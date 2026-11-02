@@ -1,0 +1,48 @@
+---
+// Yes/no capabilities per pair, grouped by model. Every state is an icon + a word,
+// never colour alone.
+import { models, featured, providerLabel, providerSlug, rejectedFields, videoLabel, type Entry } from "../lib/data";
+
+type State = { icon: string; text: string; cls: string; tip: string };
+const yes = (tip: string): State => ({ icon: "✓", text: "Yes", cls: "yes", tip });
+const no = (tip: string): State => ({ icon: "✕", text: "No", cls: "no", tip });
+const unknown: State = { icon: "?", text: "Unknown", cls: "unk", tip: "Not determined" };
+
+const COLS: { label: string; help: string; get: (e: Entry) => State }[] = [
+  { label: "Images inline", help: "Accepts base64 images inside the request.",
+    get: (e) => e.accepts.image_inline ? yes("Base64 data URIs accepted.") : e.accepts.image_inline === false ? no("Base64 images rejected.") : unknown },
+  { label: "Images by URL", help: "Fetches images from https URLs.",
+    get: (e) => e.accepts.image_url ? yes("https image URLs accepted.") : e.accepts.image_url === false ? no("Image URLs rejected.") : unknown },
+  { label: "Video input", help: "Whether a video_url reaches the model. Ignored: accepted, but it adds no tokens.",
+    get: (e) => { const v = videoLabel(e); return { icon: v.cls === "yes" ? "✓" : v.cls === "warn" ? "!" : v.cls === "no" ? "✕" : "?", text: v.text, cls: v.cls, tip: v.tip }; } },
+  { label: "Tool messages", help: "Whether tool results for parallel tool calls must directly follow the assistant message.",
+    get: (e) => e.behaviour.strict_tool_message_order === true
+      ? { icon: "!", text: "Strict order", cls: "warn", tip: "A user message between two tool results is rejected. Send all tool results first, then any media." }
+      : e.behaviour.strict_tool_message_order === false ? { icon: "✓", text: "Lenient", cls: "yes", tip: "Accepts tool results with other messages in between." } : unknown },
+  { label: "Extra fields", help: "Whether OpenRouter-style fields such as usage and reasoning are accepted.",
+    get: (e) => { const r = rejectedFields(e); return r.length ? { icon: "!", text: `Rejects ${r.join(", ")}`, cls: "warn", tip: "Request validation rejects these fields; omit them for this endpoint." } : { icon: "✓", text: "Accepted", cls: "yes", tip: "usage, reasoning, stream_options, response_format and tools all accepted." }; } },
+];
+---
+<div class="table-wrap cg">
+  <table>
+    <thead>
+      <tr>
+        <th>Model · provider</th>
+        {COLS.map((c) => <th><span class="help" title={c.help}>{c.label}</span></th>)}
+      </tr>
+    </thead>
+    {models(featured).map((m) => (
+      <tbody>
+        <tr class="cg-model"><th colspan={COLS.length + 1} scope="rowgroup"><a href={`/models/${m.slug}`}>{m.name}</a> <span class="sub">{m.vendor}</span></th></tr>
+        {m.entries.map((e) => (
+          <tr>
+            <td><a href={`/providers/${providerSlug(e)}`}>{providerLabel(e)}</a></td>
+            {COLS.map((c) => { const s = c.get(e); return (
+              <td><span class={`cap ${s.cls}`} title={s.tip}><b aria-hidden="true">{s.icon}</b> {s.text}</span></td>
+            ); })}
+          </tr>
+        ))}
+      </tbody>
+    ))}
+  </table>
+</div>

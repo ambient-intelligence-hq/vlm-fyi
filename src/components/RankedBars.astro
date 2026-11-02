@@ -1,0 +1,72 @@
+---
+import { bars, niceScale, tickLabel, providerLabel, modelSlug, type Metric } from "../lib/data";
+
+interface Props {
+  metric: Metric;
+  hidden?: boolean;
+}
+const { metric, hidden = false } = Astro.props;
+const rows = bars(metric.key);
+const top = Math.max(...rows.map((r) => r.value ?? 0), metric.ref?.value ?? 0);
+const { max, ticks } = niceScale(top);
+const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
+---
+<figure class="rb" data-metric={metric.key} hidden={hidden} aria-label={metric.question}>
+  <figcaption>
+    <h3>{metric.question}</h3>
+    <p class="sub">{metric.explain}</p>
+  </figcaption>
+
+  <div class="rb-plot" role="list">
+    <div class="rb-axis" aria-hidden="true">
+      <span class="rb-gutter"></span>
+      <div class="rb-track">
+        {ticks.map((t) => <span class="rb-tick" style={`left:${pct(t)}`}>{tickLabel(metric.key, t)}</span>)}
+      </div>
+    </div>
+    <div class="rb-rows">
+      <div class="rb-grid" aria-hidden="true">
+        <span class="rb-gutter"></span>
+        <div class="rb-track">
+          {ticks.map((t) => <span class="rb-gridline" style={`left:${pct(t)}`}></span>)}
+          {metric.ref && (
+            <span class="rb-ref" style={`left:${pct(metric.ref.value)}`}><em>{metric.ref.label}</em></span>
+          )}
+        </div>
+      </div>
+      {rows.map((r) => (
+        <a class="rb-row" role="listitem" href={`/models/${modelSlug(r.entry)}`}
+           data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
+           data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`} data-tip-value={r.text} data-tip-body={r.tip}>
+          <span class="rb-gutter rb-label">
+            <span class="rb-model">{r.entry.model.name}</span>
+            <span class="rb-prov">{providerLabel(r.entry)}</span>
+          </span>
+          <span class="rb-track">
+            {r.value !== null && r.value > 0 && (
+              <span class:list={["rb-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>
+            )}
+            <span class:list={["rb-val", { none: r.value === null, open: r.open }]}
+                  style={r.value !== null ? `left:${pct(r.value)}` : undefined}>{r.text}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="rb-key sub">
+    <span><i class="sw"></i> measured limit</span>
+    <span><i class="sw open"></i> ≥ the real limit is higher: nothing failed up to our probe's cap</span>
+    {metric.ref && <span><i class="refkey"></i> {metric.ref.label}</span>}
+  </div>
+
+  <details class="rb-table">
+    <summary>Show as table</summary>
+    <table>
+      <thead><tr><th>Model</th><th>Provider</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        {rows.map((r) => <tr data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}><td>{r.entry.model.name}</td><td>{providerLabel(r.entry)}</td><td class="num">{r.text}</td></tr>)}
+      </tbody>
+    </table>
+  </details>
+</figure>

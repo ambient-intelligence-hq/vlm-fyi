@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/Base.astro";
+import { providers, cell } from "../../lib/data";
+const ps = providers();
+---
+<Base title="Providers" description="Measured request limits for vision models on each API provider.">
+  <div class="page-head">
+  <span class="eyebrow">Reference</span>
+  <h1>Providers</h1>
+  <p class="lede">OpenRouter routes are listed by the upstream provider they're pinned to, because limits follow the upstream.</p>
+  </div>
+  <div class="detail-cards">
+    {ps.map((p) => (
+      <a class="card" href={`/providers/${p.slug}`}>
+        <strong>{p.name}</strong>
+        <span>{p.entries.length} model{p.entries.length === 1 ? "" : "s"} · images per request: {
+          [...new Set(p.entries.map((e) => cell("images_per_request", e.limits.images_per_request, e).text))].join(" / ")}</span>
+      </a>
+    ))}
+  </div>
+</Base>

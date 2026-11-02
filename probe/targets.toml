@@ -1,0 +1,89 @@
+# Provider matrix: every (model, provider) pair to check against the task in
+# run.py. Each target gets its own engine process (model, endpoint and OpenRouter
+# upstream pin are process-wide settings), so a target is exactly what a user who
+# deployed that config would get.
+#
+# Fields:
+#   name                 label in the progress table and report
+#   base_url             OpenAI-compatible endpoint (sets AGENT_BASE_URL + LLM_BASE_URL)
+#   api_key_env          variable in .env.local (or the environment) holding the key
+#   model                model id as that endpoint names it (sets AGENT_MODEL + LLM_MODEL)
+#   openrouter_provider  OpenRouter only: upstream to pin ("auto" = no pin).
+#                        Omitted = use the pin in ambient/artifacts/openrouter_providers.json.
+#   modes                optional, default ["fast", "agent"]
+
+# --- OpenRouter: the pinned models from artifacts/openrouter_providers.json ---
+
+[[target]]
+name = "deepseek-v4.1-flash · openrouter/fireworks"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "deepseek/deepseek-v4.1-flash-1017"
+openrouter_provider = "fireworks"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/alibaba"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "alibaba"
+
+[[target]]
+name = "glm-5.3-flash · openrouter/z-ai"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "z-ai/glm-5.3-flash"
+openrouter_provider = "z-ai"
+
+[[target]]
+name = "minimax-m3.1-flash · openrouter/minimax"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "minimax/minimax-m3.1-flash"
+openrouter_provider = "minimax"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/auto"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "auto"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-ai-studio"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-ai-studio"
+
+# --- Direct endpoints ---
+
+[[target]]
+name = "deepseek-v4.1-flash · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "deepseek-v4.1-flash-1017"
+
+[[target]]
+name = "glm-5.3-flash · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "glm-5.3-flash"
+
+[[target]]
+name = "qwen-3.8-27b-fp8 · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "qwen-3.8-27b-fp8"
+
+[[target]]
+name = "gemma-4-31b · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "gemma-4-31b-it"
+
+[[target]]
+name = "deepseek-v4.1-flash · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/deepseek-v4p1-flash-1017"

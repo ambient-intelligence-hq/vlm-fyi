@@ -1,0 +1,43 @@
+---
+// Small multiple: one model, a bar per provider for frames per request, on an axis
+// shared by every card (`max`), plus whether the provider takes video at all.
+import { bars, providerLabel, providerSlug, cell, type Entry } from "../lib/data";
+
+interface Props {
+  slug: string;
+  name: string;
+  vendor: string | null;
+  entries: Entry[];
+  max: number;
+}
+const { slug, name, vendor, entries, max } = Astro.props;
+const rows = bars("frames_768x432", entries);
+const pct = (v: number) => `${Math.min(100, (v / max) * 100).toFixed(2)}%`;
+const video = (e: Entry) => cell("video_file_bytes", e.limits.video_file_bytes, e);
+---
+<article class="mc">
+  <header>
+    <h3><a href={`/models/${slug}`}>{name}</a></h3>
+    <span class="sub">{vendor} · {entries.length} provider{entries.length > 1 ? "s" : ""}</span>
+  </header>
+  <ul>
+    {rows.map((r) => {
+      const v = video(r.entry);
+      return (
+        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={`${r.text} frames`} data-tip-body={r.tip} tabindex="0">
+          <span class="mc-name">
+            <a class="mc-prov" href={`/providers/${providerSlug(r.entry)}`} tabindex="-1">{providerLabel(r.entry)}</a>
+            <span class:list={["mc-video", { no: v.cls.includes("unsupported") }]}>
+              {v.cls.includes("unsupported") ? "No video" : v.text === "—" || v.text === "?" ? "Video: unknown" : v.text.startsWith("≥") ? `Video ${v.text}` : `Video up to ${v.text}`}
+            </span>
+          </span>
+          <span class="mc-track">
+            {r.value !== null && r.value > 0 && <span class:list={["mc-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>}
+          </span>
+          <span class="mc-val">{r.text}</span>
+        </li>
+      );
+    })}
+  </ul>
+  <div class="mc-axis" aria-hidden="true"><span>0</span><span>{max.toLocaleString("en-US")} frames</span></div>
+</article>

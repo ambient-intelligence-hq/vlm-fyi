@@ -1,0 +1,53 @@
+---
+// One model, every OpenRouter upstream, the same 5-minute clip: how much of the
+// video each upstream feeds the model. Bars are visual tokens per minute on the
+// card's own scale (token counts only compare within a model).
+import { bars, cell, fmtNumber, type Entry } from "../lib/data";
+
+interface Props {
+  name: string;
+  slug: string;
+  entries: Entry[];
+}
+const { name, slug, entries } = Astro.props;
+// Frames per minute where calibrated; a card falls back to tokens if none are.
+const byFrames = entries.some((x) => x.limits.video_frames_per_min?.value);
+const all = bars(byFrames ? "video_frames_per_min" : "video_tokens_per_min", entries);
+const measured = all.filter((b) => b.value !== null);
+const max = Math.max(...measured.map((b) => b.value ?? 0), 1);
+const pct = (v: number) => `${Math.max(0.6, (v / max) * 100).toFixed(2)}%`;
+const groups: [string, Entry[]][] = [
+  ["Reject video", all.filter((b) => b.value === null && ["unsupported"].includes(e(b).limits.video_tokens_per_min?.status ?? "")).map(e)],
+  ["Take video, frames not measured", byFrames ? all.filter((b) => b.value === null && e(b).limits.video_tokens_per_min?.status === "measured").map(e) : []],
+  ["Reject this clip (too large)", all.filter((b) => e(b).limits.video_tokens_per_min?.status === "rejected").map(e)],
+  ["Accept it but ignore it", all.filter((b) => e(b).limits.video_tokens_per_min?.status === "ignored").map(e)],
+  ["Unknown (timeout or error)", all.filter((b) => ["inconclusive", "not_tested"].includes(e(b).limits.video_tokens_per_min?.status ?? "not_tested")).map(e)],
+];
+function e(b: { entry: Entry }) { return b.entry; }
+const label = (x: Entry) => x.provider.name;
+const hi = measured[0], lo = measured[measured.length - 1];
+const ratio = hi && lo && lo.value ? Math.round((hi.value ?? 0) / lo.value) : null;
+---
+<article class="lc">
+  <header>
+    <h3><a href={`/models/${slug}`}>{name}</a></h3>
+    <span class="sub">{entries.length} OpenRouter upstreams · {measured.length} take video</span>
+  </header>
+  {ratio && ratio > 1 && (
+    <p class="lc-lede"><strong>{ratio}×</strong> difference: {label(hi.entry)} feeds the model {fmtNumber("video_frames_per_min", hi.value!)} {byFrames ? "frames" : "tokens"} a minute of this clip; {label(lo.entry)} {fmtNumber("video_frames_per_min", lo.value!)}.</p>
+  )}
+  <ul>
+    {measured.map((b) => (
+      <li data-tip-title={`${name} · ${label(b.entry)} via OpenRouter`} data-tip-value={b.text} data-tip-body={b.tip} tabindex="0">
+        <span class="lc-prov">{label(b.entry)}</span>
+        <span class="lc-track"><span class="lc-bar" style={`width:${pct(b.value!)}`}></span></span>
+        <span class="lc-val">{byFrames ? `${fmtNumber("video_frames_per_min", b.value!)}/min${b.entry.limits.video_frames_per_min?.capped ? " ⁎" : ""}` : `${fmtNumber("video_tokens_per_min", b.value!)} tok`}</span>
+      </li>
+    ))}
+  </ul>
+  {groups.filter(([, xs]) => xs.length).map(([title, xs]) => (
+    <p class="lc-rest"><span class="eyebrow">{title}</span>{xs.map((x) => (
+      <span class="tag" title={cell("video_tokens_per_min", x.limits.video_tokens_per_min, x).title}>{label(x)}</span>
+    ))}</p>
+  ))}
+</article>

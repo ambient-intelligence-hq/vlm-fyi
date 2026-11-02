@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+import EntryCard from "../../components/EntryCard.astro";
+import { providers } from "../../lib/data";
+
+export function getStaticPaths() {
+  return providers().map((p) => ({ params: { slug: p.slug }, props: p }));
+}
+const { name, entries } = Astro.props;
+const n = entries.length;
+---
+<Base title={`${name} limits`} description={`Measured request limits for ${n} vision model${n === 1 ? "" : "s"} on ${name}.`}>
+  <div class="page-head">
+  <span class="crumb"><a href="/providers">Providers</a></span>
+  <h1>{name}</h1>
+  <p class="lede">{n} model{n === 1 ? "" : "s"} measured.</p>
+  </div>
+  <div class="detail-cards">{entries.map((e) => <EntryCard entry={e} heading="model" />)}</div>
+</Base>

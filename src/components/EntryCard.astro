@@ -1,0 +1,42 @@
+---
+// Every limit for one model + provider pair, with the provider's error text.
+import { COLUMNS, cell, providerLabel, providerSlug, modelSlug, rejectedFields, videoLabel, type Entry } from "../lib/data";
+
+interface Props {
+  entry: Entry;
+  heading: "model" | "provider";
+}
+const { entry: e, heading } = Astro.props;
+const rej = rejectedFields(e);
+---
+<article class="card">
+  <h3>
+    {heading === "provider"
+      ? <a href={`/providers/${providerSlug(e)}`}>{providerLabel(e)}</a>
+      : <a href={`/models/${modelSlug(e)}`}>{e.model.name}</a>}
+  </h3>
+  <div class="api-id">{e.model.api_id}</div>
+  <dl class="limits">
+    {COLUMNS.map((c) => {
+      const x = cell(c.key, e.limits[c.key], e);
+      const ev = e.limits[c.key]?.evidence;
+      return (
+        <>
+          <dt>{c.short}</dt>
+          <dd>
+            <span class={`v ${x.cls}`} title={x.title}>{x.text}</span>
+            {ev && <span class="evidence">“{ev}”</span>}
+          </dd>
+        </>
+      );
+    })}
+    <dt>Video input</dt>
+    <dd title={videoLabel(e).tip}>{videoLabel(e).text}</dd>
+    <dt>Tool messages</dt>
+    <dd>{e.behaviour.strict_tool_message_order ? "Strict order" : e.behaviour.strict_tool_message_order === false ? "Lenient" : "—"}</dd>
+    <dt>Extra fields</dt>
+    <dd>{rej.length ? `Rejects ${rej.join(", ")}` : "All accepted"}</dd>
+  </dl>
+  {e.notes.length > 0 && <ul class="notes">{e.notes.map((n) => <li>{n}</li>)}</ul>}
+  <p class="sub">Measured {e.measured_at}</p>
+</article>

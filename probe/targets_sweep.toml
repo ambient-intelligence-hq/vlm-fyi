@@ -1,0 +1,28 @@
+# E06/E07 re-confirmation: the same three models as the August sweep, every
+# OpenRouter upstream pinned in turn (provider.order=[tag], allow_fallbacks=false).
+# Only the dimensions E06/E07 measured: video density (E06) and image count (E07),
+# plus the baseline and image-input checks every target gets.
+
+[[target]]
+name = "qwen3.8-27b · openrouter"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+upstreams = "all"
+dims = ["video_density", "video_frames", "image_count"]
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+upstreams = "all"
+dims = ["video_density", "video_frames", "image_count"]
+
+[[target]]
+name = "gemini-3.7-flash · openrouter"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+upstreams = "all"
+dims = ["video_density", "video_frames", "image_count"]

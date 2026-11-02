@@ -1,0 +1,22 @@
+---
+import Base from "../../layouts/Base.astro";
+import EntryCard from "../../components/EntryCard.astro";
+import { models } from "../../lib/data";
+
+export function getStaticPaths() {
+  return models().map((m) => ({ params: { slug: m.slug }, props: m }));
+}
+const { name, vendor, entries } = Astro.props;
+const n = entries.length;
+const mods = entries[0].model.input_modalities?.join(", ");
+---
+<Base title={`${name} limits`} description={`How many images, frames and bytes ${name} accepts per request on ${n} provider${n === 1 ? "" : "s"}, measured.`}>
+  <div class="page-head">
+  <span class="crumb"><a href="/models">Models</a> / {vendor}</span>
+  <h1>{name}</h1>
+  <p class="lede">
+    Measured on {n} provider{n === 1 ? "" : "s"}.{mods && ` The model card lists ${mods} input; what each provider accepts is below.`}
+  </p>
+  </div>
+  <div class="detail-cards">{entries.map((e) => <EntryCard entry={e} heading="provider" />)}</div>
+</Base>

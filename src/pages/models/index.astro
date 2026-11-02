@@ -1,0 +1,17 @@
+---
+import Base from "../../layouts/Base.astro";
+import ModelCard from "../../components/ModelCard.astro";
+import Tooltip from "../../components/Tooltip.astro";
+import { models, bars, niceScale } from "../../lib/data";
+const ms = models();
+const max = niceScale(Math.max(...bars("frames_768x432").map((b) => b.value ?? 0))).max;
+---
+<Base title="Models" description="Measured request limits for each vision-language model, compared across the providers that serve it.">
+  <div class="page-head">
+  <span class="eyebrow">Reference</span>
+  <h1>Models</h1>
+  <p class="lede">Each card compares the providers serving one model: frames per request on a shared scale, and video support.</p>
+  </div>
+  <div class="cards">{ms.map((m) => <ModelCard {...m} max={max} />)}</div>
+  <Tooltip />
+</Base>

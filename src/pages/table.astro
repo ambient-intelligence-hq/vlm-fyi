@@ -1,0 +1,128 @@
+---
+import Base from "../layouts/Base.astro";
+import { entries, COLUMNS, cell, providerLabel, providerSlug, modelSlug, rejectedFields, updated } from "../lib/data";
+
+const providers = [...new Set(entries.map(providerLabel))].sort();
+---
+<Base title="Full table" description="Every measured request limit for every vision model and provider pair, sortable.">
+  <div class="page-head">
+  <span class="eyebrow">Reference</span>
+  <h1>Full table</h1>
+  <p class="lede">
+    Every measured limit for {entries.length} model and provider pairs, measured {updated}. Hover a value for the passing and
+    failing request sizes and the provider's error text. Click a column header to sort.
+  </p>
+  </div>
+
+  <div class="controls">
+    <input id="q" type="search" placeholder="Filter by model or provider…" aria-label="Filter" />
+    <select id="prov" aria-label="Provider">
+      <option value="">All providers</option>
+      {providers.map((p) => <option value={p}>{p}</option>)}
+    </select>
+    <select id="scope" aria-label="Scope">
+      <option value="featured">Featured pairs</option>
+      <option value="all">All, incl. every OpenRouter upstream</option>
+    </select>
+    <label class="sub"><input id="video" type="checkbox" /> Video reaches the model</label>
+    <span class="count" id="count">{entries.length} pairs</span>
+  </div>
+
+  <div class="table-wrap">
+    <table id="grid">
+      <thead>
+        <tr>
+          <th data-sort="text">Model</th>
+          <th data-sort="text">Provider</th>
+          {COLUMNS.map((c) => <th class="num" data-sort="num"><span class="help" title={c.help}>{c.short}</span></th>)}
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {entries.map((e) => {
+          const rej = rejectedFields(e);
+          return (
+            <tr data-text={`${e.model.name} ${e.model.vendor ?? ""} ${e.model.api_id} ${providerLabel(e)}`.toLowerCase()}
+                data-prov={providerLabel(e)} data-video={e.accepts.video === "yes" ? "1" : "0"} data-featured={e.featured ? "1" : "0"}>
+              <td class="model-cell" data-v={e.model.name.toLowerCase()}>
+                <a href={`/models/${modelSlug(e)}`}>{e.model.name}</a>
+                <div class="sub">{e.model.vendor}</div>
+              </td>
+              <td data-v={providerLabel(e).toLowerCase()}>
+                <a href={`/providers/${providerSlug(e)}`}>{providerLabel(e)}</a>
+                <div class="sub mono">{e.model.api_id}</div>
+              </td>
+              {COLUMNS.map((c) => {
+                const x = cell(c.key, e.limits[c.key], e);
+                return <td class="num" data-v={x.sort}><span class={`v ${x.cls}`} title={x.title}>{x.text}</span></td>;
+              })}
+              <td>
+                {e.behaviour.strict_tool_message_order && <span class="tag" title="Tool results for parallel tool calls must directly follow the assistant message; a user message in between is rejected.">strict tool order</span>}
+                {rej.length > 0 && <span class="tag warn" title="These request fields are rejected with a validation error.">rejects {rej.join(", ")}</span>}
+                {e.notes.length > 0 && <span class="tag" title={e.notes.join("\n\n")}>{e.notes.length} note{e.notes.length > 1 ? "s" : ""}</span>}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    <p id="empty" class="empty" hidden>No pairs match. Clear the filter to see all of them.</p>
+  </div>
+
+  <div class="legend">
+    <span><span class="v measured">120</span> measured limit</span>
+    <span><span class="v atleast">≥ 16 MB</span> no failure up to our probe's cap</span>
+    <span><span class="v inconclusive">?</span> search stopped on a timeout</span>
+    <span><span class="v tight">170</span> tight for video work</span>
+    <span><span class="v severe">4</span> very tight</span>
+    <span><span class="v unsupported">No video</span> not accepted</span>
+  </div>
+
+  <h2>Reading the numbers</h2>
+  <ul class="prose">
+    <li><strong>Images</strong> and <strong>768×432 frames</strong> are different tests. Tiny images measure the count limit alone; real-size frames hit pixel, payload or context-window limits first on some providers.</li>
+    <li><strong>Inline body</strong> and <strong>images by URL</strong> often have different limits on the same endpoint. If one is tight, try the other.</li>
+    <li>A value is the largest request that <em>passed</em>. Leave headroom: limits change, and some depend on your plan.</li>
+  </ul>
+
+  <script>
+    const q = document.getElementById("q") as HTMLInputElement;
+    const prov = document.getElementById("prov") as HTMLSelectElement;
+    const video = document.getElementById("video") as HTMLInputElement;
+    const scope = document.getElementById("scope") as HTMLSelectElement;
+    const count = document.getElementById("count")!;
+    const rows = [...document.querySelectorAll<HTMLTableRowElement>("#grid tbody tr")];
+    const empty = document.getElementById("empty")!;
+
+    function apply() {
+      const t = q.value.trim().toLowerCase();
+      let n = 0;
+      for (const r of rows) {
+        const show = (!t || r.dataset.text!.includes(t)) && (!prov.value || r.dataset.prov === prov.value)
+          && (!video.checked || r.dataset.video === "1") && (scope.value === "all" || r.dataset.featured === "1");
+        r.hidden = !show;
+        if (show) n++;
+      }
+      count.textContent = `${n} pair${n === 1 ? "" : "s"}`;
+      empty.hidden = n > 0;
+    }
+    [q, prov, video, scope].forEach((el) => el.addEventListener("input", apply));
+    apply();
+
+    const tbody = document.querySelector("#grid tbody")!;
+    document.querySelectorAll<HTMLTableCellElement>("#grid thead th[data-sort]").forEach((th, _i, all) => {
+      th.addEventListener("click", () => {
+        const idx = [...th.parentElement!.children].indexOf(th);
+        const asc = th.getAttribute("aria-sort") !== "ascending";
+        all.forEach((h) => h.removeAttribute("aria-sort"));
+        th.setAttribute("aria-sort", asc ? "ascending" : "descending");
+        const num = th.dataset.sort === "num";
+        rows.sort((a, b) => {
+          const va = (a.children[idx] as HTMLElement).dataset.v!, vb = (b.children[idx] as HTMLElement).dataset.v!;
+          const d = num ? Number(va) - Number(vb) : va.localeCompare(vb);
+          return asc ? d : -d;
+        }).forEach((r) => tbody.appendChild(r));
+      });
+    });
+  </script>
+</Base>

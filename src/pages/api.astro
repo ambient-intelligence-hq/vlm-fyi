@@ -1,0 +1,40 @@
+---
+import Base from "../layouts/Base.astro";
+import { entries } from "../lib/data";
+const sample = entries.find((e) => e.id === "fireworks/kimi-k3") ?? entries[0];
+const excerpt = JSON.stringify({ ...sample, limits: { images_per_request: sample.limits.images_per_request, video_file_bytes: sample.limits.video_file_bytes } }, null, 2);
+---
+<Base title="API" description="Use vlm.fyi's measured vision-model limits in your code: JSON and CSV, CC BY 4.0.">
+  <div class="prose page-head">
+    <span class="eyebrow">API</span>
+    <h1>Use the data</h1>
+    <p class="lede">The dataset is free to use under CC BY 4.0. Fetch it at build time or at startup and size your requests to fit.</p>
+
+    <h2>Endpoints</h2>
+    <ul>
+      <li><a href="/v1/capabilities.json"><code>/v1/capabilities.json</code></a> — every pair, every limit, with evidence.</li>
+      <li><a href="/v1/capabilities.csv"><code>/v1/capabilities.csv</code></a> — one row per pair, for spreadsheets.</li>
+      <li><a href="/v1/changes.json"><code>/v1/changes.json</code></a> — every recorded change, by date.</li>
+    </ul>
+    <p>All endpoints are static files with CORS enabled. The schema is versioned; breaking changes get a new <code>/v2</code> path.</p>
+
+    <h2>Shape</h2>
+    <p>Each entry is one model on one provider. Each limit has a <code>status</code>:</p>
+    <ul>
+      <li><code>measured</code> — <code>value</code> is the largest passing request, <code>fails_at</code> the first failure.</li>
+      <li><code>stated</code> — the provider's error states the limit (<code>value</code>).</li>
+      <li><code>at_least</code> — no failure up to our probe's cap; the limit is higher than <code>value</code>.</li>
+      <li><code>inconclusive</code> — the search stopped early; <code>at_least</code>, if present, passed.</li>
+      <li><code>unsupported</code> / <code>not_tested</code>.</li>
+    </ul>
+    <p>Bytes are in bytes; counts are counts. An excerpt:</p>
+    <pre><code>{excerpt}</code></pre>
+
+    <h2>Example: fit frames to a provider</h2>
+    <pre><code>{`const data = await fetch("https://vlm.fyi/v1/capabilities.json").then((r) => r.json());
+const entry = data.entries.find((e) => e.id === "fireworks/kimi-k3");
+const cap = entry.limits.frames_768x432;
+// Leave headroom: limits change, and other messages use context too.
+const maxFrames = Math.floor((cap.value ?? 0) * 0.85);`}</code></pre>
+  </div>
+</Base>

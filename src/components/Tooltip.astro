@@ -1,0 +1,51 @@
+---
+// One shared tooltip for every element carrying data-tip-title / data-tip-value / data-tip-body.
+// Values lead, labels follow. Text is inserted with textContent only.
+---
+<div id="tip" role="tooltip" hidden>
+  <strong class="tip-value"></strong>
+  <span class="tip-title"></span>
+  <span class="tip-body"></span>
+</div>
+<script>
+  const tip = document.getElementById("tip")!;
+  const [vEl, tEl, bEl] = [".tip-value", ".tip-title", ".tip-body"].map((s) => tip.querySelector<HTMLElement>(s)!);
+
+  function show(el: HTMLElement, x: number, y: number) {
+    vEl.textContent = el.dataset.tipValue ?? "";
+    tEl.textContent = el.dataset.tipTitle ?? "";
+    bEl.textContent = el.dataset.tipBody ?? "";
+    bEl.hidden = !el.dataset.tipBody;
+    tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    const left = Math.min(window.innerWidth - r.width - 12, x + 14);
+    const top = y + 18 + r.height > window.innerHeight ? y - r.height - 12 : y + 18;
+    tip.style.transform = `translate(${Math.max(8, left)}px, ${Math.max(8, top)}px)`;
+  }
+  // The first tooltip waits a moment (no accidental pop-ups while the pointer
+  // passes over the chart); once one is open, neighbours show instantly.
+  let timer = 0, lastHide = 0, current: HTMLElement | null = null;
+  const hide = () => { clearTimeout(timer); if (!tip.hidden) lastHide = performance.now(); tip.hidden = true; current = null; };
+
+  document.addEventListener("pointermove", (ev) => {
+    if (ev.pointerType !== "mouse") return;
+    const el = (ev.target as Element).closest<HTMLElement>("[data-tip-title]");
+    if (!el) return hide();
+    const warm = !tip.hidden || performance.now() - lastHide < 400;
+    if (warm) { current = el; return show(el, ev.clientX, ev.clientY); }
+    if (current !== el) {
+      current = el;
+      clearTimeout(timer);
+      const { clientX, clientY } = ev;
+      timer = window.setTimeout(() => current === el && show(el, clientX, clientY), 250);
+    }
+  });
+  document.addEventListener("focusin", (ev) => {
+    const el = (ev.target as Element).closest<HTMLElement>("[data-tip-title]");
+    if (!el) return hide();
+    const r = el.getBoundingClientRect();
+    show(el, r.left + Math.min(r.width, 320), r.top + r.height / 2);
+  });
+  document.addEventListener("focusout", hide);
+  document.addEventListener("scroll", hide, { passive: true });
+</script>

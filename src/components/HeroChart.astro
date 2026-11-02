@@ -1,0 +1,46 @@
+---
+// The site's thesis in one picture: one model, several providers, very different ceilings.
+import { entries, bars, providerLabel, modelSlug } from "../lib/data";
+
+const SLUG = "deepseek-v4.1-flash-1017";
+const pick = entries.filter((e) => modelSlug(e) === SLUG);
+const rows = bars("frames_768x432", pick);
+const max = 400;
+const pct = (v: number) => `${Math.min(100, (v / max) * 100).toFixed(2)}%`;
+const name = pick[0]?.model.name ?? "";
+// Caption from the data: who took everything vs. where it stopped.
+const list = (xs: string[]) => new Intl.ListFormat("en-US", { type: "conjunction" }).format(xs);
+// Routes to the same provider (direct and via OpenRouter) read as one name.
+const names = (rs: typeof rows) => {
+  const by = new Map<string, typeof rows>();
+  rs.forEach((r) => by.set(r.entry.provider.name, [...(by.get(r.entry.provider.name) ?? []), r]));
+  return [...by.entries()].map(([n, g]) => (g.length > 1 ? `${n} (direct and via OpenRouter)` : providerLabel(g[0].entry)));
+};
+const open = names(rows.filter((r) => r.open));
+const capped = rows.filter((r) => !r.open && r.value !== null);
+const cappedText = capped.length && new Set(capped.map((r) => r.text)).size === 1
+  ? `${list(names(capped))} stopped at ${capped[0].text}`
+  : list(capped.map((r) => `${providerLabel(r.entry)} at ${r.text}`));
+const top = rows.find((r) => r.open)?.text.replace("≥ ", "");
+const caption = [open.length ? `${list(open)} took all ${top} frames we sent` : "", cappedText].filter(Boolean).join("; ") + ".";
+---
+{rows.length > 0 && (
+  <figure class="hero-chart" aria-label={`${name}: video frames per request on ${rows.length} providers`}>
+    <figcaption>
+      <span class="eyebrow">Same model · <a href={`/models/${SLUG}`}>{name}</a></span>
+      <span class="hc-title">768×432 frames per request</span>
+    </figcaption>
+    <ul>
+      {rows.map((r) => (
+        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={`${r.text} frames`} data-tip-body={r.tip}>
+          <span class="hc-prov">{providerLabel(r.entry)}</span>
+          <span class="hc-track">
+            {r.value !== null && <span class:list={["hc-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>}
+          </span>
+          <span class="hc-val">{r.text}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="hc-foot">{caption}</p>
+  </figure>
+)}

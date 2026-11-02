@@ -1,0 +1,65 @@
+# Direct (non-OpenRouter) endpoints: Fireworks, Modal, Together, Jarvislabs.
+# Same fields as targets.toml. Run with:
+#   uv run python benchmarks/provider_matrix/run.py --targets benchmarks/provider_matrix/targets_direct.toml
+
+# --- Fireworks ---
+
+[[target]]
+name = "muse-spark-open · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/muse-spark-open"
+
+[[target]]
+name = "deepseek-v4.1-flash · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/deepseek-v4p1-flash-1017"
+
+[[target]]
+name = "glm-5.3-flash · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/glm-5p3-flash"
+
+[[target]]
+name = "kimi-k3 · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/kimi-k3"
+
+# Modal (self-deployed) targets live in targets_private.toml (gitignored).
+
+# --- Together ---
+
+[[target]]
+name = "glm-5.3-flash · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "zai-org/GLM-5.3-Flash"
+
+[[target]]
+name = "deepseek-v4.1-flash · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "deepseek-ai/DeepSeek-V4.1-Flash-1017"
+
+[[target]]
+name = "kimi-k3 · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "moonshotai/Kimi-K3"
+
+# --- Jarvislabs ---
+
+[[target]]
+name = "qwen-3.8-27b-fp8 · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "qwen-3.8-27b-fp8"
+
+[[target]]
+name = "glm-5.3-flash · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "glm-5.3-flash"

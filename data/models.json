@@ -1,0 +1,19 @@
+{
+ "_doc": "Canonical identity for models the OpenRouter catalog doesn't cover, or names it differently. Matched on the normalized model id (org prefix, case, quant suffix, Fireworks 'p' versions and hyphens ignored).",
+ "models": [
+  {
+   "id": "deepseek/deepseek-v4.1-flash-1017",
+   "name": "DeepSeek V4.1 Flash (1017)",
+   "vendor": "DeepSeek",
+   "input_modalities": ["text", "image"],
+   "aliases": ["deepseek-ai/DeepSeek-V4.1-Flash-1017", "accounts/fireworks/models/deepseek-v4p1-flash-1017", "deepseek-v4.1-flash-1017"]
+  },
+  {
+   "id": "meta/muse-spark-open",
+   "name": "Muse Spark (open)",
+   "vendor": "Meta",
+   "input_modalities": ["text", "image", "video", "audio"],
+   "aliases": ["accounts/fireworks/models/muse-spark-open"]
+  }
+ ]
+}

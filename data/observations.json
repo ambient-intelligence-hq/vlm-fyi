@@ -1,0 +1,57 @@
+[
+ {
+  "target": "qwen3.8-27b · openrouter/alibaba",
+  "limit": "url_image_bytes",
+  "value": 30000000,
+  "evidence": "Downloaded image content cannot exceed 30MB",
+  "source": "agent session"
+ },
+ {
+  "target": "qwen3.8-27b · openrouter/alibaba",
+  "note": "Inline images are capped at 250 data URIs per request; images sent by URL are capped at 30 MB of downloaded content instead."
+ },
+ {
+  "target": "deepseek-v4.1-flash · together",
+  "note": "Together caps the decoded media in one request at 1,502,189,977 bytes (≈1.43 GB). Images are decoded to tensors before this check, so pixel count matters, not file size."
+ },
+ {
+  "target": "glm-5.3-flash · together",
+  "note": "Together caps the decoded media in one request at ≈1.43 GB (seen on DeepSeek V4.1 Flash; likely shared)."
+ },
+ {
+  "target": "kimi-k3 · together",
+  "note": "Together caps the decoded media in one request at ≈1.43 GB (seen on DeepSeek V4.1 Flash; likely shared)."
+ },
+ {
+  "target": "deepseek-v4.1-flash · fireworks",
+  "note": "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+ },
+ {
+  "target": "glm-5.3-flash · fireworks",
+  "note": "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+ },
+ {
+  "target": "kimi-k3 · fireworks",
+  "note": "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+ },
+ {
+  "target": "muse-spark-open · fireworks",
+  "note": "Rejects the OpenRouter-style `usage` and `reasoning` request fields. Full agent sessions with 100 frames got no response within 300 s."
+ },
+ {
+  "target": "deepseek-v4.1-flash · jarvislabs",
+  "note": "Inline bodies above ~5–8 MB fail with \"Request body timed out\" (about a 10 s window to receive the body), so the usable inline size depends on upload speed. Hard limit: HTTP 413 at 16 MB. Images by URL avoid both."
+ },
+ {
+  "target": "glm-5.3-flash · openrouter/z-ai",
+  "note": "This upstream doesn't accept video input for the model; OpenRouter answers a video request with 404 \"No allowed providers\"."
+ },
+ {
+  "target": "qwen-3.8-27b-fp8 · jarvislabs",
+  "note": "The deployment accepts at most 4 images per request."
+ },
+ {
+  "target": "gemma-4-31b · jarvislabs",
+  "note": "The deployment accepts at most 4 images per request."
+ }
+]

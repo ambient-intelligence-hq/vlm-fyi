@@ -1,0 +1,168 @@
+---
+import Base from "../layouts/Base.astro";
+import RankedBars from "../components/RankedBars.astro";
+import ModelCard from "../components/ModelCard.astro";
+import CapabilityGrid from "../components/CapabilityGrid.astro";
+import Tooltip from "../components/Tooltip.astro";
+import HeroChart from "../components/HeroChart.astro";
+import LotteryCard from "../components/LotteryCard.astro";
+import { entries, featured, METRICS, span, fmtNumber, models, providers, bars, niceScale, updated } from "../lib/data";
+
+const plural = (n: number, one: string, many: string) => (new Intl.PluralRules("en-US").select(n) === "one" ? one : many);
+const range = (key: string) => {
+  const s = span(key);
+  if (!s) return "—";
+  const plus = s.hiOpen ? "+" : "";
+  if (key.endsWith("_bytes")) {
+    const mb = (v: number) => (v / 1_000_000).toLocaleString("en-US", { maximumFractionDigits: 0 });
+    return `${mb(s.lo)}–${mb(s.hi)}${plus} MB`;
+  }
+  return `${fmtNumber(key, s.lo)}–${fmtNumber(key, s.hi)}${plus}`;
+};
+const videoYes = featured.filter((e) => e.accepts.video === "yes").length;
+const ms = models(featured);
+const upstreamOnly = entries.length - featured.length;
+// The routing lottery: models measured across many OpenRouter upstreams.
+const lottery = models(entries.filter((e) => e.provider.via === "openrouter")).filter((m) => m.entries.length >= 4);
+// Small multiples share one axis.
+const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.value ?? 0))).max;
+---
+<Base>
+  <section class="hero">
+    <div class="hero-copy">
+    <span class="eyebrow"><b>●</b> Measured {updated} · {entries.length} model × provider pairs</span>
+    <h1>Every vision API has a different ceiling. <span class="dim">We measure it.</span></h1>
+    <p class="lede">
+      The same model can take 4 images on one provider and over a thousand on another. vlm.fyi records what each API
+      actually accepts in one request: images, real video frames, bytes and video files, with the provider's own error
+      message as evidence.
+    </p>
+    <div class="actions">
+      <a class="pill" href="#limits">See the limits</a>
+      <a class="pill ghost" href="/methodology">How we measure</a>
+    </div>
+    </div>
+    <HeroChart />
+  </section>
+
+  <div class="strip">
+    <div>
+      <span class="eyebrow">Pairs measured</span>
+      <strong>{entries.length}</strong>
+      <span class="sub">{featured.length} featured · {upstreamOnly} more OpenRouter upstreams</span>
+    </div>
+    <div>
+      <span class="eyebrow">Images per request</span>
+      <strong>{range("images_per_request")}</strong>
+      <span class="sub">set by the provider, not the model</span>
+    </div>
+    <div>
+      <span class="eyebrow">Video seen per minute</span>
+      <strong>{range("video_frames_per_min")} frames</strong>
+      <span class="sub">same 5-min clip, depends on the provider</span>
+    </div>
+    <div>
+      <span class="eyebrow">Tokens per frame</span>
+      <strong>{range("tokens_per_frame_768x432")}</strong>
+      <span class="sub">for the same 768×432 frame</span>
+    </div>
+  </div>
+
+  <section class="block explorer" id="limits" aria-label="Limits by metric">
+    <header>
+      <span class="eyebrow"><b>01</b> — Limits per request</span>
+      <h2>Pick a limit. See who fits.</h2>
+    </header>
+    <div class="explorer-controls">
+    <div class="tabs" role="tablist" aria-label="Metric">
+      {METRICS.map((m, i) => (
+        <button role="tab" type="button" data-metric={m.key} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{m.tab}</button>
+      ))}
+    </div>
+    <div class="tabs scope" role="radiogroup" aria-label="Which pairs">
+      <button type="button" role="radio" data-scope="featured" aria-checked="true">Featured</button>
+      <button type="button" role="radio" data-scope="upstreams" aria-checked="false">OpenRouter upstreams</button>
+      <button type="button" role="radio" data-scope="all" aria-checked="false">All {entries.length}</button>
+    </div>
+    </div>
+    {METRICS.map((m, i) => <RankedBars metric={m} hidden={i > 0} />)}
+  </section>
+
+  <section class="block">
+    <header>
+      <span class="eyebrow"><b>02</b> — Same model, different provider</span>
+      <h2>The provider decides, not the model.</h2>
+      <p class="sub">Frames per request for each provider of a model, on one shared scale, and whether that provider takes video.</p>
+    </header>
+    <div class="cards">
+      {ms.filter((m) => m.entries.length > 1).map((m) => <ModelCard {...m} max={framesMax} />)}
+    </div>
+    <p class="sub more">Single-provider models: {ms.filter((m) => m.entries.length === 1).map((m, i, a) => (
+      <><a href={`/models/${m.slug}`}>{m.name}</a>{i < a.length - 1 ? ", " : ""}</>
+    ))}.</p>
+  </section>
+
+  <section class="block">
+    <header>
+      <span class="eyebrow"><b>03</b> — The routing lottery</span>
+      <h2>Same model id, same clip, a different video every time.</h2>
+      <p class="sub">OpenRouter routes one model id to many upstream providers. We pinned each one and sent the same 5-minute clip. This is how much of it each upstream fed the model.</p>
+    </header>
+    <div class="lottery">
+      {lottery.map((m) => <LotteryCard name={m.name} slug={m.slug} entries={m.entries} />)}
+    </div>
+  </section>
+
+  <section class="block">
+    <header>
+      <span class="eyebrow"><b>04</b> — Request format</span>
+      <h2>What each endpoint accepts.</h2>
+      <p class="sub">Input types, and the request-format rules that break integrations most often.</p>
+    </header>
+    <CapabilityGrid />
+  </section>
+
+  <nav class="grid-cells next" aria-label="More">
+    <a class="next-card" href="/table"><strong>Full table</strong><span>Every limit for every pair, sortable</span></a>
+    <a class="next-card" href="/methodology"><strong>How we measure</strong><span>Synthetic probes, caps and caveats</span></a>
+    <a class="next-card" href="/api"><strong>Use the data</strong><span>JSON and CSV, CC BY 4.0</span></a>
+  </nav>
+
+  <Tooltip />
+
+  <script>
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>(".tabs [role=tab]")];
+    const charts = [...document.querySelectorAll<HTMLElement>(".explorer figure.rb")];
+    function select(key: string, focus = false, push = true) {
+      tabs.forEach((t) => {
+        const on = t.dataset.metric === key;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      charts.forEach((c) => (c.hidden = c.dataset.metric !== key));
+      if (push) history.replaceState(null, "", `#${key}`);
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t.dataset.metric!));
+      t.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (d) select(tabs[(i + d + tabs.length) % tabs.length].dataset.metric!, true);
+      });
+    });
+    const explorer = document.querySelector<HTMLElement>(".explorer")!;
+    explorer.dataset.scope = "featured";
+    document.querySelectorAll<HTMLButtonElement>(".scope [data-scope]").forEach((b, _, all) => {
+      b.addEventListener("click", () => {
+        explorer.dataset.scope = b.dataset.scope!;
+        all.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+      });
+    });
+    const fromHash = () => {
+      const key = location.hash.slice(1);
+      if (tabs.some((t) => t.dataset.metric === key)) select(key, false, false);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+  </script>
+</Base>
