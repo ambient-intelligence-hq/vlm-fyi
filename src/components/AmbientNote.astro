@@ -1,0 +1,16 @@
+---
+// One line pointing to Ambient where a visitor has just seen the problem it solves.
+// Kept out of charts and rankings: the data stays neutral.
+import { ambient } from "../lib/site";
+
+interface Props {
+  placement: string;
+  path?: string;
+  cta?: string;
+}
+const { placement, path = "", cta = "See Ambient" } = Astro.props;
+---
+<aside class="amb">
+  <span class="amb-tag">From the team behind vlm.fyi</span>
+  <p><slot /> <a href={ambient(placement, path)}>{cta} →</a></p>
+</aside>

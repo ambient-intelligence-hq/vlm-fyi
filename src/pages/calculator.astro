@@ -1,0 +1,233 @@
+---
+// How much of your video fits: pick a model and a video length, and see for every
+// provider how much of it the model can see in one request, sent as frames or as a
+// video file. Everything is computed in the browser from the measured limits.
+import Base from "../layouts/Base.astro";
+import AmbientNote from "../components/AmbientNote.astro";
+import { entries, models, bars, providerLabel, providerSlug, modelSlug, type Entry } from "../lib/data";
+
+// One row per pair, only the fields the calculator needs.
+const one = (key: string, e: Entry) => {
+  const b = bars(key, [e])[0];
+  return b.value !== null ? { n: b.value, open: b.open } : null;
+};
+const rows = entries.map((e) => {
+  const file = e.limits.video_file_bytes;
+  const d = e.limits.video_frames_per_min;
+  const tok = e.limits.video_tokens_per_min;
+  return {
+    model: modelSlug(e),
+    provider: providerLabel(e),
+    href: `/providers/${providerSlug(e)}`,
+    frames: one("frames_768x432", e),
+    images: one("images_per_request", e),
+    tpf: e.limits.tokens_per_frame_768x432?.value ?? null,
+    // Video input: how the provider treats a video file, and how many frames it feeds the model.
+    video: tok?.status === "ignored" || e.accepts.video === "ignored" ? "ignored"
+      : ["unsupported", "rejected"].includes(file?.status ?? "") || ["unsupported"].includes(tok?.status ?? "") ? "no"
+      : d?.value ? "measured" : tok?.status === "measured" ? "unmeasured" : "unknown",
+    fileMax: file && ["measured", "at_least", "stated"].includes(file.status) ? { n: file.value ?? 0, open: file.status === "at_least" } : null,
+    perMin: d?.value ?? null,
+    capped: !!d?.capped,
+    perVideo: d?.frames_per_video ?? null,
+    shortPerMin: d?.frames_per_min_short_clip ?? null,
+  };
+});
+// Pinned popular models first, then the rest by how many providers serve them.
+const PINNED = ["deepseek-v4.1-flash-1017", "glm-5.3-flash", "kimi-k3"];
+const pin = (slug: string) => (PINNED.includes(slug) ? PINNED.indexOf(slug) : PINNED.length);
+const ms = models().sort((a, b) => pin(a.slug) - pin(b.slug)).map((m) => ({ slug: m.slug, name: m.name, n: m.entries.length }));
+const data = JSON.stringify({ rows, models: ms });
+---
+<Base title="Video calculator" description="How much of your video can a vision model see in one request? Pick a model and a video length to compare every provider, from measured limits.">
+  <div class="page-head">
+    <span class="eyebrow">Calculator</span>
+    <h1>How much of your video will the model see?</h1>
+    <p class="lede">
+      Pick a model and a video length. For every provider of that model, this shows how much of the video fits in one
+      request, sent as frames or as a video file, from the limits we measured.
+    </p>
+  </div>
+
+  <section class="calc" aria-label="Video calculator">
+    <form class="calc-in" id="calc-form" onsubmit="return false">
+      <label>
+        <span>Model</span>
+        <select id="calc-model">{ms.map((m) => <option value={m.slug}>{m.name} ({m.n} provider{m.n === 1 ? "" : "s"})</option>)}</select>
+      </label>
+      <label>
+        <span>Video length</span>
+        <span class="calc-len">
+          <input id="calc-min" type="number" min="0.1" max="600" step="any" value="30" inputmode="decimal" />
+          <em>minutes</em>
+        </span>
+        <span class="calc-presets">{[1, 5, 30, 60].map((m) => <button type="button" data-min={m}>{m} min</button>)}</span>
+      </label>
+      <label>
+        <span>Video file size</span>
+        <span class="calc-len">
+          <input id="calc-mb" type="number" min="1" step="any" inputmode="decimal" />
+          <em>MB</em>
+        </span>
+        <small>Defaults to about 20 MB a minute (720p). Only matters when sending the file.</small>
+      </label>
+    </form>
+
+    <p class="calc-head" id="calc-head" aria-live="polite"></p>
+
+    <div class="calc-out" id="calc-out" role="list"></div>
+
+    <div class="rb-key sub">
+      <span><i class="sw"></i> frames the model sees in one request, the better of the two ways to send it</span>
+    </div>
+
+    <details class="calc-how sub">
+      <summary>How this is worked out</summary>
+      <ul>
+        <li><strong>As frames:</strong> the most 768×432 frames the provider accepted in one request, spread evenly over your video. Larger frames fit fewer. Where only the image-count test ran, the image cap is shown for reference but not ranked: real frames often hit other limits first.</li>
+        <li><strong>Tokens</strong> are the provider's measured prompt tokens per 768×432 frame, times the frames.</li>
+        <li><strong>As a video file:</strong> whether your file fits the provider's size limit, and how many frames it then feeds the model. That rate comes from a 5-minute reference clip; where the provider caps frames per video (⁎), a longer video gets the same number spread thinner. For other providers, videos longer than 5 minutes are extrapolated, and may hit duration limits we haven't measured. A file larger than any we tested isn't ranked.</li>
+        <li>All of it is for a single request. See the <a href="/methodology">methodology</a> for how each limit is measured.</li>
+      </ul>
+    </details>
+
+    <AmbientNote placement="calculator">
+      One request is rarely enough for a long video. Ambient takes an overview of the whole video, then looks closer at the
+      parts that matter, sizing every request to the provider's limits.
+    </AmbientNote>
+  </section>
+
+  <script type="application/json" id="calc-data" set:html={data}></script>
+  <script>
+    type Lim = { n: number; open: boolean } | null;
+    type Row = {
+      model: string; provider: string; href: string; frames: Lim; images: Lim; tpf: number | null;
+      video: "measured" | "unmeasured" | "no" | "ignored" | "unknown"; fileMax: Lim;
+      perMin: number | null; capped: boolean; perVideo: number | null; shortPerMin: number | null;
+    };
+    const { rows } = JSON.parse(document.getElementById("calc-data")!.textContent!) as { rows: Row[] };
+    const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+    const modelEl = $<HTMLSelectElement>("calc-model"), minEl = $<HTMLInputElement>("calc-min"), mbEl = $<HTMLInputElement>("calc-mb");
+    const out = $("calc-out"), head = $("calc-head");
+    const MB_PER_MIN = 20;
+    let mbTouched = false;
+
+    const listFmt = new Intl.ListFormat("en-US", { type: "conjunction" });
+    const num = (v: number) => v.toLocaleString("en-US", { maximumFractionDigits: v < 10 ? 1 : 0 });
+    const every = (seconds: number) => (seconds >= 120 ? `${num(seconds / 60)} min` : `${num(seconds)} s`);
+    const mb = (bytes: number) => (bytes >= 1e9 ? `${num(bytes / 1e9)} GB` : `${num(bytes / 1e6)} MB`);
+    const el = (tag: string, cls?: string, text?: string) => {
+      const x = document.createElement(tag);
+      if (cls) x.className = cls;
+      if (text !== undefined) x.textContent = text;
+      return x;
+    };
+
+    // Frames the provider feeds the model from a video file of `min` minutes.
+    function fileFrames(r: Row, min: number): number | null {
+      if (r.video !== "measured" || r.perMin === null) return null;
+      if (r.capped && r.perVideo !== null) return Math.min((r.shortPerMin ?? r.perMin) * min, r.perVideo);
+      return r.perMin * min;
+    }
+
+    function render() {
+      const min = Math.max(0.1, Number(minEl.value) || 0);
+      if (!mbTouched) mbEl.value = String(Math.round(min * MB_PER_MIN));
+      const fileBytes = (Number(mbEl.value) || min * MB_PER_MIN) * 1e6;
+      const secs = min * 60;
+      const list = rows.filter((r) => r.model === modelEl.value).map((r) => {
+        // Only real-frame measurements rank; an image-count cap is shown as text, not as frames.
+        const asFrames = r.frames ?? r.images;
+        const framesN = r.frames ? r.frames.n : null;
+        const tooBig = !!r.fileMax && !r.fileMax.open && fileBytes > r.fileMax.n;
+        // Above an open ("≥") limit we never tested, so we can't say it fits.
+        const untested = !!r.fileMax && r.fileMax.open && fileBytes > r.fileMax.n;
+        const fileN = tooBig ? null : fileFrames(r, min);
+        // A file bigger than any we tested might be rejected, so it doesn't rank either.
+        const best = Math.max(framesN ?? 0, untested ? 0 : fileN ?? 0);
+        // "≥": the best figure is a frame count nothing failed at, so the real number is higher.
+        const open = !!r.frames?.open && best === framesN && (untested || (fileN ?? 0) < best);
+        return { r, asFrames, framesN, fileN, tooBig, untested, best, open };
+      }).sort((a, b) => b.best - a.best || a.r.provider.localeCompare(b.r.provider));
+
+      const max = Math.max(...list.map((x) => x.best), 1);
+      out.replaceChildren();
+      for (const x of list) {
+        const row = el("div", "calc-row");
+        row.setAttribute("role", "listitem");
+        const name = el("a", "calc-prov", x.r.provider) as HTMLAnchorElement;
+        name.href = x.r.href;
+        const track = el("span", "calc-track");
+        if (x.best > 0) {
+          const bar = el("span", x.open ? "calc-bar open" : "calc-bar");
+          bar.style.width = `${Math.max(0.8, (x.best / max) * 100).toFixed(2)}%`;
+          track.append(bar);
+        }
+        if (x.best === 0) row.classList.add("unmeasured");
+        const big = el("span", "calc-big", x.best > 0 ? `${x.open ? "≥ " : ""}${num(x.best)} frames` : "—");
+        const sub = el("span", "calc-sub", x.best > 0 ? `one every ${x.open ? "≤ " : ""}${every(secs / x.best)}` : "not measured");
+
+        // As frames
+        const f = el("span", "calc-mode");
+        f.append(el("b", "", "As frames"));
+        if (x.asFrames) {
+          const open = x.asFrames.open ? "≥ " : "";
+          f.append(document.createTextNode(x.r.frames
+            ? ` ${open}${num(x.asFrames.n)} per request, one every ${x.asFrames.open ? "≤ " : ""}${every(secs / x.asFrames.n)}`
+            : ` real frames not measured; it takes at most ${open}${num(x.asFrames.n)} tiny images, and real frames may hit other limits first`));
+          if (x.r.tpf && x.r.frames) f.append(document.createTextNode(` · ≈ ${num((x.r.tpf * x.asFrames.n) / 1000)}k tokens`));
+        } else f.append(document.createTextNode(" not measured"));
+
+        // As a video file
+        const v = el("span", "calc-mode");
+        v.append(el("b", "", "As a video file"));
+        const vt =
+          x.r.video === "no" ? " not accepted"
+          : x.r.video === "ignored" ? " accepted, but the model never sees it"
+          : x.tooBig ? ` too large: the limit is ${mb(x.r.fileMax!.n)}`
+          : x.fileN !== null ? `${x.untested ? ` larger than the ${mb(x.r.fileMax!.n)} we tested; if it fits,` : ""} ≈ ${num(x.fileN)} frames, one every ${every(secs / x.fileN)}${x.r.capped ? " ⁎" : ""}${x.r.fileMax ? ` · file limit ${x.r.fileMax.open ? "≥ " : ""}${mb(x.r.fileMax.n)}` : ""}`
+          : x.r.video === "unmeasured" ? " accepted; frames seen not measured"
+          : " not measured";
+        v.append(document.createTextNode(vt));
+
+        row.append(name, el("span", "calc-res"));
+        const res = row.lastChild as HTMLElement;
+        const top = el("span", "calc-top");
+        top.append(track, big, sub);
+        res.append(top, f, v);
+        out.append(row);
+      }
+
+      const seen = list.filter((x) => x.best > 0);
+      head.replaceChildren();
+      if (seen.length) {
+        // Providers tied at the top or bottom are named together.
+        const names = (v: number) => listFmt.format(seen.filter((x) => x.best === v).map((x) => x.r.provider));
+        const hi = seen[0], lo = seen[seen.length - 1];
+        head.append(
+          document.createTextNode(`For a ${num(min)}-minute video, the model sees at best `),
+          el("b", "", `one frame every ${hi.open ? "≤ " : ""}${every(secs / hi.best)}`),
+          document.createTextNode(` on ${names(hi.best)}`),
+          document.createTextNode(lo.best < hi.best ? `, and only one every ${every(secs / lo.best)} on ${names(lo.best)}.` : "."),
+        );
+      } else head.textContent = "No provider of this model has a measured frame or video limit yet.";
+
+      const q = new URLSearchParams({ model: modelEl.value, min: String(min) });
+      if (mbTouched) q.set("mb", mbEl.value);
+      history.replaceState(null, "", `?${q}`);
+    }
+
+    // Restore from the URL, so a result can be shared.
+    const q = new URLSearchParams(location.search);
+    if (q.get("model") && [...modelEl.options].some((o) => o.value === q.get("model"))) modelEl.value = q.get("model")!;
+    if (Number(q.get("min")) > 0) minEl.value = q.get("min")!;
+    if (Number(q.get("mb")) > 0) { mbEl.value = q.get("mb")!; mbTouched = true; }
+
+    modelEl.addEventListener("change", render);
+    minEl.addEventListener("input", render);
+    mbEl.addEventListener("input", () => { mbTouched = mbEl.value !== ""; render(); });
+    document.querySelectorAll<HTMLButtonElement>(".calc-presets [data-min]").forEach((b) =>
+      b.addEventListener("click", () => { minEl.value = b.dataset.min!; render(); }));
+    render();
+  </script>
+</Base>

@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import { updated } from "../lib/data";
-import { REPO } from "../lib/site";
+import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
 
 interface Props {
   title?: string;
@@ -13,6 +13,7 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const nav = [
   ["/", "Overview"],
   ["/#limits", "Compare"],
+  ["/calculator", "Calculator"],
   ["/models", "Models"],
   ["/providers", "Providers"],
   ["/table", "Table"],
@@ -62,6 +63,11 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
     <header class="site">
       <div class="wrap bar">
         <a class="brand" href="/">vlm<i>.</i>fyi</a>
+        <a class="by" href={ambient("header")} title="Ambient, the open-source video engine for AI agents">
+          by
+          <svg viewBox="0 0 192 192" fill="currentColor" aria-hidden="true"><circle cx="96" cy="44" r="10"/><path d="M89 58 24 152 70 144Z"/><path d="m103 58 18 86 47 8Z"/></svg>
+          Ambient
+        </a>
         <nav aria-label="Main">
           {nav.map(([href, label]) => <a href={href} aria-current={isCurrent(href) ? "page" : undefined}>{label}</a>)}
         </nav>
@@ -82,7 +88,10 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
           <span class="brand">vlm<i>.</i>fyi</span>
           <p style="margin-top: 10px">
             Measured {updated} with synthetic probe requests. Limits change and can depend on your account.
-            Spotted something wrong? <a href={`${REPO}/issues`}>Open an issue</a>.
+          </p>
+          <p style="margin-top: 10px">
+            Built by <a href={ambient("footer")}>Ambient</a>, the open-source video engine for AI agents. We measure
+            these limits because Ambient has to fit long videos into every one of them.
           </p>
         </div>
         <div>
@@ -99,8 +108,23 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
         <div>
           <h4>Project</h4>
           <a href={REPO}>Source</a>
+          <a href={`mailto:${CONTACT}`}>Contact</a>
+          <a href={ambient("footer-project")}>Ambient</a>
+          <a href={AMBIENT_REPO}>Ambient on GitHub</a>
           <a href="https://creativecommons.org/licenses/by/4.0/">Data: CC BY 4.0</a>
           <a href="/api">API docs</a>
+        </div>
+        <div class="foot-contact">
+          <h4>Corrections and contact</h4>
+          <p>
+            Found a limit that's wrong or out of date? <a href={`${REPO}/issues`}>Open an issue</a> with the request you
+            sent and the error you got.
+          </p>
+          <p>
+            For anything else, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Providers: if you'd like an endpoint
+            measured, or think a number is unfair, tell us. Teams running video analysis at scale: we're happy to talk about
+            what <a href={ambient("footer-contact")}>Ambient</a> can do for you.
+          </p>
         </div>
       </div>
     </footer>

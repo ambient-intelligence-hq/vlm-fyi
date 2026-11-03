@@ -194,7 +194,7 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .rb-model { font-weight: 560; font-size: 0.9rem; letter-spacing: -0.01em; overflow-wrap: anywhere; }
 .rb-prov { color: var(--muted); font-size: 0.8rem; overflow-wrap: anywhere; }
 .rb-bar { position: absolute; left: 0; top: 50%; height: 14px; margin-top: -7px; min-width: 2px; background: var(--bar); border-radius: 0 4px 4px 0; }
-.rb-bar.open, .mc-bar.open, .hc-bar.open { background: linear-gradient(90deg, var(--bar) 0%, var(--bar) 72%, transparent 100%); border-radius: 0; }
+.rb-bar.open, .mc-bar.open, .hc-bar.open, .calc-bar.open { background: linear-gradient(90deg, var(--bar) 0%, var(--bar) 72%, transparent 100%); border-radius: 0; }
 .rb-val { position: absolute; top: 50%; transform: translate(8px, -50%); font-size: 0.84rem; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--fg); font-weight: 520; }
 .rb-val.open { color: var(--fg-2); font-weight: 450; }
 .rb-val.none { left: 0; transform: translate(0, -50%); color: var(--muted); font-weight: 450; }
@@ -419,3 +419,62 @@ pre { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); borde
 @media (max-width: 960px) { .featured-model { grid-template-columns: 1fr; gap: 28px; } }
 /* The header nav links to #limits; land below the sticky header, not under it. */
 #limits { scroll-margin-top: 72px; }
+
+/* Pointers to Ambient: one quiet line, never inside a chart. */
+.amb { margin: 22px 0 0; padding: 12px 14px; border-left: 2px solid var(--accent); background: var(--surface); border-radius: 0 8px 8px 0; max-width: 62ch; }
+.amb-tag { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.amb p { margin: 0; font-size: 0.88rem; color: var(--fg-2); line-height: 1.5; }
+.amb a { white-space: nowrap; }
+
+/* Calculator */
+.calc { margin-top: 2rem; }
+.calc-in { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); gap: 18px 28px; padding: 22px; border-radius: 14px; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.calc-in label { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.calc-in label > span:first-child { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-2); }
+.calc-in select, .calc-in input { font: inherit; font-size: 0.95rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+.calc-in select:focus-visible, .calc-in input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.calc-len { display: flex; align-items: center; gap: 8px; }
+.calc-len input { width: 7.5rem; font-variant-numeric: tabular-nums; }
+.calc-len em { font-style: normal; color: var(--muted); font-size: 0.86rem; }
+.calc-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+.calc-presets button { font: inherit; font-size: 0.78rem; color: var(--fg-2); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) { .calc-presets button:hover { color: var(--fg); border-color: var(--fg-2); } }
+.calc-in small { color: var(--muted); font-size: 0.76rem; line-height: 1.4; }
+.calc-head { margin: 28px 0 14px; font-size: 1.05rem; line-height: 1.5; max-width: 70ch; }
+.calc-head b { color: var(--accent); font-weight: 600; }
+.calc-out { border-top: 1px solid var(--line); }
+.calc-row { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 4px 20px; padding: 14px 0; box-shadow: inset 0 -1px 0 var(--line-2); }
+.calc-prov { color: var(--fg); font-weight: 560; font-size: 0.92rem; overflow-wrap: anywhere; }
+.calc-res { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.calc-top { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: center; }
+.calc-track { position: relative; height: 12px; box-shadow: inset 1px 0 0 var(--line); }
+.calc-bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar); border-radius: 0 4px 4px 0; }
+.calc-big { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.calc-sub { color: var(--fg-2); font-size: 0.84rem; white-space: nowrap; min-width: 9.5rem; }
+.calc-mode { font-size: 0.82rem; color: var(--muted); }
+.calc-mode b { color: var(--fg-2); font-weight: 560; }
+.calc-how { margin-top: 18px; font-size: 0.86rem; }
+.calc-how summary { cursor: pointer; color: var(--fg-2); }
+.calc-how ul { margin: 8px 0 0; padding-left: 1.2em; line-height: 1.55; max-width: 80ch; }
+@media (max-width: 760px) {
+  .calc-in { grid-template-columns: 1fr; }
+  .calc-row { grid-template-columns: 1fr; }
+  .calc-top { grid-template-columns: minmax(0, 1fr) auto; }
+  .calc-sub { grid-column: 1 / -1; min-width: 0; }
+}
+.calc-row.unmeasured .calc-prov, .calc-row.unmeasured .calc-big { color: var(--muted); font-weight: 450; }
+
+/* "by Ambient" beside the logo: attribution, quiet until hovered. */
+.by { display: inline-flex; align-items: center; gap: 5px; margin-left: -16px; padding: 3px 9px 3px 8px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line); color: var(--muted); font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; transition: color 150ms ease, box-shadow 150ms ease; }
+.by svg { width: 13px; height: 13px; color: var(--fg-2); transition: color 150ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .by:hover { color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg-2); text-decoration: none; }
+  .by:hover svg { color: var(--accent); }
+}
+@media (max-width: 420px) { .by { display: none; } }
+/* Footer: corrections and contact, across the full width under the link columns. */
+.foot-contact { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; row-gap: 8px; padding-top: 22px; border-top: 1px solid var(--line); }
+.foot-contact h4 { grid-row: span 2; }
+.foot-contact p { grid-column: 2 / -1; }
+.foot .foot-contact p { max-width: 80ch; color: var(--muted); }
+@media (max-width: 960px) { .foot-contact { grid-template-columns: 1fr; } .foot-contact h4 { grid-row: auto; } .foot-contact p { grid-column: auto; } }

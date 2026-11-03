@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import AmbientNote from "../components/AmbientNote.astro";
 import { entries } from "../lib/data";
 const sample = entries.find((e) => e.id === "fireworks/kimi-k3") ?? entries[0];
 const excerpt = JSON.stringify({ ...sample, limits: { images_per_request: sample.limits.images_per_request, video_file_bytes: sample.limits.video_file_bytes } }, null, 2);
@@ -9,6 +10,10 @@ const excerpt = JSON.stringify({ ...sample, limits: { images_per_request: sample
     <span class="eyebrow">API</span>
     <h1>Use the data</h1>
     <p class="lede">The dataset is free to use under CC BY 4.0. Fetch it at build time or at startup and size your requests to fit.</p>
+    <AmbientNote placement="api" path="docs/quickstart/" cta="Ambient quickstart">
+      Ambient, the open-source video engine for AI agents, is built on this data: it fits frames, clips and request size
+      to each provider's limits, so you don't have to.
+    </AmbientNote>
 
     <h2>Endpoints</h2>
     <ul>

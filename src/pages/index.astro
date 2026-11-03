@@ -85,6 +85,10 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
           OpenRouter routes one model id to many upstream providers. We pinned each one and sent the same 5-minute clip.
           This is how much of it each upstream fed {videoName}.
         </p>
+        <p class="sub">
+          Every one of these requests succeeded; on one provider, the model saw {fed[fed.length - 1]} frames of a
+          5-minute video instead of {fed[0]}.
+        </p>
       </div>
       <VideoChart />
     </section>

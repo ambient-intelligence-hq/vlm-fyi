@@ -4,6 +4,7 @@ import EntryCard from "../../components/EntryCard.astro";
 import MetricTabs from "../../components/MetricTabs.astro";
 import RankedBars from "../../components/RankedBars.astro";
 import Tooltip from "../../components/Tooltip.astro";
+import AmbientNote from "../../components/AmbientNote.astro";
 import { models, bars, METRICS, OVERALL_METRIC } from "../../lib/data";
 
 export function getStaticPaths() {
@@ -23,6 +24,7 @@ const metrics = n > 1 ? [OVERALL_METRIC, ...METRICS].filter((m) => bars(m.key, e
   <p class="lede">
     Measured on {n} provider{n === 1 ? "" : "s"}.{mods && ` The model card lists ${mods} input; what each provider accepts is below.`}
   </p>
+  <p class="sub"><a href={`/calculator?model=${Astro.params.slug}`}>How much of your video will {name} see? Try the calculator →</a></p>
   </div>
   {metrics.length > 0 && (
     <section class="explorer model-explorer" aria-label={`${name} limits by provider`}>
@@ -30,6 +32,10 @@ const metrics = n > 1 ? [OVERALL_METRIC, ...METRICS].filter((m) => bars(m.key, e
       {metrics.map((m, i) => <RankedBars metric={m} only={entries} hidden={i > 0} />)}
     </section>
   )}
+  <AmbientNote placement="model-page">
+    Building video features on {name}? Ambient, the open-source video engine for AI agents, fits each request to
+    the provider's measured limits for you.
+  </AmbientNote>
   <div class="detail-cards">{entries.map((e) => <EntryCard entry={e} heading="provider" />)}</div>
   {metrics.length > 0 && <Tooltip />}
 </Base>

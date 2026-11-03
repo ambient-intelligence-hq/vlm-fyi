@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { updated } from "../lib/data";
-import { REPO } from "../lib/site";
+import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
 ---
 <Base title="Methodology" description="How vlm.fyi measures request limits: synthetic probe requests that isolate one limit at a time.">
   <div class="prose page-head">
@@ -116,9 +116,26 @@ import { REPO } from "../lib/site";
       such as <code>--limit-mm-per-prompt</code> and <code>VLLM_MAX_MEDIA_REQUEST_DECODE_BYTES</code>.
     </p>
 
-    <h2>Corrections</h2>
+    <h2>Why we built this</h2>
+    <p>
+      vlm.fyi is made by the team behind <a href={ambient("methodology")}>Ambient</a>, the
+      <a href={AMBIENT_REPO}>open-source</a> video engine for AI agents. Ambient sends long videos to many providers, and
+      none of them documents these limits fully. So we measured them, and Ambient now sizes each request from this data.
+      We publish it because everyone building with vision models runs into the same walls.
+    </p>
+    <p>
+      The measurements are the same for every provider and model, including the ones Ambient uses. Ambient isn't ranked
+      or scored anywhere on this site.
+    </p>
+
+    <h2>Corrections and contact</h2>
     <p>
       Found a limit that's wrong or out of date? <a href={`${REPO}/issues`}>Open an issue</a> with the request you sent and the error you got.
+    </p>
+    <p>
+      For anything else, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Providers: if you'd like an endpoint measured,
+      or think a number is unfair, tell us. Teams running video analysis at scale: we're happy to talk about what Ambient
+      can do for you.
     </p>
   </div>
 </Base>
