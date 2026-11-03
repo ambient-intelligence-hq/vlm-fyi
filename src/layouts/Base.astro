@@ -23,6 +23,18 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWi
 <!doctype html>
 <html lang="en">
   <head>
+    {import.meta.env.PROD && (
+      <>
+        <!-- Google tag (gtag.js); production builds only, so local dev isn't counted -->
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-VXR94EJN57"></script>
+        <script is:inline>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VXR94EJN57');
+        </script>
+      </>
+    )}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f2ee" />
