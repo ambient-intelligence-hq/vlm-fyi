@@ -129,6 +129,10 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
       </div>
     </footer>
     <script>
+      // On narrow screens the nav scrolls sideways: bring the current page's link into view.
+      const nav = document.querySelector<HTMLElement>("header.site nav");
+      const here = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+      if (nav && here && nav.scrollWidth > nav.clientWidth) nav.scrollLeft += here.getBoundingClientRect().left - nav.getBoundingClientRect().left - (nav.clientWidth - here.offsetWidth) / 2;
       // Cycle System → Light → Dark. "System" removes the override and follows the OS.
       const btn = document.getElementById("theme")!;
       const order = ["system", "light", "dark"] as const;
