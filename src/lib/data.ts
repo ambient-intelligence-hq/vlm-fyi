@@ -210,6 +210,11 @@ export interface Metric {
 
 export const METRICS: Metric[] = [
   {
+    key: "video_frames_per_min", tab: "Video density",
+    question: "How much of a video does the model actually see?",
+    explain: "Distinct frames the model receives per minute of the same 5-minute clip, measured with a frame-counter clip. ⁎ means the provider caps frames per video, so longer videos get fewer per minute.",
+  },
+  {
     key: "frames_768x432", tab: "Frames per request",
     question: "How many video frames fit in one request?",
     explain: "768×432 frames, the size most video pipelines send. Whichever limit hits first counts: image count, decoded pixels or the context window.",
@@ -237,11 +242,6 @@ export const METRICS: Metric[] = [
     explain: "Images sent as links the provider fetches itself. Capped at 128 MB by our probe.",
   },
   {
-    key: "video_frames_per_min", tab: "Video density",
-    question: "How much of a video does the model actually see?",
-    explain: "Distinct frames the model receives per minute of the same 5-minute clip, measured with a frame-counter clip. ⁎ means the provider caps frames per video, so longer videos get fewer per minute.",
-  },
-  {
     key: "tokens_per_frame_768x432", tab: "Tokens per frame",
     question: "How many tokens does one frame cost?",
     explain: "Prompt tokens per 768×432 frame. Lower is cheaper: a 100-frame clip costs 100× this.",
@@ -258,7 +258,13 @@ export interface Bar {
 }
 
 export function bars(key: string, list: Entry[] = entries): Bar[] {
-  const out = list.map((e) => {
+  const out = key === OVERALL ? list.map((e): Bar => {
+    const o = overall(e);
+    return o
+      ? { entry: e, value: o.score, open: false, text: String(o.score), cls: "measured",
+          tip: `On average ${o.score}% of the best ${e.model.name} provider's limit, over the ${o.limits} limits measured.` }
+      : { entry: e, value: null, open: false, text: "—", cls: "na", tip: "Too few limits measured to compare." };
+  }) : list.map((e) => {
     const l = e.limits[key];
     const c = cell(key, l, e);
     const v = l ? (l.status === "inconclusive" ? l.at_least ?? null
@@ -268,9 +274,65 @@ export function bars(key: string, list: Entry[] = entries): Bar[] {
     const text = key === "video_frames_per_min" && v !== null ? `${c.text}/min${tok ? ` · ${fmtNumber("video_tokens_per_min", tok)} tok` : ""}` : c.text;
     return { entry: e, value: v, open, text, cls: c.cls, tip: c.title };
   });
-  const rank = (b: Bar) => (b.value === null ? (b.text === "Ignored" ? -0.5 : b.cls.includes("unsupported") ? -1 : -2) : b.value + (b.open ? 0.5 : 0));
-  return out.sort((a, b) => rank(b) - rank(a) || a.entry.model.name.localeCompare(b.entry.model.name));
+  return out.sort((a, b) => barRank(b) - barRank(a) || a.entry.model.name.localeCompare(b.entry.model.name));
 }
+
+/** Sort key for a bar: higher is better; an open "≥" value edges out the same measured one. */
+export function barRank(b: Bar): number {
+  return b.value === null ? (b.text === "Ignored" ? -0.5 : b.cls.includes("unsupported") ? -1 : -2) : b.value + (b.open ? 0.5 : 0);
+}
+
+const ORDINAL = new Intl.PluralRules("en-US", { type: "ordinal" });
+const SUFFIX: Record<string, string> = { one: "st", two: "nd", few: "rd", other: "th" };
+export const ordinal = (n: number) => `${n}${SUFFIX[ORDINAL.select(n)]}`;
+
+// Token counts aren't better or worse when higher, so they don't count toward standing.
+const UNRANKED = new Set(["tokens_per_frame_768x432", "video_tokens_per_min"]);
+/** Limits where higher is better, in column order. */
+export const RANKED: string[] = COLUMNS.map((c) => c.key).filter((k) => !UNRANKED.has(k));
+
+/** A model's providers on one limit, best first; pairs not tested on it are left out. */
+export function peers(key: string, e: Entry): Bar[] {
+  return bars(key, entries.filter((x) => modelSlug(x) === modelSlug(e))).filter((b) => b.cls !== "na");
+}
+
+/** This pair's limit as a share of the best provider's for the same model (0–1), or
+ *  null when it wasn't measured, no other provider was, or no provider accepts it.
+ *  A rejected or unsupported input scores 0; an inconclusive one counts at the largest
+ *  size that passed, or is left out if none did. */
+export function shareOfBest(key: string, e: Entry): number | null {
+  const ps = peers(key, e);
+  const me = ps.find((b) => b.entry === e);
+  const best = ps[0]?.value ?? null;
+  // No provider takes it at all (e.g. video files on every DeepSeek endpoint): nothing to compare.
+  if (!me || ps.length < 2 || best === null) return null;
+  if (me.value === null) return /unsupported|tight/.test(me.cls) || ["Rejected", "Ignored"].includes(me.text) ? 0 : null;
+  return best ? Math.min(1, me.value / best) : null;
+}
+
+/** The overall score that ranks a model's providers: its limits as a share of the best
+ *  provider's, averaged over the limits it was measured on, 0–100. Needs two limits. */
+const overallCache = new Map<Entry, { score: number; limits: number } | null>();
+export function overall(e: Entry): { score: number; limits: number } | null {
+  if (!overallCache.has(e)) {
+    const s = RANKED.map((k) => shareOfBest(k, e)).filter((x): x is number => x !== null);
+    overallCache.set(e, s.length >= 2 ? { score: Math.round((100 * s.reduce((a, b) => a + b, 0)) / s.length), limits: s.length } : null);
+  }
+  return overallCache.get(e)!;
+}
+
+/** The model in the homepage hero (frames per request), and the one in the video density block below it. */
+export const HERO_MODEL = "deepseek-v4.1-flash-1017";
+export const VIDEO_MODEL = "qwen3.8-27b";
+
+export const OVERALL = "overall";
+/** One-line explanation of the overall score, for tooltips; /methodology#overall-score has the rest. */
+export const OVERALL_HELP = "Each limit as a percentage of the best provider's for this model, averaged over the limits this provider was measured on. 100 = matches the best provider on every limit.";
+export const OVERALL_METRIC: Metric = {
+  key: OVERALL, tab: "Overall",
+  question: "Which provider gives this model the most room overall?",
+  explain: "Each limit as a percentage of the best provider's for this model, averaged over the limits that provider was measured on (token counts left out). 100 means it matches the best provider on every limit. Providers measured on fewer than two limits aren't scored.",
+};
 
 /** A round axis maximum and 4–6 ticks covering `max`. */
 export function niceScale(max: number): { max: number; ticks: number[] } {

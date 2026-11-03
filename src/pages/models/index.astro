@@ -2,16 +2,22 @@
 import Base from "../../layouts/Base.astro";
 import ModelCard from "../../components/ModelCard.astro";
 import Tooltip from "../../components/Tooltip.astro";
-import { models, bars, niceScale } from "../../lib/data";
-const ms = models();
+import { models, bars, niceScale, OVERALL } from "../../lib/data";
+// Pinned models first, in this order; the rest as models() sorts them, most providers first.
+const PINNED = ["deepseek-v4.1-flash-1017", "glm-5.3-flash", "kimi-k3"];
+const pin = (slug: string) => (PINNED.includes(slug) ? PINNED.indexOf(slug) : PINNED.length);
+const ms = models().sort((a, b) => pin(a.slug) - pin(b.slug));
 const max = niceScale(Math.max(...bars("frames_768x432").map((b) => b.value ?? 0))).max;
 ---
 <Base title="Models" description="Measured request limits for each vision-language model, compared across the providers that serve it.">
   <div class="page-head">
   <span class="eyebrow">Reference</span>
   <h1>Models</h1>
-  <p class="lede">Each card compares the providers serving one model: frames per request on a shared scale, and video support.</p>
+  <p class="lede">
+    Each card ranks the providers serving one model by overall score: how close each comes to the best provider's
+    limits, from 0 to 100. <a href="/methodology#overall-score">How it's scored</a>.
+  </p>
   </div>
-  <div class="cards">{ms.map((m) => <ModelCard {...m} max={max} />)}</div>
+  <div class="cards">{ms.map((m) => <ModelCard {...m} max={max} metric={OVERALL} />)}</div>
   <Tooltip />
 </Base>

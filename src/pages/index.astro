@@ -4,9 +4,10 @@ import RankedBars from "../components/RankedBars.astro";
 import ModelCard from "../components/ModelCard.astro";
 import CapabilityGrid from "../components/CapabilityGrid.astro";
 import Tooltip from "../components/Tooltip.astro";
+import MetricTabs from "../components/MetricTabs.astro";
 import HeroChart from "../components/HeroChart.astro";
-import LotteryCard from "../components/LotteryCard.astro";
-import { entries, featured, METRICS, span, fmtNumber, models, providers, bars, niceScale, updated } from "../lib/data";
+import VideoChart from "../components/VideoChart.astro";
+import { entries, featured, METRICS, span, fmtNumber, models, providers, bars, niceScale, updated, modelSlug, HERO_MODEL, VIDEO_MODEL } from "../lib/data";
 
 const plural = (n: number, one: string, many: string) => (new Intl.PluralRules("en-US").select(n) === "one" ? one : many);
 const range = (key: string) => {
@@ -22,8 +23,14 @@ const range = (key: string) => {
 const videoYes = featured.filter((e) => e.accepts.video === "yes").length;
 const ms = models(featured);
 const upstreamOnly = entries.length - featured.length;
-// The routing lottery: models measured across many OpenRouter upstreams.
-const lottery = models(entries.filter((e) => e.provider.via === "openrouter")).filter((m) => m.entries.length >= 4);
+// Copy beside the two charts, from the same data: the hero's frames per request, and the
+// most and fewest frames of one clip fed in the video block.
+const of = (slug: string) => entries.filter((e) => modelSlug(e) === slug);
+const heroFrames = bars("frames_768x432", of(HERO_MODEL)).filter((b) => b.value);
+const [heroHi, heroLo] = [heroFrames[0], heroFrames[heroFrames.length - 1]];
+const videoName = of(VIDEO_MODEL)[0]?.model.name;
+const fed = bars("video_frames_per_min", of(VIDEO_MODEL)).filter((b) => b.value !== null)
+  .map((b) => b.entry.limits.video_frames_per_min!.frames_per_video!);
 // Small multiples share one axis.
 const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.value ?? 0))).max;
 ---
@@ -33,7 +40,8 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
     <span class="eyebrow"><b>●</b> Measured {updated} · {entries.length} model × provider pairs</span>
     <h1>Every vision API has a different ceiling. <span class="dim">We measure it.</span></h1>
     <p class="lede">
-      The same model can take 4 images on one provider and over a thousand on another. vlm.fyi records what each API
+      Send the same video frames to the same model, and one provider stops at {heroLo.value} while another
+      {heroHi.open ? ` takes all ${heroHi.value} we sent` : ` takes ${heroHi.value}`}. vlm.fyi records what each API
       actually accepts in one request: images, real video frames, bytes and video files, with the provider's own error
       message as evidence.
     </p>
@@ -68,21 +76,37 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
     </div>
   </div>
 
-  <section class="block explorer" id="limits" aria-label="Limits by metric">
+  {videoName && fed.length > 1 && (
+    <section class="block featured-model">
+      <div>
+        <span class="eyebrow">The routing lottery</span>
+        <h2>Same model id, same clip, a different video every time.</h2>
+        <p class="sub">
+          OpenRouter routes one model id to many upstream providers. We pinned each one and sent the same 5-minute clip.
+          This is how much of it each upstream fed {videoName}.
+        </p>
+      </div>
+      <VideoChart />
+    </section>
+  )}
+
+  <section class="block explorer" id="limits" data-scope="all" data-view="model" aria-label="Limits by metric">
     <header>
       <span class="eyebrow"><b>01</b> — Limits per request</span>
       <h2>Pick a limit. See who fits.</h2>
     </header>
     <div class="explorer-controls">
-    <div class="tabs" role="tablist" aria-label="Metric">
-      {METRICS.map((m, i) => (
-        <button role="tab" type="button" data-metric={m.key} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{m.tab}</button>
-      ))}
-    </div>
+    <MetricTabs metrics={METRICS} />
+    <div class="scopes">
     <div class="tabs scope" role="radiogroup" aria-label="Which pairs">
-      <button type="button" role="radio" data-scope="featured" aria-checked="true">Featured</button>
+      <button type="button" role="radio" data-scope="featured" aria-checked="false">Featured</button>
       <button type="button" role="radio" data-scope="upstreams" aria-checked="false">OpenRouter upstreams</button>
-      <button type="button" role="radio" data-scope="all" aria-checked="false">All {entries.length}</button>
+      <button type="button" role="radio" data-scope="all" aria-checked="true">All {entries.length}</button>
+    </div>
+    <div class="tabs scope" role="radiogroup" aria-label="Arrange">
+      <button type="button" role="radio" data-view="rank" aria-checked="false">Ranked</button>
+      <button type="button" role="radio" data-view="model" aria-checked="true">By model</button>
+    </div>
     </div>
     </div>
     {METRICS.map((m, i) => <RankedBars metric={m} hidden={i > 0} />)}
@@ -104,18 +128,7 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
 
   <section class="block">
     <header>
-      <span class="eyebrow"><b>03</b> — The routing lottery</span>
-      <h2>Same model id, same clip, a different video every time.</h2>
-      <p class="sub">OpenRouter routes one model id to many upstream providers. We pinned each one and sent the same 5-minute clip. This is how much of it each upstream fed the model.</p>
-    </header>
-    <div class="lottery">
-      {lottery.map((m) => <LotteryCard name={m.name} slug={m.slug} entries={m.entries} />)}
-    </div>
-  </section>
-
-  <section class="block">
-    <header>
-      <span class="eyebrow"><b>04</b> — Request format</span>
+      <span class="eyebrow"><b>03</b> — Request format</span>
       <h2>What each endpoint accepts.</h2>
       <p class="sub">Input types, and the request-format rules that break integrations most often.</p>
     </header>
@@ -131,38 +144,14 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
   <Tooltip />
 
   <script>
-    const tabs = [...document.querySelectorAll<HTMLButtonElement>(".tabs [role=tab]")];
-    const charts = [...document.querySelectorAll<HTMLElement>(".explorer figure.rb")];
-    function select(key: string, focus = false, push = true) {
-      tabs.forEach((t) => {
-        const on = t.dataset.metric === key;
-        t.setAttribute("aria-selected", String(on));
-        t.tabIndex = on ? 0 : -1;
-        if (on && focus) t.focus();
-      });
-      charts.forEach((c) => (c.hidden = c.dataset.metric !== key));
-      if (push) history.replaceState(null, "", `#${key}`);
-    }
-    tabs.forEach((t, i) => {
-      t.addEventListener("click", () => select(t.dataset.metric!));
-      t.addEventListener("keydown", (e) => {
-        const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-        if (d) select(tabs[(i + d + tabs.length) % tabs.length].dataset.metric!, true);
-      });
-    });
     const explorer = document.querySelector<HTMLElement>(".explorer")!;
-    explorer.dataset.scope = "featured";
-    document.querySelectorAll<HTMLButtonElement>(".scope [data-scope]").forEach((b, _, all) => {
-      b.addEventListener("click", () => {
-        explorer.dataset.scope = b.dataset.scope!;
-        all.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+    for (const attr of ["scope", "view"] as const) {
+      document.querySelectorAll<HTMLButtonElement>(`.scope [data-${attr}]`).forEach((b, _, all) => {
+        b.addEventListener("click", () => {
+          explorer.dataset[attr] = b.dataset[attr]!;
+          all.forEach((x) => x.setAttribute("aria-checked", String(x === b)));
+        });
       });
-    });
-    const fromHash = () => {
-      const key = location.hash.slice(1);
-      if (tabs.some((t) => t.dataset.metric === key)) select(key, false, false);
-    };
-    fromHash();
-    window.addEventListener("hashchange", fromHash);
+    }
   </script>
 </Base>

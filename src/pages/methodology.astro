@@ -58,6 +58,41 @@ import { REPO } from "../lib/site";
       <code>x-request-id</code> / <code>cf-ray</code>). That lets a provider look up the exact request behind any number here.
     </p>
 
+    <h2 id="overall-score">Overall score: ranking a model's providers</h2>
+    <p>
+      The overall score answers one question: how close does a provider come to the best provider of the same model,
+      across its limits? It runs from 0 to 100 and only compares providers of one model with each other.
+    </p>
+    <ol>
+      <li>
+        <strong>Limits.</strong> Six limits where higher is better: images per request, 768×432 frames, inline request
+        body, images by URL, video file size and video frames per minute. Token counts are left out, because more tokens
+        per frame isn't better or worse in itself.
+      </li>
+      <li>
+        <strong>Each limit as a share of the best.</strong> For each limit, among the model's providers measured on it,
+        a provider scores its value divided by the best provider's value, capped at 100%. A "≥" value counts at our
+        probe's cap. A rejected, unsupported or ignored input scores 0%. An inconclusive result counts at the largest
+        size that passed, or is skipped if none did. Limits are skipped too when only one provider was measured on them
+        or no provider accepts them (no DeepSeek V4.1 Flash endpoint
+        takes a video file, so video file size doesn't count against any of them).
+      </li>
+      <li>
+        <strong>Average.</strong> The score is the plain average of those shares over the limits the provider was
+        measured on, rounded. Every limit counts the same. Providers measured on fewer than two limits aren't scored.
+      </li>
+    </ol>
+    <p>
+      For example, Alibaba Cloud serves Qwen3.8 27B with the most images (250) and frames per minute (60), but takes
+      images by URL only up to 28 MB where another provider took at least 128 MB: that limit scores 22%, the other five
+      100%, so its score is 87. A provider at 170 images (68%) and 6.3 frames per minute (11%) scores 39.
+    </p>
+    <p>
+      Read it with care. Providers aren't always measured on the same limits: most OpenRouter upstreams have only images
+      and video density, while direct APIs have all six. The number of limits behind each score is shown next to it.
+      And because every limit weighs the same, the score is a summary; the per-limit charts show what it hides.
+    </p>
+
     <h2>Reading a value</h2>
     <ul>
       <li><strong>A number</strong> is the largest request that passed. The first size that failed, and the provider's error text, are in the tooltip and on the model page.</li>

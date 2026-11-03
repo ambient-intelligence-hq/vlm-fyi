@@ -1,8 +1,8 @@
 ---
 // The site's thesis in one picture: one model, several providers, very different ceilings.
-import { entries, bars, providerLabel, modelSlug } from "../lib/data";
+// Frames per request on each provider, and the overall ranking under it.
+import { entries, bars, providerLabel, modelSlug, OVERALL, HERO_MODEL as SLUG } from "../lib/data";
 
-const SLUG = "deepseek-v4.1-flash-1017";
 const pick = entries.filter((e) => modelSlug(e) === SLUG);
 const rows = bars("frames_768x432", pick);
 const max = 400;
@@ -22,6 +22,8 @@ const cappedText = capped.length && new Set(capped.map((r) => r.text)).size === 
   ? `${list(names(capped))} stopped at ${capped[0].text}`
   : list(capped.map((r) => `${providerLabel(r.entry)} at ${r.text}`));
 const top = rows.find((r) => r.open)?.text.replace("≥ ", "");
+// The same providers ranked by overall score, as one line linking to the full ranking.
+const ranked = bars(OVERALL, pick).filter((r) => r.value !== null);
 const caption = [open.length ? `${list(open)} took all ${top} frames we sent` : "", cappedText].filter(Boolean).join("; ") + ".";
 ---
 {rows.length > 0 && (
@@ -42,5 +44,12 @@ const caption = [open.length ? `${list(open)} took all ${top} frames we sent` : 
       ))}
     </ul>
     <p class="hc-foot">{caption}</p>
+    {ranked.length > 1 && (
+      <p class="hc-rank">
+        <span class="hc-rank-label">Overall</span>
+        {ranked.map((r, i) => <>{i > 0 && " · "}<span>{providerLabel(r.entry)} <b>{r.text}</b></span></>)}
+        <a href={`/models/${SLUG}#${OVERALL}`}>See the ranking →</a>
+      </p>
+    )}
   </figure>
 )}

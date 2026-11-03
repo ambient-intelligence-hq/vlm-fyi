@@ -136,14 +136,14 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .foot p a { color: var(--fg-2); }
 
 /* Hero */
-.hero { padding: 88px 0 8px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: end; }
+.hero { padding: 88px 0 8px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 56px; align-items: center; }
 .hero-chart { margin: 0; padding: 22px 22px 18px; border-radius: 14px; background: var(--surface); box-shadow: 0 0 0 1px var(--line), 0 24px 48px -28px rgba(0, 0, 0, 0.35); }
 .hero-chart figcaption { margin-bottom: 16px; }
 .hero-chart .eyebrow { margin-bottom: 4px; }
 .hero-chart .eyebrow a { color: var(--fg-2); }
 .hc-title { font-weight: 560; letter-spacing: -0.015em; }
 .hero-chart ul { list-style: none; margin: 0; padding: 0; }
-.hero-chart li { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 3.6rem; gap: 12px; align-items: center; padding: 9px 0; box-shadow: inset 0 -1px 0 var(--line-2); }
+.hero-chart li { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 5.4rem; gap: 12px; align-items: center; padding: 9px 0; box-shadow: inset 0 -1px 0 var(--line-2); }
 .hero-chart li:last-child { box-shadow: none; }
 .hc-prov { font-size: 0.86rem; overflow-wrap: anywhere; line-height: 1.25; }
 .hc-track { position: relative; height: 22px; box-shadow: inset 1px 0 0 var(--line); }
@@ -361,18 +361,61 @@ pre { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); borde
 .explorer[data-scope="featured"] .rb-untested:not(.has-featured),
 .explorer[data-scope="upstreams"] .rb-untested:not(.has-upstreams) { display: none; }
 
-/* Routing lottery cards */
-.lottery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.lc { padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
-.lc header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.lc header a { color: var(--fg); }
-.lc-lede { font-size: 0.86rem; color: var(--fg-2); margin: 8px 0 12px; }
-.lc-lede strong { color: var(--accent); font-weight: 650; }
-.lc ul { list-style: none; margin: 0; padding: 0; }
-.lc li { display: grid; grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) 5.2rem; gap: 12px; align-items: center; padding: 4px 0; }
-.lc-prov { font-size: 0.84rem; overflow-wrap: anywhere; line-height: 1.25; }
-.lc-track { position: relative; height: 9px; box-shadow: inset 1px 0 0 var(--line); }
-.lc-bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar); border-radius: 0 3px 3px 0; }
-.lc-val { text-align: right; font-size: 0.82rem; font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 520; }
-.lc-rest { margin: 12px 0 0; line-height: 1.9; }
-.lc-rest .eyebrow { margin: 0 0 2px; }
+
+/* Explorer view: one ranked list, or grouped by model (each model's providers together). */
+.explorer-controls .scopes { display: flex; flex-wrap: wrap; gap: 10px; }
+.explorer:not([data-view="model"]) .rb-rows.by-model,
+.explorer[data-view="model"] .rb-rows.by-rank { display: none; }
+.rb-group { position: relative; }
+.rb-ghead { display: block; position: relative; padding: 18px 0 6px; font-weight: 600; font-size: 0.9rem; letter-spacing: -0.01em; color: var(--fg); background: var(--bg); box-shadow: inset 0 -1px 0 var(--line); }
+.rb-group:first-of-type .rb-ghead { padding-top: 10px; }
+.by-model .rb-prov { color: var(--fg); font-size: 0.86rem; }
+.by-model .rb-row { min-height: 34px; }
+.by-model .rb-row .rb-track { height: 34px; }
+/* A model page's chart names only the provider on each row; a provider page's, only the model. */
+.by-model .rb-model, .by-provider-only .rb-model, .by-model-only .rb-prov { display: none; }
+.rb-rows.by-provider-only .rb-prov { color: var(--fg); font-size: 0.86rem; }
+.model-explorer { margin-top: 2.5rem; }
+.model-explorer .detail-cards { margin-top: 2.5rem; }
+
+/* Provider page: how this provider compares with each model's other providers. */
+.compare { margin-top: 3rem; }
+.compare > header h2 { font-size: 1.3rem; }
+.compare > header .sub { max-width: 75ch; margin: 6px 0 0; }
+.cs { margin-top: 28px; }
+.cs-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.cs-head a { color: var(--fg); }
+.cs-head .sub { font-weight: 400; font-size: 0.84rem; }
+.cs-row { display: grid; grid-template-columns: minmax(0, 130px) minmax(0, 1fr) minmax(0, 300px); gap: 0 20px; align-items: center; min-height: 38px; box-shadow: inset 0 -1px 0 var(--line-2); font-size: 0.86rem; }
+.cs-label { color: var(--fg-2); }
+.cs-overall .cs-label, .cs-overall .cs-val b { font-weight: 620; color: var(--fg); }
+.cs-overall { min-height: 46px; }
+.cs-track { position: relative; height: 24px; margin: 0 8px; }
+.cs-line { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); }
+.cs-dot { position: absolute; top: 50%; width: calc(7px + var(--k) * 1.6px); height: calc(7px + var(--k) * 1.6px); border-radius: 50%; transform: translate(-50%, -50%); background: var(--muted); opacity: 0.55; }
+.cs-dot::after { content: ""; position: absolute; inset: -8px; }  /* bigger hit target than the mark */
+.cs-dot.mine { width: 13px; height: 13px; background: var(--bar); opacity: 1; z-index: 1; box-shadow: 0 0 0 2px var(--bg); }
+@media (hover: hover) and (pointer: fine) { .cs-dot:hover { opacity: 1; } }
+.cs-val { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-variant-numeric: tabular-nums; min-width: 0; }
+.cs-val b { font-weight: 560; }
+.cs-best { color: var(--muted); font-size: 0.8rem; overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .cs-row { grid-template-columns: minmax(0, 92px) minmax(0, 1fr); padding: 6px 0; }
+  .cs-val { grid-column: 2; }
+}
+.cs-place { font-size: 0.8rem; color: var(--fg-2); }
+.info { display: inline-grid; place-items: center; width: 15px; height: 15px; margin-left: 5px; border-radius: 50%; border: 1px solid var(--line); color: var(--muted); font-size: 0.66rem; font-weight: 600; line-height: 1; vertical-align: 1px; text-decoration: none; }
+@media (hover: hover) and (pointer: fine) { .info:hover { color: var(--fg); border-color: var(--fg-2); text-decoration: none; } }
+.mc-solo { margin: 4px 0 0; font-size: 0.84rem; }
+.hc-rank { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line-2); font-size: 0.8rem; color: var(--fg-2); line-height: 1.55; }
+.hc-rank b { margin-left: 4px; color: var(--fg); font-weight: 560; font-variant-numeric: tabular-nums; }
+.hc-rank span { white-space: nowrap; }
+.hc-rank-label { margin-right: 6px; color: var(--muted); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.hc-rank a { margin-left: 8px; white-space: nowrap; }
+/* Homepage: the featured model, beside its frames-per-request chart. */
+.featured-model { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.featured-model h2 { margin-top: 6px; text-wrap: balance; }
+.featured-model .sub { margin: 10px 0 22px; max-width: 46ch; }
+@media (max-width: 960px) { .featured-model { grid-template-columns: 1fr; gap: 28px; } }
+/* The header nav links to #limits; land below the sticky header, not under it. */
+#limits { scroll-margin-top: 72px; }

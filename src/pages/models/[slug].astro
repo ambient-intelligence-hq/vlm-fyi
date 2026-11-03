@@ -1,7 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
 import EntryCard from "../../components/EntryCard.astro";
-import { models } from "../../lib/data";
+import MetricTabs from "../../components/MetricTabs.astro";
+import RankedBars from "../../components/RankedBars.astro";
+import Tooltip from "../../components/Tooltip.astro";
+import { models, bars, METRICS, OVERALL_METRIC } from "../../lib/data";
 
 export function getStaticPaths() {
   return models().map((m) => ({ params: { slug: m.slug }, props: m }));
@@ -9,6 +12,9 @@ export function getStaticPaths() {
 const { name, vendor, entries } = Astro.props;
 const n = entries.length;
 const mods = entries[0].model.input_modalities?.join(", ");
+// Compare providers only where there is more than one and the metric was measured.
+// Overall first: the one score that ranks this model's providers.
+const metrics = n > 1 ? [OVERALL_METRIC, ...METRICS].filter((m) => bars(m.key, entries).some((b) => b.cls !== "na")) : [];
 ---
 <Base title={`${name} limits`} description={`How many images, frames and bytes ${name} accepts per request on ${n} provider${n === 1 ? "" : "s"}, measured.`}>
   <div class="page-head">
@@ -18,5 +24,12 @@ const mods = entries[0].model.input_modalities?.join(", ");
     Measured on {n} provider{n === 1 ? "" : "s"}.{mods && ` The model card lists ${mods} input; what each provider accepts is below.`}
   </p>
   </div>
+  {metrics.length > 0 && (
+    <section class="explorer model-explorer" aria-label={`${name} limits by provider`}>
+      <div class="explorer-controls"><MetricTabs metrics={metrics} /></div>
+      {metrics.map((m, i) => <RankedBars metric={m} only={entries} hidden={i > 0} />)}
+    </section>
+  )}
   <div class="detail-cards">{entries.map((e) => <EntryCard entry={e} heading="provider" />)}</div>
+  {metrics.length > 0 && <Tooltip />}
 </Base>

@@ -12,13 +12,15 @@ const fullTitle = title ? `${title} · vlm.fyi` : "vlm.fyi: what vision model AP
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const nav = [
   ["/", "Overview"],
-  ["/table", "Table"],
+  ["/#limits", "Compare"],
   ["/models", "Models"],
   ["/providers", "Providers"],
+  ["/table", "Table"],
   ["/changes", "Changes"],
   ["/methodology", "Methodology"],
 ];
-const isCurrent = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+// In-page links (the homepage's limits explorer) never mark a page as current.
+const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.includes("#") && path.startsWith(href));
 ---
 <!doctype html>
 <html lang="en">

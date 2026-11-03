@@ -1,13 +1,22 @@
 ---
 import Base from "../../layouts/Base.astro";
 import EntryCard from "../../components/EntryCard.astro";
-import { providers } from "../../lib/data";
+import MetricTabs from "../../components/MetricTabs.astro";
+import RankedBars from "../../components/RankedBars.astro";
+import Tooltip from "../../components/Tooltip.astro";
+import CompareStrip from "../../components/CompareStrip.astro";
+import { providers, bars, METRICS, overall } from "../../lib/data";
 
 export function getStaticPaths() {
   return providers().map((p) => ({ params: { slug: p.slug }, props: p }));
 }
 const { name, entries } = Astro.props;
 const n = entries.length;
+// A chart across this provider's models is worth it from three models up; below that
+// the cards side by side compare them.
+const metrics = n >= 3 ? METRICS.filter((m) => bars(m.key, entries).some((b) => b.cls !== "na")) : [];
+// Models this provider can be compared on (another provider measured on 2+ limits).
+const compared = entries.filter((e) => overall(e) !== null);
 ---
 <Base title={`${name} limits`} description={`Measured request limits for ${n} vision model${n === 1 ? "" : "s"} on ${name}.`}>
   <div class="page-head">
@@ -15,5 +24,25 @@ const n = entries.length;
   <h1>{name}</h1>
   <p class="lede">{n} model{n === 1 ? "" : "s"} measured.</p>
   </div>
+  {metrics.length > 0 && (
+    <section class="explorer model-explorer" aria-label={`${name} limits by model`}>
+      <div class="explorer-controls"><MetricTabs metrics={metrics} /></div>
+      {metrics.map((m, i) => <RankedBars metric={m} only={entries} name="model" hidden={i > 0} />)}
+    </section>
+  )}
+  {compared.length > 0 && (
+    <section class="compare" aria-label={`How ${name} compares`}>
+      <header>
+        <h2>How {name} compares with other providers</h2>
+        <p class="sub">
+          Each dot is one or more of the model's other providers on that limit; the highlighted dot is {name}.
+          The overall score ranks a model's providers: each limit as a percentage of the best provider's,
+          averaged over the limits measured. 100 means it matches the best provider on every limit.
+        </p>
+      </header>
+      {compared.map((e) => <CompareStrip entry={e} />)}
+    </section>
+  )}
   <div class="detail-cards">{entries.map((e) => <EntryCard entry={e} heading="model" />)}</div>
+  {(metrics.length > 0 || compared.length > 0) && <Tooltip />}
 </Base>

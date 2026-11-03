@@ -1,0 +1,42 @@
+---
+// One model id, the same 5-minute video, and how much of it each provider actually fed the model.
+import { entries, bars, niceScale, providerLabel, modelSlug, VIDEO_MODEL as SLUG } from "../lib/data";
+
+const pick = entries.filter((e) => modelSlug(e) === SLUG);
+const rows = bars("video_frames_per_min", pick).filter((r) => r.value !== null);
+const { max } = niceScale(Math.max(...rows.map((r) => r.value ?? 0)));
+const pct = (v: number) => `${Math.max(0.6, Math.min(100, (v / max) * 100)).toFixed(2)}%`;
+const name = pick[0]?.model.name ?? "";
+const lim = (r: (typeof rows)[number]) => r.entry.limits.video_frames_per_min!;
+const hi = rows[0], lo = rows[rows.length - 1];
+const minutes = hi && lim(hi).video_minutes;
+const clip = minutes ? `${Math.floor(minutes)}:${String(Math.round((minutes % 1) * 60)).padStart(2, "0")}` : "";
+const capped = rows.some((r) => lim(r).capped);
+// Most rows are OpenRouter upstreams: say so once, and mark the direct APIs instead.
+const direct = rows.filter((r) => r.entry.provider.via !== "openrouter");
+const label = (r: (typeof rows)[number]) => providerLabel(r.entry).replace(" via OpenRouter", "") + (direct.length && direct.includes(r) ? " (direct)" : "");
+const via = direct.length === 0 ? "All via OpenRouter" : direct.length < rows.length ? "Via OpenRouter unless marked direct" : "";
+---
+{rows.length > 1 && (
+  <figure class="hero-chart" aria-label={`${name}: frames of the same video each provider fed the model`}>
+    <figcaption>
+      <span class="eyebrow">Same model · same video · <a href={`/models/${SLUG}`}>{name}</a></span>
+      <span class="hc-title">Frames the model saw, per minute of video</span>
+    </figcaption>
+    <ul>
+      {rows.map((r) => (
+        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={`${lim(r).frames_per_video} frames of the ${clip} clip`} data-tip-body={r.tip}>
+          <span class="hc-prov">{label(r)}</span>
+          <span class="hc-track"><span class="hc-bar" style={`width:${pct(r.value!)}`}></span></span>
+          <span class="hc-val">{r.text.split(" · ")[0]}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="hc-foot">
+      {`${via ? `${via}, the` : "The"} same ${clip} clip. ${label(hi)} fed the model`}
+      {" "}<b>{lim(hi).frames_per_video} frames</b>; {label(lo)} fed it <b>{lim(lo).frames_per_video}</b>.
+      {capped && " ⁎ The provider caps frames per video, so longer videos get even fewer per minute."}
+    </p>
+    <p class="hc-rank"><a href={`/models/${SLUG}#video_frames_per_min`}>{`See all ${pick.length} ${name} providers →`}</a></p>
+  </figure>
+)}

@@ -1,0 +1,45 @@
+---
+// Metric tabs for an `.explorer`: one tab per RankedBars chart in it, the first
+// selected. The URL hash (#metric_key) selects a tab on load.
+import type { Metric } from "../lib/data";
+
+interface Props {
+  metrics: Metric[];
+}
+const { metrics } = Astro.props;
+---
+<div class="tabs" role="tablist" aria-label="Metric">
+  {metrics.map((m, i) => (
+    <button role="tab" type="button" data-metric={m.key} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{m.tab}</button>
+  ))}
+</div>
+
+<script>
+  for (const explorer of document.querySelectorAll<HTMLElement>(".explorer")) {
+    const tabs = [...explorer.querySelectorAll<HTMLButtonElement>(".tabs [role=tab]")];
+    const charts = [...explorer.querySelectorAll<HTMLElement>("figure.rb")];
+    const select = (key: string, focus = false, push = true) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.metric === key;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      charts.forEach((c) => (c.hidden = c.dataset.metric !== key));
+      if (push) history.replaceState(null, "", `#${key}`);
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(t.dataset.metric!));
+      t.addEventListener("keydown", (e) => {
+        const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (d) select(tabs[(i + d + tabs.length) % tabs.length].dataset.metric!, true);
+      });
+    });
+    const fromHash = () => {
+      const key = location.hash.slice(1);
+      if (tabs.some((t) => t.dataset.metric === key)) select(key, false, false);
+    };
+    fromHash();
+    window.addEventListener("hashchange", fromHash);
+  }
+</script>

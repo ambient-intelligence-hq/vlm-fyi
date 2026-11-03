@@ -1,12 +1,17 @@
 ---
-import { bars, niceScale, tickLabel, providerLabel, modelSlug, type Metric } from "../lib/data";
+import { bars, niceScale, tickLabel, providerLabel, modelSlug, providerSlug, OVERALL, type Entry, type Metric } from "../lib/data";
 
 interface Props {
   metric: Metric;
   hidden?: boolean;
+  /** Only these pairs, ungrouped: a model page's providers or a provider page's models.
+   *  `name` is what each row names and links to. */
+  only?: Entry[];
+  name?: "provider" | "model";
 }
-const { metric, hidden = false } = Astro.props;
-const all = bars(metric.key);
+const { metric, hidden = false, only, name = "provider" } = Astro.props;
+const all = bars(metric.key, only);
+const link = (e: Entry) => (only && name === "provider" ? `/providers/${providerSlug(e)}` : `/models/${modelSlug(e)}`);
 // Pairs never probed on this metric say nothing about it: list them once under the
 // chart instead of drawing a blank row each.
 const untested = all.filter((r) => r.cls === "na");
@@ -16,14 +21,23 @@ const counts = {
   featured: untested.filter((r) => r.entry.featured).length,
   upstreams: untested.filter((r) => r.entry.provider.via).length,
 };
-const top = Math.max(...rows.map((r) => r.value ?? 0), metric.ref?.value ?? 0);
+// The axis always spans every pair, so a bar means the same length on every page.
+const top = Math.max(...bars(metric.key).map((r) => r.value ?? 0), metric.ref?.value ?? 0);
 const { max, ticks } = niceScale(top);
 const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
+// The "By model" view: one group per model, ordered by its best provider; rows are
+// already ranked, so first appearance gives both orders.
+const groups = [...rows.reduce((g, r) => {
+  const slug = modelSlug(r.entry);
+  g.set(slug, [...(g.get(slug) ?? []), r]);
+  return g;
+}, new Map<string, typeof rows>())].map(([slug, rs]) => ({ slug, name: rs[0].entry.model.name, rows: rs }));
+const flag = (rs: typeof rows, f: (r: (typeof rows)[number]) => unknown) => (rs.some(f) ? "1" : "0");
 ---
 <figure class="rb" data-metric={metric.key} hidden={hidden} aria-label={metric.question}>
   <figcaption>
     <h3>{metric.question}</h3>
-    <p class="sub">{metric.explain}</p>
+    <p class="sub">{metric.explain}{metric.key === OVERALL && <> <a href="/methodology#overall-score">How it's scored</a>.</>}</p>
   </figcaption>
 
   <div class="rb-plot" role="list">
@@ -33,7 +47,7 @@ const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
         {ticks.map((t) => <span class="rb-tick" style={`left:${pct(t)}`}>{tickLabel(metric.key, t)}</span>)}
       </div>
     </div>
-    <div class="rb-rows">
+    <div class:list={["rb-rows by-rank", only && `solo by-${name}-only`]}>
       <div class="rb-grid" aria-hidden="true">
         <span class="rb-gutter"></span>
         <div class="rb-track">
@@ -44,7 +58,7 @@ const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
         </div>
       </div>
       {rows.map((r) => (
-        <a class="rb-row" role="listitem" href={`/models/${modelSlug(r.entry)}`}
+        <a class="rb-row" role="listitem" href={link(r.entry)}
            data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
            data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`} data-tip-value={r.text} data-tip-body={r.tip}>
           <span class="rb-gutter rb-label">
@@ -61,6 +75,42 @@ const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
         </a>
       ))}
     </div>
+    {!only && (
+      <div class="rb-rows by-model">
+        <div class="rb-grid" aria-hidden="true">
+          <span class="rb-gutter"></span>
+          <div class="rb-track">
+            {ticks.map((t) => <span class="rb-gridline" style={`left:${pct(t)}`}></span>)}
+            {metric.ref && (
+              <span class="rb-ref" style={`left:${pct(metric.ref.value)}`}><em>{metric.ref.label}</em></span>
+            )}
+          </div>
+        </div>
+        {groups.map((g) => (
+          <div class="rb-group" role="group" aria-label={g.name}
+               data-featured={flag(g.rows, (r) => r.entry.featured)} data-or={flag(g.rows, (r) => r.entry.provider.via)}>
+            <a class="rb-ghead" href={`/models/${g.slug}`}>{g.name}</a>
+            {g.rows.map((r) => (
+              <a class="rb-row" role="listitem" href={`/models/${modelSlug(r.entry)}`}
+                 data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
+                 data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`} data-tip-value={r.text} data-tip-body={r.tip}>
+                <span class="rb-gutter rb-label">
+                  <span class="rb-model">{r.entry.model.name}</span>
+                  <span class="rb-prov">{providerLabel(r.entry)}</span>
+                </span>
+                <span class="rb-track">
+                  {r.value !== null && r.value > 0 && (
+                    <span class:list={["rb-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>
+                  )}
+                  <span class:list={["rb-val", { none: r.value === null, open: r.open }]}
+                        style={r.value !== null ? `left:${pct(r.value)}` : undefined}>{r.text}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+    )}
   </div>
 
   {untested.length > 0 && (
@@ -72,7 +122,9 @@ const pct = (v: number) => `${((v / max) * 100).toFixed(2)}%`;
       <ul>
         {untested.map((r) => (
           <li data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}>
-            <a href={`/models/${modelSlug(r.entry)}`}>{r.entry.model.name}</a> · {providerLabel(r.entry)}
+            {only
+              ? <a href={link(r.entry)}>{name === "provider" ? providerLabel(r.entry) : r.entry.model.name}</a>
+              : <><a href={`/models/${modelSlug(r.entry)}`}>{r.entry.model.name}</a> · {providerLabel(r.entry)}</>}
           </li>
         ))}
       </ul>

@@ -1,0 +1,62 @@
+---
+// How one provider compares with the model's other providers: a dot per distinct
+// value on each limit, this provider's dot highlighted, its value and the best
+// value on the right. The first row is the overall score that ranks them.
+import ScoreInfo from "./ScoreInfo.astro";
+import { COLUMNS, RANKED, OVERALL, overall, peers, bars, barRank, ordinal, providerLabel, modelSlug, entries, type Bar, type Entry } from "../lib/data";
+
+interface Props {
+  entry: Entry;
+}
+const { entry: e } = Astro.props;
+const label: Record<string, string> = Object.fromEntries(COLUMNS.map((c) => [c.key, c.short]));
+label[OVERALL] = "Overall score";
+const all = entries.filter((x) => modelSlug(x) === modelSlug(e));
+
+const rows = [OVERALL, ...RANKED].map((key) => {
+  const ps = key === OVERALL ? bars(OVERALL, all).filter((b) => b.cls !== "na") : peers(key, e);
+  const me = ps.find((b) => b.entry === e);
+  if (!me || ps.length < 2) return null;
+  const max = key === OVERALL ? 100 : Math.max(...ps.map((b) => b.value ?? 0)) || 1;
+  // Providers with the same value share one dot, sized by how many.
+  const dots = [...ps.reduce((m, b) => m.set(barRank(b), [...(m.get(barRank(b)) ?? []), b]), new Map<number, Bar[]>()).values()]
+    .map((bs) => ({ bs, at: ((bs[0].value ?? 0) / max) * 100, mine: bs.includes(me) }));
+  const best = ps[0];
+  const isBest = barRank(me) === barRank(best);
+  const place = 1 + ps.filter((b) => barRank(b) > barRank(me)).length;
+  return { key, me, best, isBest, dots, place, n: ps.length };
+}).filter((r) => r !== null);
+const n = all.length;
+// Frames/min text carries the token count; the strip keeps just the value.
+const short = (b: Bar) => b.text.split(" · ")[0];
+---
+{rows.length > 0 && (
+  <div class="cs">
+    <h3 class="cs-head">
+      <a href={`/models/${modelSlug(e)}`}>{e.model.name}</a>
+      <span class="sub">against its {n - 1} other provider{n === 2 ? "" : "s"}</span>
+    </h3>
+    {rows.map((r) => (
+      <div class:list={["cs-row", { "cs-overall": r.key === OVERALL }]}>
+        <span class="cs-label">{label[r.key]}{r.key === OVERALL && <ScoreInfo />}</span>
+        <span class="cs-track">
+          <span class="cs-line"></span>
+          {r.dots.map((d) => (
+            <a class:list={["cs-dot", { mine: d.mine }]} href={`/models/${modelSlug(e)}#${r.key}`}
+               style={`left:${d.at.toFixed(2)}%;--k:${Math.min(d.bs.length, 6)}`}
+               data-tip-title={d.bs.length === 1 ? providerLabel(d.bs[0].entry) : `${d.bs.length} providers`}
+               data-tip-value={short(d.bs[0])}
+               data-tip-body={d.bs.length === 1 ? undefined : d.bs.map((b) => providerLabel(b.entry)).join(" · ")}></a>
+          ))}
+        </span>
+        <span class="cs-val">
+          <b>{short(r.me)}</b>
+          {r.key === OVERALL && <span class="cs-place">{ordinal(r.place)} of {r.n} scored · {overall(e)!.limits} limits</span>}
+          {r.isBest
+            ? <span class="cs-best">best{r.dots.find((d) => d.mine)!.bs.length > 1 ? ", tied" : ""}</span>
+            : <span class="cs-best">best {short(r.best)} · {providerLabel(r.best.entry)}</span>}
+        </span>
+      </div>
+    ))}
+  </div>
+)}
