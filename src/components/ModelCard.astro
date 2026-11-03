@@ -11,7 +11,10 @@ interface Props {
   max: number;
 }
 const { slug, name, vendor, entries, max } = Astro.props;
-const rows = bars("frames_768x432", entries);
+const all = bars("frames_768x432", entries);
+// Providers never probed for frames get one line under the bars, not a blank row each.
+const rows = all.filter((r) => r.cls !== "na");
+const untested = all.filter((r) => r.cls === "na");
 const pct = (v: number) => `${Math.min(100, (v / max) * 100).toFixed(2)}%`;
 const video = (e: Entry) => cell("video_file_bytes", e.limits.video_file_bytes, e);
 ---
@@ -39,5 +42,11 @@ const video = (e: Entry) => cell("video_file_bytes", e.limits.video_file_bytes, 
       );
     })}
   </ul>
-  <div class="mc-axis" aria-hidden="true"><span>0</span><span>{max.toLocaleString("en-US")} frames</span></div>
+  {rows.length > 0 && <div class="mc-axis" aria-hidden="true"><span>0</span><span>{max.toLocaleString("en-US")} frames</span></div>}
+  {untested.length > 0 && (
+    <details class="mc-untested">
+      <summary>{rows.length ? `+ ${untested.length} more` : untested.length} provider{untested.length > 1 ? "s" : ""} not tested yet</summary>
+      <p>{untested.map((r, i) => <>{i > 0 && ", "}<a href={`/providers/${providerSlug(r.entry)}`}>{providerLabel(r.entry)}</a></>)}</p>
+    </details>
+  )}
 </article>

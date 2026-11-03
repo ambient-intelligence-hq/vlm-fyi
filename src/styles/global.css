@@ -203,6 +203,11 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .rb-key .sw { display: inline-block; width: 12px; height: 10px; border-radius: 0 3px 3px 0; background: var(--bar); vertical-align: -1px; margin-right: 5px; }
 .rb-key .sw.open { width: 22px; background: linear-gradient(90deg, var(--bar) 0%, var(--bar) 55%, transparent 100%); border-radius: 0; }
 .rb-key .refkey { display: inline-block; width: 1px; height: 12px; background: var(--ref); opacity: 0.4; vertical-align: -2px; margin: 0 7px 0 5px; }
+.rb-untested { margin-top: 14px; font-size: 0.86rem; }
+.rb-untested summary { cursor: pointer; color: var(--fg-2); }
+.rb-untested ul { margin: 8px 0 0; padding: 0; list-style: none; columns: 2 260px; column-gap: 24px; }
+.rb-untested li { padding: 2px 0; break-inside: avoid; }
+.rb-n { display: none; margin-left: 0.3em; }
 .rb-table { margin-top: 12px; font-size: 0.86rem; }
 .rb-table summary { cursor: pointer; color: var(--fg-2); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .rb-table table { margin-top: 10px; }
@@ -226,6 +231,9 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .mc-val { font-size: 0.84rem; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; font-weight: 520; }
 .mc-video { font-size: 0.74rem; color: var(--fg-2); }
 .mc-video.no { color: var(--muted); }
+.mc-untested { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line-2); font-size: 0.8rem; color: var(--fg-2); }
+.mc-untested summary { cursor: pointer; }
+.mc-untested p { margin: 6px 0 0; line-height: 1.5; }
 .mc-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.66rem; color: var(--muted); margin: 10px 0 0; padding-left: calc(10rem + 14px); padding-right: calc(3.4rem + 14px); }
 .more { margin-top: 1rem; }
 
@@ -345,6 +353,13 @@ pre { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); borde
 .tabs.scope button[aria-checked="true"] { background: var(--raise); color: var(--fg); box-shadow: 0 0 0 1px var(--line), 0 1px 2px rgba(0, 0, 0, 0.06); }
 .explorer[data-scope="featured"] [data-featured="0"],
 .explorer[data-scope="upstreams"] [data-or="0"] { display: none; }
+/* The untested-pairs note counts only the pairs in the current scope, and hides when that is none. */
+.explorer:not([data-scope]) .rb-n[data-for="all"],
+.explorer[data-scope="all"] .rb-n[data-for="all"],
+.explorer[data-scope="featured"] .rb-n[data-for="featured"],
+.explorer[data-scope="upstreams"] .rb-n[data-for="upstreams"] { display: inline; }
+.explorer[data-scope="featured"] .rb-untested:not(.has-featured),
+.explorer[data-scope="upstreams"] .rb-untested:not(.has-upstreams) { display: none; }
 
 /* Routing lottery cards */
 .lottery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
