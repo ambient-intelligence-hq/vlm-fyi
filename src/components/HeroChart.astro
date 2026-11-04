@@ -29,7 +29,7 @@ const caption = [open.length ? `${list(open)} took all ${top} frames we sent` : 
 {rows.length > 0 && (
   <figure class="hero-chart" aria-label={`${name}: video frames per request on ${rows.length} providers`}>
     <figcaption>
-      <span class="eyebrow">Same model · <a href={`/models/${SLUG}`}>{name}</a></span>
+      <span class="eyebrow">Same model <a class="hc-model" href={`/models/${SLUG}`}>{name}</a></span>
       <span class="hc-title">768×432 frames per request</span>
     </figcaption>
     <ul>

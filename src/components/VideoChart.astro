@@ -20,7 +20,7 @@ const via = direct.length === 0 ? "All via OpenRouter" : direct.length < rows.le
 {rows.length > 1 && (
   <figure class="hero-chart" aria-label={`${name}: frames of the same video each provider fed the model`}>
     <figcaption>
-      <span class="eyebrow">Same model · same video · <a href={`/models/${SLUG}`}>{name}</a></span>
+      <span class="eyebrow">Same model · same video <a class="hc-model" href={`/models/${SLUG}`}>{name}</a></span>
       <span class="hc-title">Frames the model saw, per minute of video</span>
     </figcaption>
     <ul>

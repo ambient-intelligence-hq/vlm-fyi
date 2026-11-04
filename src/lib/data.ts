@@ -266,7 +266,7 @@ export function bars(key: string, list: Entry[] = entries): Bar[] {
       : { entry: e, value: null, open: false, text: "—", cls: "na", tip: "Too few limits measured to compare." };
   }) : list.map((e) => {
     const l = e.limits[key];
-    const c = cell(key, l, e);
+    const c = key === "video_frames_per_min" && (!l || l.status === "not_tested") ? videoVerdict(e) : cell(key, l, e);
     const v = l ? (l.status === "inconclusive" ? l.at_least ?? null
       : ["unsupported", "not_tested", "ignored", "rejected"].includes(l.status) ? null : l.value || null) : null;
     const open = !!l && (l.status === "at_least" || (l.status === "inconclusive" && l.at_least !== undefined));
@@ -275,6 +275,27 @@ export function bars(key: string, list: Entry[] = entries): Bar[] {
     return { entry: e, value: v, open, text, cls: c.cls, tip: c.title };
   });
   return out.sort((a, b) => barRank(b) - barRank(a) || a.entry.model.name.localeCompare(b.entry.model.name));
+}
+
+/** Frames per minute needs video to work and a frame calibration. Without a value, say
+ *  which: a pair whose video was refused or ignored was tested, not "not tested". */
+function videoVerdict(e: Entry): Cell {
+  const tok = e.limits.video_tokens_per_min;
+  const ev = tok?.evidence ? `\n\nProvider said: “${tok.evidence}”` : "";
+  switch (tok?.status) {
+    case "unsupported":
+      return { text: "No video", cls: "unsupported", sort: -0.5, title: `Video is not accepted on this route.${ev}` };
+    case "ignored":
+      return cell("video_frames_per_min", tok, e);
+    case "measured":
+      return { text: "Not calibrated", cls: "inconclusive", sort: -0.3,
+        title: `Video works (${fmtNumber("video_tokens_per_min", tok.value ?? 0)} tokens per minute), but the frame-counter `
+          + "calibration did not complete, so frames per minute is unknown." };
+    case "inconclusive":
+      return { text: "?", cls: "inconclusive", sort: -0.3,
+        title: `The video probe got no verdict (${tok.reason ?? tok.failure ?? "error"}).${ev}` };
+  }
+  return cell("video_frames_per_min", undefined, e);
 }
 
 /** Sort key for a bar: higher is better; an open "≥" value edges out the same measured one. */

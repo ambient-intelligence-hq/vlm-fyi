@@ -1,5 +1,6 @@
 ---
-import { bars, niceScale, tickLabel, providerLabel, modelSlug, providerSlug, OVERALL, type Entry, type Metric } from "../lib/data";
+import { bars, niceScale, tickLabel, providerLabel, modelSlug, providerSlug, OVERALL, type Bar, type Entry, type Metric } from "../lib/data";
+import RbRow from "./RbRow.astro";
 
 interface Props {
   metric: Metric;
@@ -8,8 +9,10 @@ interface Props {
    *  `name` is what each row names and links to. */
   only?: Entry[];
   name?: "provider" | "model";
+  /** Fold "No" / "No video" rows behind one expandable line when a list has more than 2. */
+  collapseNo?: boolean;
 }
-const { metric, hidden = false, only, name = "provider" } = Astro.props;
+const { metric, hidden = false, only, name = "provider", collapseNo = false } = Astro.props;
 const all = bars(metric.key, only);
 const link = (e: Entry) => (only && name === "provider" ? `/providers/${providerSlug(e)}` : `/models/${modelSlug(e)}`);
 // Pairs never probed on this metric say nothing about it: list them once under the
@@ -33,6 +36,21 @@ const groups = [...rows.reduce((g, r) => {
   return g;
 }, new Map<string, typeof rows>())].map(([slug, rs]) => ({ slug, name: rs[0].entry.model.name, rows: rs }));
 const flag = (rs: typeof rows, f: (r: (typeof rows)[number]) => unknown) => (rs.some(f) ? "1" : "0");
+// Rows that only say "not accepted" carry little once there are several: keep the first
+// line of each list about what works, and fold the rest (count per scope, like the
+// untested note).
+const isNo = (r: Bar) => r.value === null && r.cls.includes("unsupported");
+const fold = (rs: Bar[]) => {
+  const no = collapseNo ? rs.filter(isNo) : [];
+  return no.length > 2 ? { shown: rs.filter((r) => !isNo(r)), folded: no } : { shown: rs, folded: [] as Bar[] };
+};
+const scopes = (rs: Bar[]) => ({
+  all: rs.length,
+  featured: rs.filter((r) => r.entry.featured).length,
+  upstreams: rs.filter((r) => r.entry.provider.via).length,
+});
+const noWhat = metric.key.startsWith("video_") ? "did not accept video" : "not supported";
+const ranked = fold(rows);
 ---
 <figure class="rb" data-metric={metric.key} hidden={hidden} aria-label={metric.question}>
   <figcaption>
@@ -57,23 +75,15 @@ const flag = (rs: typeof rows, f: (r: (typeof rows)[number]) => unknown) => (rs.
           )}
         </div>
       </div>
-      {rows.map((r) => (
-        <a class="rb-row" role="listitem" href={link(r.entry)}
-           data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
-           data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`} data-tip-value={r.text} data-tip-body={r.tip}>
-          <span class="rb-gutter rb-label">
-            <span class="rb-model">{r.entry.model.name}</span>
-            <span class="rb-prov">{providerLabel(r.entry)}</span>
-          </span>
-          <span class="rb-track">
-            {r.value !== null && r.value > 0 && (
-              <span class:list={["rb-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>
-            )}
-            <span class:list={["rb-val", { none: r.value === null, open: r.open }]}
-                  style={r.value !== null ? `left:${pct(r.value)}` : undefined}>{r.text}</span>
-          </span>
-        </a>
-      ))}
+      {ranked.shown.map((r) => <RbRow r={r} href={link(r.entry)} pct={pct} />)}
+      {ranked.folded.length > 0 && (
+        <details class:list={["rb-fold", Object.entries(scopes(ranked.folded)).filter(([, n]) => n).map(([s]) => `has-${s}`)]}>
+          <summary class="rb-gutter">
+            {Object.entries(scopes(ranked.folded)).map(([s, n]) => <span class="rb-n" data-for={s}>+ {n} {n === 1 ? "pair" : "pairs"}: {noWhat}</span>)}
+          </summary>
+          {ranked.folded.map((r) => <RbRow r={r} href={link(r.entry)} pct={pct} />)}
+        </details>
+      )}
     </div>
     {!only && (
       <div class="rb-rows by-model">
@@ -90,23 +100,21 @@ const flag = (rs: typeof rows, f: (r: (typeof rows)[number]) => unknown) => (rs.
           <div class="rb-group" role="group" aria-label={g.name}
                data-featured={flag(g.rows, (r) => r.entry.featured)} data-or={flag(g.rows, (r) => r.entry.provider.via)}>
             <a class="rb-ghead" href={`/models/${g.slug}`}>{g.name}</a>
-            {g.rows.map((r) => (
-              <a class="rb-row" role="listitem" href={`/models/${modelSlug(r.entry)}`}
-                 data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
-                 data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`} data-tip-value={r.text} data-tip-body={r.tip}>
-                <span class="rb-gutter rb-label">
-                  <span class="rb-model">{r.entry.model.name}</span>
-                  <span class="rb-prov">{providerLabel(r.entry)}</span>
-                </span>
-                <span class="rb-track">
-                  {r.value !== null && r.value > 0 && (
-                    <span class:list={["rb-bar", { open: r.open }]} style={`width:${pct(r.value)}`}></span>
-                  )}
-                  <span class:list={["rb-val", { none: r.value === null, open: r.open }]}
-                        style={r.value !== null ? `left:${pct(r.value)}` : undefined}>{r.text}</span>
-                </span>
-              </a>
-            ))}
+            {(() => {
+              const { shown, folded } = fold(g.rows);
+              const n = scopes(folded);
+              return <>
+                {shown.map((r) => <RbRow r={r} href={`/models/${modelSlug(r.entry)}`} pct={pct} />)}
+                {folded.length > 0 && (
+                  <details class:list={["rb-fold", Object.entries(n).filter(([, c]) => c).map(([s]) => `has-${s}`)]}>
+                    <summary class="rb-gutter">
+                      {Object.entries(n).map(([s, c]) => <span class="rb-n" data-for={s}>{shown.length ? "+ " : ""}{c} {c === 1 ? "provider" : "providers"}: {noWhat}</span>)}
+                    </summary>
+                    {folded.map((r) => <RbRow r={r} href={`/models/${modelSlug(r.entry)}`} pct={pct} />)}
+                  </details>
+                )}
+              </>;
+            })()}
           </div>
         ))}
       </div>

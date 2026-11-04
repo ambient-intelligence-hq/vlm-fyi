@@ -52,11 +52,21 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
     <meta property="og:type" content="website" />
     <meta name="color-scheme" content="light dark" />
     <script is:inline>
-      // Apply the saved theme before first paint (no flash). "system" = follow the OS.
-      try {
-        const t = localStorage.getItem("theme");
-        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
-      } catch {}
+      // Apply the theme before first paint (no flash). Light unless the reader picked dark,
+      // or "system" to follow the OS. The browser bar colour follows the page, not the OS.
+      window.applyTheme = (m) => {
+        const root = document.documentElement;
+        if (m === "system") delete root.dataset.theme;
+        else root.dataset.theme = m;
+        document.querySelectorAll('meta[name="theme-color"]').forEach((el) => {
+          el.dataset.media ||= el.media;
+          el.media = m === "system" ? el.dataset.media : "all";
+          el.content = (m === "system" ? el.dataset.media.includes("dark") : m === "dark") ? "#08090a" : "#f4f2ee";
+        });
+      };
+      let t = "light";
+      try { const saved = localStorage.getItem("theme"); if (saved === "dark" || saved === "system") t = saved; } catch {}
+      window.applyTheme(t);
     </script>
   </head>
   <body>
@@ -72,7 +82,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
           {nav.map(([href, label]) => <a href={href} aria-current={isCurrent(href) ? "page" : undefined}>{label}</a>)}
         </nav>
         <a class="pill" href="/api">Get the data</a>
-        <button class="theme" type="button" id="theme" data-mode="system" aria-label="Theme: system" title="Theme: system">
+        <button class="theme" type="button" id="theme" data-mode="light" aria-label="Theme: light" title="Theme: light">
           <svg class="i-system" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.75" y="2.75" width="12.5" height="8.5" rx="1.5"/><path d="M5.5 13.75h5M8 11.25v2.5"/></svg>
           <svg class="i-light" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.25M8 13.25v1.25M1.5 8h1.25M13.25 8h1.25M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg>
           <svg class="i-dark" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/></svg>
@@ -133,9 +143,9 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
       const nav = document.querySelector<HTMLElement>("header.site nav");
       const here = nav?.querySelector<HTMLElement>('[aria-current="page"]');
       if (nav && here && nav.scrollWidth > nav.clientWidth) nav.scrollLeft += here.getBoundingClientRect().left - nav.getBoundingClientRect().left - (nav.clientWidth - here.offsetWidth) / 2;
-      // Cycle System → Light → Dark. "System" removes the override and follows the OS.
+      // Cycle Light → Dark → System. "System" removes the override and follows the OS.
       const btn = document.getElementById("theme")!;
-      const order = ["system", "light", "dark"] as const;
+      const order = ["light", "dark", "system"] as const;
       type Mode = (typeof order)[number];
       const current = (): Mode => (document.documentElement.dataset.theme as Mode) || "system";
       const label = (m: Mode) => {
@@ -147,8 +157,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
       label(current());
       btn.addEventListener("click", () => {
         const next = order[(order.indexOf(current()) + 1) % 3];
-        if (next === "system") delete document.documentElement.dataset.theme;
-        else document.documentElement.dataset.theme = next;
+        (window as unknown as { applyTheme: (m: Mode) => void }).applyTheme(next);
         try { localStorage.setItem("theme", next); } catch {}
         label(next);
       });

@@ -89,6 +89,9 @@ button { touch-action: manipulation; }
 code, .mono { font-family: var(--mono); font-size: 0.86em; }
 h1 { font-size: clamp(2rem, 5.2vw, 3.6rem); line-height: 1.04; margin: 0 0 1rem; letter-spacing: -0.035em; font-weight: 560; max-width: 18ch; }
 h1 .dim { color: var(--muted); }
+.hero h1 .dim { display: block; font-size: 0.6em; letter-spacing: -0.025em; margin-bottom: 0.12em; }
+h1 .hl { display: block; }
+h1 em { font-style: normal; color: var(--accent); }
 h2 { font-size: clamp(1.25rem, 2.4vw, 1.6rem); line-height: 1.2; margin: 0 0 0.5rem; letter-spacing: -0.022em; font-weight: 560; }
 h3 { font-size: 0.98rem; margin: 0; letter-spacing: -0.012em; font-weight: 590; }
 p { margin: 0.5rem 0; }
@@ -141,6 +144,7 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .hero-chart figcaption { margin-bottom: 16px; }
 .hero-chart .eyebrow { margin-bottom: 4px; }
 .hero-chart .eyebrow a { color: var(--fg-2); }
+.hero-chart .hc-model { margin-left: 6px; font-size: 0.66rem; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; }
 .hc-title { font-weight: 560; letter-spacing: -0.015em; }
 .hero-chart ul { list-style: none; margin: 0; padding: 0; }
 .hero-chart li { display: grid; grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 5.4rem; gap: 12px; align-items: center; padding: 9px 0; box-shadow: inset 0 -1px 0 var(--line-2); }
@@ -208,6 +212,14 @@ footer.site { margin-top: 112px; box-shadow: 0 -1px 0 var(--line); color: var(--
 .rb-untested ul { margin: 8px 0 0; padding: 0; list-style: none; columns: 2 260px; column-gap: 24px; }
 .rb-untested li { padding: 2px 0; break-inside: avoid; }
 .rb-n { display: none; margin-left: 0.3em; }
+/* Folded "No" rows: one quiet line per list, expands in place */
+.rb-fold { position: relative; }
+.rb-fold > summary { display: block; cursor: pointer; list-style: none; min-height: 34px; line-height: 34px; font-size: 0.82rem;
+  color: var(--muted); box-shadow: inset 0 -1px 0 var(--line-2); }
+.rb-fold > summary::-webkit-details-marker { display: none; }
+.rb-fold > summary::before { content: "▸"; display: inline-block; width: 1.1em; font-size: 0.7rem; transition: transform 120ms; }
+.rb-fold[open] > summary::before { transform: rotate(90deg); }
+@media (hover: hover) and (pointer: fine) { .rb-fold > summary:hover { color: var(--fg-2); } }
 .rb-table { margin-top: 12px; font-size: 0.86rem; }
 .rb-table summary { cursor: pointer; color: var(--fg-2); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .rb-table table { margin-top: 10px; }
@@ -363,6 +375,8 @@ pre { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); borde
 .explorer[data-scope="all"] .rb-n[data-for="all"],
 .explorer[data-scope="featured"] .rb-n[data-for="featured"],
 .explorer[data-scope="upstreams"] .rb-n[data-for="upstreams"] { display: inline; }
+.explorer[data-scope="featured"] .rb-fold:not(.has-featured),
+.explorer[data-scope="upstreams"] .rb-fold:not(.has-upstreams),
 .explorer[data-scope="featured"] .rb-untested:not(.has-featured),
 .explorer[data-scope="upstreams"] .rb-untested:not(.has-upstreams) { display: none; }
 

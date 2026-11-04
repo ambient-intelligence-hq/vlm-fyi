@@ -1,96 +1,80 @@
 ---
 import Base from "../layouts/Base.astro";
 import RankedBars from "../components/RankedBars.astro";
-import ModelCard from "../components/ModelCard.astro";
 import CapabilityGrid from "../components/CapabilityGrid.astro";
 import Tooltip from "../components/Tooltip.astro";
 import MetricTabs from "../components/MetricTabs.astro";
 import HeroChart from "../components/HeroChart.astro";
 import VideoChart from "../components/VideoChart.astro";
-import { entries, featured, METRICS, span, fmtNumber, models, providers, bars, niceScale, updated, modelSlug, HERO_MODEL, VIDEO_MODEL } from "../lib/data";
+import { entries, featured, METRICS, COLUMNS, providers, bars, modelSlug, HERO_MODEL, VIDEO_MODEL } from "../lib/data";
 
 const plural = (n: number, one: string, many: string) => (new Intl.PluralRules("en-US").select(n) === "one" ? one : many);
-const range = (key: string) => {
-  const s = span(key);
-  if (!s) return "—";
-  const plus = s.hiOpen ? "+" : "";
-  if (key.endsWith("_bytes")) {
-    const mb = (v: number) => (v / 1_000_000).toLocaleString("en-US", { maximumFractionDigits: 0 });
-    return `${mb(s.lo)}–${mb(s.hi)}${plus} MB`;
-  }
-  return `${fmtNumber(key, s.lo)}–${fmtNumber(key, s.hi)}${plus}`;
-};
 const videoYes = featured.filter((e) => e.accepts.video === "yes").length;
-const ms = models(featured);
-const upstreamOnly = entries.length - featured.length;
-// Copy beside the two charts, from the same data: the hero's frames per request, and the
-// most and fewest frames of one clip fed in the video block.
+// Copy beside the two charts, from the same data: the most and fewest frames of one clip fed
+// to the video model (hero), and the frames-per-request ceilings (block below).
 const of = (slug: string) => entries.filter((e) => modelSlug(e) === slug);
 const heroFrames = bars("frames_768x432", of(HERO_MODEL)).filter((b) => b.value);
 const [heroHi, heroLo] = [heroFrames[0], heroFrames[heroFrames.length - 1]];
-const videoName = of(VIDEO_MODEL)[0]?.model.name;
 const fed = bars("video_frames_per_min", of(VIDEO_MODEL)).filter((b) => b.value !== null)
   .map((b) => b.entry.limits.video_frames_per_min!.frames_per_video!);
-// Small multiples share one axis.
-const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.value ?? 0))).max;
+// What was measured, for the strip under the hero.
+const upstreamOnly = entries.length - featured.length;
+const directApis = new Set(entries.filter((e) => e.provider.via !== "openrouter").map((e) => e.provider.id)).size;
 ---
 <Base>
   <section class="hero">
     <div class="hero-copy">
-    <span class="eyebrow"><b>●</b> Measured {updated} · {entries.length} model × provider pairs</span>
-    <h1>Every vision API has a different ceiling. <span class="dim">We measure it.</span></h1>
+    <span class="eyebrow"><b>●</b> {entries.length} model × provider pairs</span>
+    <h1><span class="dim">Same model. Same video.</span> <span class="hl">Different providers. <em>Different views.</em></span></h1>
     <p class="lede">
-      Send the same video frames to the same model, and one provider stops at {heroLo.value} while another
-      {heroHi.open ? ` takes all ${heroHi.value} we sent` : ` takes ${heroHi.value}`}. vlm.fyi records what each API
-      actually accepts in one request: images, real video frames, bytes and video files, with the provider's own error
-      message as evidence.
+      Send the same 5-minute video to the same model, and one provider shows it {Math.max(...fed)} frames while
+      another shows it {Math.min(...fed)}. Both requests succeed, so nothing tells you the model saw less. vlm.fyi
+      measures how much of your video each API actually passes to the model, along with its limits on images, frames,
+      bytes and files.
     </p>
     <div class="actions">
       <a class="pill" href="#limits">See the limits</a>
       <a class="pill ghost" href="/methodology">How we measure</a>
     </div>
     </div>
-    <HeroChart />
+    <VideoChart />
   </section>
 
   <div class="strip">
     <div>
-      <span class="eyebrow">Pairs measured</span>
+      <span class="eyebrow">Model × provider pairs</span>
       <strong>{entries.length}</strong>
       <span class="sub">{featured.length} featured · {upstreamOnly} more OpenRouter upstreams</span>
     </div>
     <div>
-      <span class="eyebrow">Images per request</span>
-      <strong>{range("images_per_request")}</strong>
-      <span class="sub">set by the provider, not the model</span>
+      <span class="eyebrow">Providers</span>
+      <strong>{providers().length}</strong>
+      <span class="sub">{directApis} direct APIs, the rest OpenRouter upstreams</span>
     </div>
     <div>
-      <span class="eyebrow">Video seen per minute</span>
-      <strong>{range("video_frames_per_min")} frames</strong>
-      <span class="sub">same 5-min clip, depends on the provider</span>
+      <span class="eyebrow">Limits per pair</span>
+      <strong>{COLUMNS.length}</strong>
+      <span class="sub">images, frames, video density, file sizes and tokens</span>
     </div>
     <div>
-      <span class="eyebrow">Tokens per frame</span>
-      <strong>{range("tokens_per_frame_768x432")}</strong>
-      <span class="sub">for the same 768×432 frame</span>
+      <span class="eyebrow">Open source</span>
+      <strong>Open data</strong>
+      <span class="sub">JSON and CSV under CC BY 4.0, <a href="https://github.com/ambient-intelligence-hq/vlm-fyi">source on GitHub</a>. <a href="/api">Use the data →</a></span>
     </div>
   </div>
 
-  {videoName && fed.length > 1 && (
+  {heroFrames.length > 1 && (
     <section class="block featured-model">
       <div>
-        <span class="eyebrow">The routing lottery</span>
-        <h2>Same model id, same clip, a different video every time.</h2>
+        <span class="eyebrow">Frames per request</span>
+        <h2>Same model, a different ceiling on every provider.</h2>
         <p class="sub">
-          OpenRouter routes one model id to many upstream providers. We pinned each one and sent the same 5-minute clip.
-          This is how much of it each upstream fed {videoName}.
-        </p>
-        <p class="sub">
-          Every one of these requests succeeded; on one provider, the model saw {fed[fed.length - 1]} frames of a
-          5-minute video instead of {fed[0]}.
+          Send the same video frames to the same model, and one provider stops at {heroLo.value} while another
+          {heroHi.open ? ` takes all ${heroHi.value} we sent` : ` takes ${heroHi.value}`}. Every limit comes with the
+          provider's own error message as evidence.
         </p>
       </div>
-      <VideoChart />
+      <HeroChart />
     </section>
   )}
 
@@ -113,26 +97,12 @@ const framesMax = niceScale(Math.max(...bars("frames_768x432").map((b) => b.valu
     </div>
     </div>
     </div>
-    {METRICS.map((m, i) => <RankedBars metric={m} hidden={i > 0} />)}
+    {METRICS.map((m, i) => <RankedBars metric={m} hidden={i > 0} collapseNo />)}
   </section>
 
   <section class="block">
     <header>
-      <span class="eyebrow"><b>02</b> — Same model, different provider</span>
-      <h2>The provider decides, not the model.</h2>
-      <p class="sub">Frames per request for each provider of a model, on one shared scale, and whether that provider takes video.</p>
-    </header>
-    <div class="cards">
-      {ms.filter((m) => m.entries.length > 1).map((m) => <ModelCard {...m} max={framesMax} />)}
-    </div>
-    <p class="sub more">Single-provider models: {ms.filter((m) => m.entries.length === 1).map((m, i, a) => (
-      <><a href={`/models/${m.slug}`}>{m.name}</a>{i < a.length - 1 ? ", " : ""}</>
-    ))}.</p>
-  </section>
-
-  <section class="block">
-    <header>
-      <span class="eyebrow"><b>03</b> — Request format</span>
+      <span class="eyebrow"><b>02</b> — Request format</span>
       <h2>What each endpoint accepts.</h2>
       <p class="sub">Input types, and the request-format rules that break integrations most often.</p>
     </header>
