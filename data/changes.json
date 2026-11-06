@@ -268,5 +268,627 @@
   "date": "2026-10-31",
   "id": "together/kimi-k3",
   "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "moonshot/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-baseten-fp8/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-fireworks/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-modal-mxfp4/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-moonshotai/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-together/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-03",
+  "id": "fireworks/glm-5.3-flash",
+  "change": "limit",
+  "limit": "video_file_bytes",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-03",
+  "id": "fireworks/kimi-k3",
+  "change": "limit",
+  "limit": "video_file_bytes",
+  "from": {
+   "status": "measured",
+   "value": 96000000
+  },
+  "to": {
+   "status": "unsupported"
+  }
+ },
+ {
+  "date": "2026-11-03",
+  "id": "fireworks/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "unsupported"
+  }
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-google-vertex-global-priority/gemini-3.7-flash",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "measured",
+   "value": 960
+  }
+ },
+ {
+  "date": "2026-11-03",
+  "id": "openrouter-phala/qwen3.8-27b",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "measured",
+   "value": 650
+  }
+ },
+ {
+  "date": "2026-11-03",
+  "id": "together/deepseek-v4.1-flash-1017",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "measured",
+   "value": 839,
+   "stated": 1502189977
+  },
+  "to": {
+   "status": "measured",
+   "value": 839
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "moonshot/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-alibaba/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-auto/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-auto/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-auto/nemotron-3.5-super-vl",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-baseten-fp4/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-decart-mxfp4/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-deepinfra-fp4/nemotron-3.5-super-vl",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-fireworks/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-moonshotai-highspeed/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-moonshotai-mxfp4/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-nebius-fp4/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/nemotron-3.5-super-vl",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-wafer/kimi-k3",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "together/muse-spark-open",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "together/nemotron-3.5-super-vl",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-04",
+  "id": "fireworks/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "fireworks/muse-spark-open",
+  "change": "limit",
+  "limit": "url_image_bytes",
+  "from": {
+   "status": "measured",
+   "value": 14000000
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "moonshot/kimi-k3",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 2.9
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "moonshot/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "measured",
+   "value": 7886
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-auto/qwen3.6-35b-a3b",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {
+   "status": "measured",
+   "value": 5.7
+  },
+  "to": {
+   "status": "measured",
+   "value": 11.4
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-chutes-fp8/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {
+   "status": "measured",
+   "value": 4.4
+  },
+  "to": {
+   "status": "measured",
+   "value": 6.3
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-cloudflare/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 6.3
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-cloudflare/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "measured",
+   "value": 2499
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-deepinfra-bf16/qwen3.8-27b",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "measured",
+   "value": 30
+  },
+  "to": {
+   "status": "measured",
+   "value": 30,
+   "stated": 30
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-deepinfra-fp8/qwen3.6-35b-a3b",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "measured",
+   "value": 30
+  },
+  "to": {
+   "status": "measured",
+   "value": 30,
+   "stated": 30
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-fireworks/kimi-k3",
+  "change": "limit",
+  "limit": "video_file_bytes",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-fireworks/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-modelrun-fp4/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 6.3
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-modelrun-fp4/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "measured",
+   "value": 2498
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-moonshotai/kimi-k3",
+  "change": "limit",
+  "limit": "video_file_bytes",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "not_tested"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-moonshotai/kimi-k3",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 2.9
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-moonshotai/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "measured",
+   "value": 7886
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-phala/qwen3.6-35b-a3b",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "inconclusive"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-siliconflow-fp8/qwen3.6-35b-a3b",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {
+   "status": "measured",
+   "value": 0.5
+  },
+  "to": {
+   "status": "measured",
+   "value": 0.9
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "frames_768x432",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "at_least",
+   "value": 384
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "measured",
+   "value": 724
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "inline_request_bytes",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "at_least",
+   "value": 32000000
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "tokens_per_frame_768x432",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 457
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "url_image_bytes",
+  "from": {
+   "status": "not_tested"
+  },
+  "to": {
+   "status": "at_least",
+   "value": 128000000
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-together/kimi-k3",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "unsupported"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-z-ai/glm-5.3-flash",
+  "change": "limit",
+  "limit": "video_file_bytes",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "not_tested"
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-z-ai/glm-5.3-flash",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 14.5
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "openrouter-z-ai/glm-5.3-flash",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "unsupported"
+  },
+  "to": {
+   "status": "measured",
+   "value": 39134
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "together/glm-5.3-flash",
+  "change": "limit",
+  "limit": "video_frames_per_min",
+  "from": {},
+  "to": {
+   "status": "measured",
+   "value": 3.1
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "together/kimi-k3",
+  "change": "limit",
+  "limit": "images_per_request",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "at_least",
+   "value": 1024
+  }
+ },
+ {
+  "date": "2026-11-04",
+  "id": "together/kimi-k3",
+  "change": "limit",
+  "limit": "url_image_bytes",
+  "from": {
+   "status": "inconclusive"
+  },
+  "to": {
+   "status": "at_least",
+   "value": 128000000
+  }
+ },
+ {
+  "date": "2026-11-05",
+  "id": "fireworks/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-alibaba/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-deepinfra-bf16/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-fireworks/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-modal-mxfp4/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-nebius-fp4/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "openrouter-together/kimi-k3.1-pro",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-05",
+  "id": "together/kimi-k3.1-pro",
+  "change": "added"
  }
 ]

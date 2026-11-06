@@ -53,5 +53,23 @@
  {
   "target": "gemma-4-31b · jarvislabs",
   "note": "The deployment accepts at most 4 images per request."
+ },
+ {
+  "target": "kimi-k3.1-pro · moonshot",
+  "limit": "images_per_request",
+  "status": "at_least",
+  "value": 488,
+  "override": true,
+  "evidence": "488 images passed and 496 failed with HTTP 429 \"request reached organization TPM\", reproducibly, each request after a full minute's cooldown.",
+  "source": "paced bisection, 2026-11-04",
+  "limit_note": "This account's limit, not the API's: Moonshot's rate limiter appears to charge ≈1,024 tokens per image whatever its size (488 × 1,024 ≈ 500k, the account's tokens-per-minute budget), while 488 images really cost 8,570 prompt tokens. Through OpenRouter, Moonshot's serving accepted 720 images."
+ },
+ {
+  "target": "kimi-k3.1-pro · openrouter/fireworks",
+  "note": "Video works (Fireworks direct feeds 2 frames per second at ~2,700 tokens each), but OpenRouter aborts requests at 300 s and Fireworks needs ~420 s to process one minute of video at that density, so video longer than about 40 seconds times out through OpenRouter."
+ },
+ {
+  "target": "kimi-k3.1-pro · fireworks",
+  "note": "Video is fed at 2 frames per second at full resolution (~2,700 tokens per 1080p frame, ~324k tokens per minute): about 3 minutes of video fill the 1M-token context, and one minute takes ~7 minutes to process. Density was measured on the first minute of the reference clip."
  }
 ]

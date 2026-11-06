@@ -74,7 +74,18 @@ REF_VIDEOS = {
 # they get the same clip re-encoded to 360p (< 10 MB). Results say which file was used.
 SMALL_VARIANT = {"short": {"name": "baker_5min_360p", "s3_key": "probe/ref/baker_5min_360p.mp4", "duration_s": 308,
                            "from": "short", "vf": "scale=-2:360", "bitrate": "220k"}}
-SIZE_REJECTIONS = {"invalid_media", "media_bytes", "request_bytes", "download_bytes"}
+# Some providers decode only H.264/H.265; the reference clip is VP9. Same clip, same
+# resolution, re-encoded to H.264 so tokens per minute stay comparable.
+H264_VARIANT = {"short": {"name": "baker_5min_h264", "s3_key": "probe/ref/baker_5min_h264.mp4", "duration_s": 308,
+                          "from": "short", "vf": None, "crf": "23"}}
+# Duration-capped providers (Baseten: 300 s) get the first 4 minutes of the same clip.
+TRIM_VARIANT = {"short": {"name": "baker_4min_h264", "s3_key": "probe/ref/baker_240s_h264.mp4", "duration_s": 240,
+                          "from": "short", "vf": None, "crf": "23", "trim": 240}}
+# Providers that feed every frame at full resolution (Fireworks: 2 fps at ~2,700 tokens per
+# 1080p frame) can't fit 5 minutes in a 1M context: measure on the first minute instead.
+MINUTE_VARIANT = {"short": {"name": "baker_1min_h264", "s3_key": "probe/ref/baker_60s_h264.mp4", "duration_s": 60,
+                            "from": "short", "vf": None, "crf": "23", "trim": 60}}
+SIZE_REJECTIONS = {"invalid_media", "media_bytes", "request_bytes", "download_bytes", "decoded_bytes"}
 
 # Frame-counter calibration: the same resolution and frame rate as the reference
 # clip it calibrates (providers resize by resolution, so tokens per frame must be
@@ -100,6 +111,7 @@ TOKENS_PER_VIDEO_FRAME = {"qwen": 169.0, "gemini": 66.0}
 
 
 DENSITY_TIMEOUT = 300
+DENSITY_START: Optional[str] = None   # start density on a variant (e.g. "minute") instead of the full clip
 
 
 def args_density_timeout() -> int:
@@ -114,7 +126,8 @@ def tokens_per_video_frame(model: str) -> Optional[float]:
 def service_of(base_url: str) -> str:
     b = base_url.lower()
     for host, svc in (("openrouter", "openrouter"), ("fireworks", "fireworks"), ("together", "together"),
-                      ("jarvislabs", "jarvislabs"), ("modal.direct", "modal"), ("modal.run", "modal")):
+                      ("jarvislabs", "jarvislabs"), ("modal.direct", "modal"), ("modal.run", "modal"),
+                      ("moonshot.ai", "moonshot")):
         if host in b:
             return svc
     return "self_hosted"
@@ -128,8 +141,27 @@ def service_of(base_url: str) -> str:
 # the provider states. Seeded from errors seen in the provider matrix runs.
 PATTERNS: list[tuple[str, str]] = [
     ("no_route", r"No allowed providers|No endpoints found"),
+    # Per-image size limits (stated in MB): Fireworks "download size exceeded maximum size
+    # limit of 10.0 MB", Baseten "Image too large: 10.1 MB (limit 10 MB)".
+    ("media_bytes", r"Video \S+ download size exceeded maximum size limit of (\d+)(?:\.\d+)? ?MB"),
+    ("image_bytes", r"download size exceeded maximum size limit of (\d+)(?:\.\d+)? ?MB|Image too large: [\d.]+ MB \(limit (\d+) MB\)"),
+    ("video_duration", r"Video too long: [\d.]+ ?s \(limit (\d+) ?s\)"),
+    ("media_bytes", r"Video too large: [\d.]+ MB \(limit (\d+) MB\)"),
+    ("download_bytes", r"MAX_MEDIA_DOWNLOAD_SIZE_MB=(\d+)"),
+    # The provider gave up fetching our media URL in time: about the fetch, not a size limit.
+    ("timeout", r"The operation was aborted|\"error_type\": ?\"timeout\""),
+    ("download_timeout", r"Timed out while downloading media|[Tt]imed? ?out (?:while )?(?:fetching|downloading)"),
+    # The provider could not fetch our media URL: about the fetch, not a limit.
+    ("download_failed", r"could not be reached|Failed to download one or more|image_url_unreachable|error while fetching media"),
+    # Codec, not video support: these decoders take H.264/H.265 only.
+    ("codec", r"has no decoder|must be H\.264|decode only H\.264|[Uu]nsupported (?:video )?codec"),
+    ("decoded_bytes", r"decoded video RGB payload|MAX_DECODED_BYTES"),
+    # The provider's own server is broken (e.g. Fireworks: "Cannot process videos: libGL.so.1:
+    # cannot open shared object file"): says nothing about what the API accepts.
+    ("provider_error", r"cannot open shared object file|Internal Server Error|Model request failed|\"upstream_error\""),
     ("auth_or_billing", r"Credit limit|Unauthorized|invalid api key|Invalid API key|insufficient.{0,20}(?:credit|quota|balance)"),
     ("image_count", r"limit the number of images per conversation to (\d+)|max number of data-uri items\s*:?\s*(\d+)"
+                    r"|[Tt]oo many images: \d+ \(max (\d+)\)|[Tt]oo many images in request: \d+ > (\d+)"
                     r"|[Aa]t most (\d+) image|too many images|images? per (?:request|prompt|message)"),
     ("download_bytes", r"[Dd]ownloaded .{0,40}cannot exceed (\d+)\s*MB"),
     ("media_bytes", r"media exceeds size limit: max (\d+) bytes|too large: \d+ exceeds limit (\d+)|file (?:is )?too large|exceeds the maximum (?:file )?size"),
@@ -138,13 +170,48 @@ PATTERNS: list[tuple[str, str]] = [
     ("request_bytes", r"Request body exceeds|request_too_large|[Pp]ayload [Tt]oo [Ll]arge|Request Entity Too Large"),
     ("body_timeout", r"[Rr]equest body timed out|request_timeout"),
     ("context_length", r"context length|maximum context|context_length_exceeded|too many tokens|prompt is too long"
+                       r"|input token count exceeds|maximum number of tokens allowed"
                        r"|exceeds the model's|input tokens? exceed|longer than the model"),
-    ("no_video", r"supports image input only|video.{0,30}not supported|does not support video|[Uu]nsupported .{0,20}video"),
+    # Media by URL refused, not media itself (Moonshot's API takes base64 or uploaded files only).
+    ("url_unsupported", r"[Uu]nsupported (?:image|video) url|URL must be from one of the allowed domains"),
+    ("no_video", r"number of videos per conversation to 0|Video count \d+ exceeds limit 0|supports image input only|[Vv]ideo.{0,30}not supported|does not support video|[Uu]nsupported .{0,20}video"),
     ("strict_params", r"Extra inputs are not permitted|Unrecognized request argument|[Uu]nknown (?:field|parameter)"),
     ("tool_order", r"tool_call_id|parallel tool|tool messages responding|parallel group"),
     ("invalid_media", r"Invalid image or video input|rejected the request parameters|INVALID_ARGUMENT|[Ii]nvalid (?:image|video)"),
 ]
-INCONCLUSIVE = {"transient", "timeout", "auth_or_billing", "no_route", "credit_guard"}
+_SIGNED = re.compile(r"(https?://[^\s\"'\\?]+)\?[^\s\"'\\]*")
+
+
+def short_msg(text: str, limit: int = 1500) -> str:
+    """An error message to keep: signed URLs lose their query string first, so a long
+    presigned URL can't push the provider's actual reason past the cut."""
+    return _SIGNED.sub(r"\1?…", text or "")[:limit]
+
+
+# A video request refused for reasons that may only concern the URL: retried inline.
+INLINE_RETRY = {"url_unsupported", "no_video", "no_route"}
+INCONCLUSIVE = {"transient", "timeout", "auth_or_billing", "no_route", "credit_guard", "download_timeout",
+                "provider_error", "download_failed", "codec"}
+
+
+# OpenRouter routing filters that answer a capability question: if one removed the
+# pinned upstream, the upstream lacks that capability (not a routing hiccup).
+_CAPABILITY_FILTERS = (("Input Video Support", "no_video"), ("Parameters", "strict_params"),
+                       ("Context Length", "context_length"))
+
+
+def classify_for(t: "Target", status: int, message: str) -> tuple[str, Optional[int]]:
+    """classify(), plus OpenRouter no-route errors that are definite answers."""
+    kind, stated = classify(status, message)
+    if kind != "no_route" or t.service != "openrouter":
+        return kind, stated
+    if "No endpoints found that support input video" in message:
+        return "no_video", None
+    for name, answer in _CAPABILITY_FILTERS:
+        m = re.search(rf"Filter by {name} removed ([^;\"]*)", message)
+        if t.pin and m and t.pin in [x.strip().rstrip(".") for x in m.group(1).split(",")]:
+            return answer, None
+    return kind, stated
 
 
 def classify(status: int, message: str) -> tuple[str, Optional[int]]:
@@ -177,6 +244,29 @@ class RequestLog:
 
 LOG: Optional[RequestLog] = None
 GUARD: Optional["CreditGuard"] = None
+# Waits between attempts after a 429/5xx/connection error. Rate limits on shared
+# upstreams can last minutes; giving up early turns a busy provider into a false "no".
+RETRY_WAITS = (5, 20, 60, 90, 120)
+_PACE: dict[str, list] = {}          # api key -> [lock, next allowed send time]
+_AFTER = re.compile(r"(?:after|in)\s+(\d+(?:\.\d+)?)\s*s", re.I)
+
+
+async def pace(t: "Target") -> None:
+    """Keep a key under its requests-per-minute limit (targets that share a key share the budget)."""
+    if not t.rpm:
+        return
+    lock, _ = _PACE.setdefault(t.key, [asyncio.Lock(), 0.0])
+    async with lock:
+        wait = _PACE[t.key][1] - time.time()
+        if wait > 0:
+            await asyncio.sleep(wait)
+        _PACE[t.key][1] = time.time() + 60.0 / t.rpm
+
+
+def known(r: "Result") -> Optional[bool]:
+    """A yes/no check's answer: None when the request never got a real verdict
+    (rate limited, timed out, unroutable) rather than a false "no"."""
+    return True if r.ok else None if r.kind in INCONCLUSIVE else False
 _DATA_URI = re.compile(r"^data:([\w/+.-]+);base64,(.*)$", re.S)
 
 
@@ -257,6 +347,12 @@ class S3:
         return self.client.generate_presigned_url("get_object", Params={"Bucket": self.bucket, "Key": key}, ExpiresIn=expires)
 
 
+def ref_spec(which: str, variant: Optional[str] = None) -> dict:
+    """The reference clip, its 360p copy ("small") or its H.264 copy ("h264")."""
+    return {"small": SMALL_VARIANT, "h264": H264_VARIANT, "trim": TRIM_VARIANT,
+            "minute": MINUTE_VARIANT}.get(variant or "", REF_VIDEOS)[which]
+
+
 class Fixtures:
     """Shared synthetic media; S3 uploads are cached by content key across targets."""
 
@@ -324,11 +420,24 @@ class Fixtures:
             self._urls[k] = self.s3.presign(spec["s3_key"])
         return self._urls[k]
 
-    def ref_video_url(self, which: str, small: bool = False) -> str:
-        ref = SMALL_VARIANT[which] if small else REF_VIDEOS[which]
+    def data_uri(self, s3_key: str) -> str:
+        """A reference video as a base64 data URL, for providers that refuse video URLs."""
+        k = f"data:{s3_key}"
+        if k not in self._urls:
+            body = self.s3.client.get_object(Bucket=self.s3.bucket, Key=s3_key)["Body"].read()
+            self._urls[k] = f"data:video/mp4;base64,{base64.b64encode(body).decode()}"
+        return self._urls[k]
+
+    def ref_video(self, t: "Target", which: str, variant: Optional[str] = None, inline: Optional[bool] = None) -> str:
+        url = self.ref_video_url(which, variant)    # also builds the re-encode if needed
+        inline = t.video_inline if inline is None else inline
+        return self.data_uri(ref_spec(which, variant)["s3_key"]) if inline else url
+
+    def ref_video_url(self, which: str, variant: Optional[str] = None) -> str:
+        ref = ref_spec(which, variant)
         k = f"ref:{ref['s3_key']}"
         if k not in self._urls:
-            if small:
+            if variant:
                 self._ensure_small(ref)
             self._urls[k] = self.s3.presign(ref["s3_key"])
         return self._urls[k]
@@ -343,8 +452,11 @@ class Fixtures:
         with tempfile.TemporaryDirectory() as d:
             src, out = os.path.join(d, "src.mp4"), os.path.join(d, "small.mp4")
             self.s3.client.download_file(self.s3.bucket, REF_VIDEOS[ref["from"]]["s3_key"], src)
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-vf", ref["vf"], "-c:v", "libx264", "-preset", "veryfast",
-                            "-b:v", ref["bitrate"], "-maxrate", ref["bitrate"], "-bufsize", "500k", "-an",
+            rate = (["-crf", ref["crf"]] if ref.get("crf") else
+                    ["-b:v", ref["bitrate"], "-maxrate", ref["bitrate"], "-bufsize", "500k"])
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, *(["-t", str(ref["trim"])] if ref.get("trim") else []),
+                            *(["-vf", ref["vf"]] if ref.get("vf") else []),
+                            "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", *rate, "-an",
                             "-movflags", "+faststart", out], check=True)
             self.s3.upload(out, ref["s3_key"], "video/mp4")
 
@@ -376,6 +488,8 @@ class Target:
     pin: Optional[str] = None
     dims: Optional[set[str]] = None
     service: str = ""
+    rpm: Optional[float] = None       # account rate limit: space this key's requests out
+    video_inline: bool = False        # provider refuses video URLs: send reference videos as base64
     accepts: dict[str, bool] = field(default_factory=dict)
     out: dict[str, Any] = field(default_factory=dict)
     requests: int = 0
@@ -432,7 +546,8 @@ async def call(http: aiohttp.ClientSession, t: Target, messages: list[dict], ext
         # Checked before every request: parallel targets all pass a start-of-target
         # check before any money is spent, so that alone can overshoot badly.
         return Result(False, 0, "credit_guard", None, "OpenRouter balance below the floor; request not sent")
-    for attempt in range(3):
+    for attempt in range(len(RETRY_WAITS) + 1):
+        await pace(t)
         t0, ttfb = time.time(), None
         t.requests += 1
         rec: dict[str, Any] = {"id": str(uuid.uuid4()), "ts": datetime.now(timezone.utc).isoformat(), "target": t.name,
@@ -456,13 +571,13 @@ async def call(http: aiohttp.ClientSession, t: Target, messages: list[dict], ext
                     if resp.status == 429 or resp.status >= 500:
                         raise _Transient(resp.status, text[:1500])
                     if resp.status != 200:
-                        kind, stated = classify(resp.status, text)
-                        r = Result(False, resp.status, kind, stated, text[:1500], time.time() - t0, len(data),
+                        kind, stated = classify_for(t, resp.status, text)
+                        r = Result(False, resp.status, kind, stated, short_msg(text), time.time() - t0, len(data),
                                    request_id=_request_id(resp_headers, parsed if isinstance(parsed, dict) else None))
                         return _log(rec, r, ttfb)
                     if isinstance(parsed, dict) and parsed.get("error") and not parsed.get("choices"):
                         msg = json.dumps(parsed["error"])
-                        kind, stated = classify(200, msg)
+                        kind, stated = classify_for(t, 200, msg)
                         return _log(rec, Result(False, 200, kind, stated, msg[:1500], time.time() - t0, len(data),
                                                 request_id=_request_id(resp_headers, parsed)), ttfb)
                     pt = ((parsed or {}).get("usage") or {}).get("prompt_tokens")
@@ -497,7 +612,7 @@ async def call(http: aiohttp.ClientSession, t: Target, messages: list[dict], ext
                         code = chunk["error"].get("code") if isinstance(chunk["error"], dict) else None
                         if isinstance(code, int) and (code == 429 or code >= 500):
                             raise _Transient(code, msg)
-                        kind, stated = classify(code if isinstance(code, int) else 200, msg)
+                        kind, stated = classify_for(t, code if isinstance(code, int) else 200, msg)
                         return _log(rec, Result(False, 200, kind, stated, msg, time.time() - t0, len(data),
                                                 request_id=_request_id(resp_headers, chunk)), ttfb)
                     usage = chunk.get("usage") if isinstance(chunk, dict) else None
@@ -521,7 +636,17 @@ async def call(http: aiohttp.ClientSession, t: Target, messages: list[dict], ext
             last = Result(False, 0, "transient", None, f"{type(e).__name__}: {e}"[:500], time.time() - t0, len(data))
             rec["response"] = {"status": status, "headers": resp_headers, "error": f"{type(e).__name__}: {e}"}
             _log(rec, last, ttfb)
-        await asyncio.sleep((5, 20, 0)[attempt])
+        if attempt == len(RETRY_WAITS):
+            break
+        hint = _AFTER.search(last.message or "")
+        retry_after = (resp_headers or {}).get("Retry-After") or (resp_headers or {}).get("retry-after")
+        wait = RETRY_WAITS[attempt]
+        for v in (hint.group(1) if hint else None, retry_after):
+            try:
+                wait = max(wait, min(float(v) + 1, 300))
+            except (TypeError, ValueError):
+                pass
+        await asyncio.sleep(wait)
     return last
 
 
@@ -595,7 +720,7 @@ async def search(probe: Callable[[float], Awaitable[Result]], start: float, cap:
         else:
             b, fail = mid, r
     return {"max_ok": a or None, "fail_at": b, "fail_kind": fail.kind, "stated_limit": fail.stated,
-            "message": fail.message[:600], "request_id": fail.request_id, "tried": tried}
+            "message": short_msg(fail.message, 600), "request_id": fail.request_id, "tried": tried}
 
 
 # --------------------------------------------------------------------------
@@ -626,26 +751,44 @@ async def density(http: aiohttp.ClientSession, t: Target, fx: Fixtures, videos: 
     text_only = [{"role": "user", "content": [{"type": "text", "text": DENSITY_PROMPT}]}]
     CTX.set({**CTX.get(), "value": "text_baseline"})
     base = await call(http, t, text_only, stream=False, max_tokens=8, timeout=180)
-    out: dict[str, Any] = {"prompt": DENSITY_PROMPT, "baseline_prompt_tokens": base.prompt_tokens, "runs": []}
+    out: dict[str, Any] = {"prompt": DENSITY_PROMPT, "baseline_prompt_tokens": base.prompt_tokens, "runs": [],
+                           **({"video_inline": True} if t.video_inline else {})}
     if not base.ok or not base.prompt_tokens:
         out["error"] = f"text baseline failed or reported no usage: {base.kind} {base.message[:200]}"
         return out
     per_frame = tokens_per_video_frame(t.model)
+    inline = t.video_inline
     for which in videos:
-        ref, small = REF_VIDEOS[which], False
+        variant: Optional[str] = DENSITY_START if DENSITY_START and which in MINUTE_VARIANT else None
+        ref = ref_spec(which, variant)
         for rep in range(repeats):
-            msgs = [{"role": "user", "content": [{"type": "text", "text": DENSITY_PROMPT},
-                                                 {"type": "video_url", "video_url": {
-                                                     "url": await asyncio.to_thread(fx.ref_video_url, which, small)}}]}]
-            CTX.set({**CTX.get(), "value": f"{ref['name']}#{rep + 1}"})
-            r = await call(http, t, msgs, stream=False, max_tokens=8, timeout=args_density_timeout())
-            if not r.ok and r.kind in SIZE_REJECTIONS and not small and which in SMALL_VARIANT:
-                out["runs"].append({"video": ref["name"], "repeat": rep + 1, "ok": False, "kind": r.kind,
-                                    "message": r.message[:400], "request_id": r.request_id, "note": "retrying with the 360p copy"})
-                ref, small = SMALL_VARIANT[which], True
-                msgs[0]["content"][1]["video_url"]["url"] = await asyncio.to_thread(fx.ref_video_url, which, True)
-                CTX.set({**CTX.get(), "value": f"{ref['name']}#{rep + 1}"})
+            while True:
+                msgs = [{"role": "user", "content": [{"type": "text", "text": DENSITY_PROMPT},
+                                                     {"type": "video_url", "video_url": {
+                                                         "url": await asyncio.to_thread(fx.ref_video, t, which, variant, inline)}}]}]
+                CTX.set({**CTX.get(), "value": f"{ref['name']}#{rep + 1}{' inline' if inline else ''}"})
                 r = await call(http, t, msgs, stream=False, max_tokens=8, timeout=args_density_timeout())
+                if r.ok:
+                    break
+                if r.kind in INLINE_RETRY and not inline:
+                    # The video URL was refused or filtered out (OpenRouter drops upstreams that
+                    # can't fetch URLs): that's about URLs, so try the same video inline.
+                    note, inline = "video URL refused; retrying inline (base64)", True
+                elif r.kind in ("timeout", "context_length") and variant not in ("minute",) and which in MINUTE_VARIANT:
+                    note, variant = "too many tokens or too slow for the full clip; retrying with its first minute", "minute"
+                elif r.kind == "video_duration" and variant != "trim" and which in TRIM_VARIANT:
+                    note, variant = "longer than the provider's video length limit; retrying with the first 4 minutes", "trim"
+                elif r.kind == "codec" and variant is None and which in H264_VARIANT:
+                    note, variant = "the provider can't decode VP9; retrying with an H.264 copy", "h264"
+                elif r.kind in SIZE_REJECTIONS and variant != "small" and which in SMALL_VARIANT:
+                    note, variant = "retrying with the 360p copy", "small"
+                else:
+                    break
+                out["runs"].append({"video": ref["name"], "repeat": rep + 1, "ok": False, "kind": r.kind,
+                                    "message": r.message[:400], "request_id": r.request_id, "note": note})
+                ref = ref_spec(which, variant)
+            if inline:
+                out["video_inline"] = True
             run: dict[str, Any] = {"video": ref["name"], "duration_s": ref["duration_s"], "repeat": rep + 1,
                                    "ok": r.ok, "latency_s": round(r.seconds, 1), "request_id": r.request_id}
             if r.ok and r.prompt_tokens:
@@ -695,10 +838,24 @@ async def frame_calibration(http: aiohttp.ClientSession, t: Target, fx: Fixtures
         out["error"] = f"text baseline failed or reported no usage: {base.kind}"
         return out
     url = await asyncio.to_thread(fx.counter_url, which)
+    if t.video_inline or (density or {}).get("video_inline"):
+        url = await asyncio.to_thread(fx.data_uri, spec["s3_key"])
     CTX.set({**CTX.get(), "value": spec["name"]})
     msgs = [{"role": "user", "content": [{"type": "text", "text": COUNTER_PROMPT},
                                          {"type": "video_url", "video_url": {"url": url}}]}]
     r = await call(http, t, msgs, stream=False, max_tokens=6000, timeout=args_density_timeout())
+    if r.ok and not (r.text or "").strip():
+        # A reasoning model can spend the whole output budget thinking (GLM 5.3 Flash
+        # did: 6,000 reasoning tokens, empty reply). Ask for less thinking and allow more
+        # output; drop the effort field if the provider refuses it.
+        for extra, label in (({"reasoning_effort": "low"}, "reasoning_effort=low, max_tokens=16000"),
+                             ({}, "max_tokens=16000")):
+            CTX.set({**CTX.get(), "value": f"{spec['name']} retry: {label}"})
+            again = await call(http, t, msgs, extra, stream=False, max_tokens=16000, timeout=args_density_timeout())
+            if again.ok:
+                r = again
+                out["retry"] = f"empty reply at max_tokens=6000; retried with {label}"
+                break
     out.update({"ok": r.ok, "request_id": r.request_id, "latency_s": round(r.seconds, 1)})
     if not r.ok:
         out.update({"kind": r.kind, "message": r.message[:400]})
@@ -745,7 +902,7 @@ async def probe_target(http: aiohttp.ClientSession, t: Target, fx: Fixtures, ski
         for name, extra in PARAMS.items():
             CTX.set({"dimension": "params", "value": name})
             r = await call(http, t, TEXT, extra)
-            res[name] = {"ok": r.ok, **({} if r.ok else {"kind": r.kind, "message": r.message[:200]})}
+            res[name] = {"ok": known(r), **({} if r.ok else {"kind": r.kind, "message": r.message[:200]})}
             t.accepts[name] = r.ok
         done("params", res)
     else:
@@ -760,7 +917,7 @@ async def probe_target(http: aiohttp.ClientSession, t: Target, fx: Fixtures, ski
     except Exception as e:  # noqa: BLE001 - no S3: URL probes are skipped
         url_res = Result(False, 0, "no_s3", None, str(e)[:200])
     t.accepts["image_url"] = url_res.ok
-    done("image_input", {"inline": r.ok, "url": url_res.ok,
+    done("image_input", {"inline": known(r), "url": known(url_res),
                          **({} if r.ok else {"inline_error": f"{r.kind}: {r.message[:200]}"}),
                          **({} if url_res.ok else {"url_error": f"{url_res.kind}: {url_res.message[:200]}"})})
 
@@ -773,7 +930,7 @@ async def probe_target(http: aiohttp.ClientSession, t: Target, fx: Fixtures, ski
         ask = {"role": "user", "content": "Reply with OK."}
         contiguous = await call(http, t, head + [tool("a"), tool("b"), media, ask], PARAMS["tools"])
         interleaved = await call(http, t, head + [tool("a"), media, tool("b"), ask], PARAMS["tools"])
-        done("tool_order", {"contiguous_ok": contiguous.ok, "interleaved_ok": interleaved.ok,
+        done("tool_order", {"contiguous_ok": known(contiguous), "interleaved_ok": known(interleaved),
                             **({} if interleaved.ok else {"message": interleaved.message[:300]})})
 
     if t.want("video_density", skip):
@@ -802,8 +959,17 @@ async def probe_target(http: aiohttp.ClientSession, t: Target, fx: Fixtures, ski
                              {"role": "user", "content": "Reply with OK."}]
             CTX.set({"dimension": "video_bytes", "value": "base"})
             first = await call(http, t, vid(small))
-            res: dict[str, Any] = {"video_input": first.ok, "base_bytes": len(mp4)}
-            if first.ok:
+            res: dict[str, Any] = {"video_input": known(first), "base_bytes": len(mp4)}
+            if not first.ok and first.kind in INLINE_RETRY:
+                # URL refused: check the same clip inline, so "no video by URL" isn't
+                # reported as "no video". The size search needs URLs, so it stops here.
+                CTX.set({"dimension": "video_bytes", "value": "base_inline"})
+                inline = await call(http, t, vid(f"data:video/mp4;base64,{base64.b64encode(mp4).decode()}"))
+                last = first if inline.ok else inline      # when both fail, the inline answer is the real one
+                res.update({"video_input": known(inline), "video_url": False, "inline_only": inline.ok,
+                            "url_kind": first.kind, "kind": last.kind, "message": last.message[:300],
+                            "request_id": last.request_id})
+            elif first.ok:
                 CTX.set({"dimension": "video_bytes"})
 
                 async def probe_video(v: float) -> Result:
@@ -940,11 +1106,11 @@ def summary_row(t: Target) -> list[str]:
         b = o.get("baseline", {})
         return [t.name, f"❌ baseline: {b.get('kind') or o.get('skipped') or '—'}", "", "", "", "", "", "", "", ""]
     p = o.get("params", {})
-    rejected = [k for k, v in p.items() if not v.get("ok")]
+    rejected = [k for k, v in p.items() if v.get("ok") is False]
     v = o.get("video_bytes", {})
     video = ("no video" if v and not v.get("video_input") else fmt_limit(v.get("bytes"), "MB")) if v else "—"
     to = o.get("tool_order")
-    order = "—" if not to else ("strict" if to["contiguous_ok"] and not to["interleaved_ok"] else
+    order = "—" if not to else ("strict" if to["contiguous_ok"] and to["interleaved_ok"] is False else
                                 "lenient" if to["interleaved_ok"] else "?")
     f7 = o.get("frames_768") or {}
     frames = fmt_limit(f7) + (f" · {f7['tokens_per_frame']} tok/frame" if f7.get("tokens_per_frame") else "")
@@ -988,12 +1154,85 @@ def write_outputs(targets: list[Target], out_dir: Path, started: float) -> Path:
     return path
 
 
+YES_NO_DIMS = {"image_input", "tool_order"}
+SEARCH_DIMS = {"image_count", "inline_bytes", "url_bytes", "frames_768"}
+# Kinds that came from matching the error text, so they can be re-derived from the stored
+# message when the patterns improve. transient/timeout come from the HTTP status: kept as is.
+RELABEL = {"other", "invalid_media", "no_route", "no_video", "request_bytes"}
+
+
+def relabel(t: Target, results: dict) -> dict:
+    """Re-classify stored failures with the current PATTERNS, so every run is judged by
+    the same rules (e.g. Baseten's "Too many images: 97 (max 96)" was once "other")."""
+    def kind_of(kind: Optional[str], msg: Optional[str]) -> tuple[Optional[str], Optional[int]]:
+        if kind not in RELABEL or not msg:
+            return kind, None
+        new, stated = classify_for(t, 400, msg)
+        # Only ever more specific: stored messages are truncated, so re-reading one can miss
+        # what the full message showed (e.g. the pinned upstream in OpenRouter's filter list).
+        if new == "other" or (new == "no_route" and kind != "no_route"):
+            return kind, None
+        return new, stated
+
+    out = json.loads(json.dumps(results))
+    for dim in SEARCH_DIMS | {"video_bytes"}:
+        res = out.get(dim)
+        if dim == "video_bytes" and isinstance(res, dict):
+            k, _ = kind_of(res.get("kind"), res.get("message"))
+            if k != res.get("kind"):
+                res["kind"] = k
+                if res.get("video_input") is False and k in INCONCLUSIVE:
+                    res["video_input"] = None
+            res = res.get("bytes")
+            holder = out[dim]
+        else:
+            holder = out
+        if not isinstance(res, dict) or not res.get("fail_kind"):
+            continue
+        k, stated = kind_of(res["fail_kind"], res.get("message"))
+        above = [x for x in res.get("tried", []) if not x.get("ok") and x["value"] > (res.get("max_ok") or 0)]
+        if k in INCONCLUSIVE and k != "no_route" and len({x["value"] for x in above}) < 2:
+            # A one-off server failure set the upper bound: keep only the lower bound. (Failures
+            # at two or more sizes above every pass are a reproducible ceiling, kept as measured.)
+            new = {**{x: v for x, v in res.items() if x not in ("fail_at", "fail_kind", "stated_limit")},
+                   "fail_at": None, "inconclusive": k, "relabelled_from": res["fail_kind"]}
+        else:
+            new = {**res, "fail_kind": k, "stated_limit": res.get("stated_limit") or stated}
+        if dim == "video_bytes":
+            holder["bytes"] = new
+        else:
+            out[dim] = new
+    for dim in ("video_density",):
+        for run in (out.get(dim) or {}).get("runs", []):
+            run["kind"], _ = kind_of(run.get("kind"), run.get("message"))
+    vf = out.get("video_frames")
+    if isinstance(vf, dict) and vf.get("kind"):
+        vf["kind"], _ = kind_of(vf["kind"], vf.get("message"))
+    for name, v in (out.get("params") or {}).items():
+        k, _ = kind_of(v.get("kind"), v.get("message"))
+        if k != v.get("kind"):
+            v["kind"] = k
+            if v.get("ok") is False and k in INCONCLUSIVE:
+                v["ok"] = None
+    ii = out.get("image_input") or {}
+    for side in ("inline", "url"):
+        err = ii.get(f"{side}_error")
+        if ii.get(side) is False and err and ": " in err:
+            k0, msg = err.split(": ", 1)
+            k, _ = kind_of(k0, msg)
+            if k in INCONCLUSIVE:
+                ii[side] = None
+    return out
+
+
 def merge_runs() -> Path:
     """Combine all probe runs (oldest first). Per target and dimension, a later
     result replaces an earlier one unless it is only an error or inconclusive and
     the earlier one was conclusive."""
     def weak(r: Any) -> bool:
-        return isinstance(r, dict) and (bool(r.get("error")) or bool(r.get("inconclusive")))
+        return isinstance(r, dict) and (bool(r.get("error")) or bool(r.get("inconclusive"))
+                                        # a baseline lost to billing/rate limits says nothing about the provider
+                                        or (r.get("ok") is False and r.get("kind") in INCONCLUSIVE))
 
     merged: dict[str, Target] = {}
     runs = sorted(RESULTS.glob("probe-2*/probe.json"), key=lambda f: f.stat().st_mtime)
@@ -1003,9 +1242,17 @@ def merge_runs() -> Path:
                                                       service=t.get("service") or service_of(t["base_url"])))
             tgt.requests += t.get("requests", 0)
             tgt.prompt_tokens += t.get("prompt_tokens", 0)
-            for dim, res in t["results"].items():
+            for dim, res in relabel(tgt, t["results"]).items():
                 if dim in tgt.out and weak(res) and not weak(tgt.out[dim]):
                     continue
+                prev = tgt.out.get(dim)
+                if isinstance(prev, dict) and isinstance(res, dict):
+                    # A later rate-limited check ("unknown") doesn't erase an earlier real answer.
+                    if dim in YES_NO_DIMS:
+                        res = {**res, **{k: v for k, v in prev.items() if res.get(k) is None and v is not None}}
+                    elif dim == "params":
+                        res = {**res, **{k: v for k, v in prev.items()
+                                         if (res.get(k) or {}).get("ok") is None and v.get("ok") is not None}}
                 tgt.out[dim] = res
     out_dir = RESULTS / "probe-merged"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -1039,7 +1286,8 @@ async def load_targets(http: aiohttp.ClientSession, paths: list[Path], secrets: 
                 if sig in seen or (only and not any(o.lower() in low for o in only)) or any(x.lower() in low for x in exclude):
                     continue
                 seen.add(sig)
-                out.append(Target(name, c["base_url"], c["model"], key, pin, dims=dims, service=svc))
+                out.append(Target(name, c["base_url"], c["model"], key, pin, dims=dims, service=svc, rpm=c.get("rpm"),
+                                  video_inline=bool(c.get("video_inline"))))
     return out
 
 
@@ -1054,6 +1302,9 @@ def main() -> None:
     ap.add_argument("--density-videos", default="short", help="comma list of reference videos: short,long")
     ap.add_argument("--density-repeats", type=int, default=2)
     ap.add_argument("--density-timeout", type=int, default=300, help="seconds to wait for a video request")
+    ap.add_argument("--density-start", choices=["small", "h264", "trim", "minute"],
+                    help="measure density on this variant of the reference clip from the start (e.g. minute: "
+                         "providers whose full clip exceeds the context window or the timeout)")
     ap.add_argument("--inline-cap-mb", type=float, default=32)
     ap.add_argument("--image-cap", type=int, default=1024,
                     help="image-count search cap; models that bill per image (Gemini ~258 tok) cost a lot near 1024")
@@ -1061,8 +1312,9 @@ def main() -> None:
     ap.add_argument("--merge", action="store_true", help="don't probe: combine results/probe-*/ into results/probe-merged/")
     args = ap.parse_args()
     args.density_videos = [v.strip() for v in args.density_videos.split(",") if v.strip()]
-    global DENSITY_TIMEOUT
+    global DENSITY_TIMEOUT, DENSITY_START
     DENSITY_TIMEOUT = args.density_timeout
+    DENSITY_START = args.density_start
 
     if args.merge:
         console.print(f"report → {merge_runs()}")
@@ -1084,12 +1336,15 @@ def main() -> None:
         if dim == "baseline":
             msg = "ok" if res["ok"] else f"[red]failed: {res['kind']} · {res['message'][:160]}[/]"
         elif dim == "params":
-            bad = [k for k, v in res.items() if not v["ok"]]
-            msg = f"rejects {', '.join(bad)}" if bad else "accepts all fields"
+            bad = [k for k, v in res.items() if v["ok"] is False]
+            unk = [k for k, v in res.items() if v["ok"] is None]
+            msg = (f"rejects {', '.join(bad)}" if bad else "accepts all fields") + (f" (unknown: {', '.join(unk)})" if unk else "")
         elif dim == "image_input":
-            msg = f"inline={'ok' if res['inline'] else 'no'} url={'ok' if res['url'] else 'no'}"
+            yn = lambda v: "ok" if v else "?" if v is None else "no"
+            msg = f"inline={yn(res['inline'])} url={yn(res['url'])}"
         elif dim == "tool_order":
-            msg = f"contiguous={'ok' if res['contiguous_ok'] else 'no'} interleaved={'ok' if res['interleaved_ok'] else 'rejected'}"
+            yn = lambda v: "ok" if v else "?" if v is None else "no"
+            msg = f"contiguous={yn(res['contiguous_ok'])} interleaved={yn(res['interleaved_ok']).replace('no', 'rejected')}"
         elif dim == "video_bytes":
             msg = ("no video input: " + str(res.get("kind"))) if not res.get("video_input") else fmt_limit(res.get("bytes"), "MB")
         elif dim == "video_density":

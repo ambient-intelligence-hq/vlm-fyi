@@ -1,0 +1,43 @@
+# Muse Spark (open), top providers (Nov 4, 2026). Fireworks direct is in targets_direct.toml.
+# All dimensions; video falls back to inline, and to an H.264 copy on codec errors.
+
+[[target]]
+name = "muse-spark-open · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "meta-models/Muse-Spark-Open-816B-A42B"
+
+[[target]]
+name = "muse-spark-open · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "together"
+
+[[target]]
+name = "muse-spark-open · openrouter/fireworks"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "fireworks"
+
+[[target]]
+name = "muse-spark-open · openrouter/baseten"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "baseten/fp4"
+
+[[target]]
+name = "muse-spark-open · openrouter/nebius"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "nebius/fp4"
+
+[[target]]
+name = "muse-spark-open · openrouter/auto"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "auto"

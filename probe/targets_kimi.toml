@@ -1,0 +1,79 @@
+# Kimi K3 across the providers that serve it: Moonshot's own API, and OpenRouter
+# pinned to each of the same upstreams (provider.order=[tag], allow_fallbacks=false).
+# Fireworks, Together and Modal direct are already in targets_direct.toml /
+# targets_private.toml. All dimensions.
+
+[[target]]
+name = "kimi-k3 · moonshot"
+base_url = "https://api.moonshot.ai/v1"
+api_key_env = "MOONSHOT_API_KEY"
+model = "kimi-k3"
+rpm = 2.5   # this account's organization limit is 3 requests/min
+video_inline = true   # refuses video URLs ("unsupported video url"), takes base64
+
+[[target]]
+name = "kimi-k3 · openrouter/moonshotai"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "moonshotai"
+
+[[target]]
+name = "kimi-k3 · openrouter/baseten"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "baseten/fp8"
+
+[[target]]
+name = "kimi-k3 · openrouter/fireworks"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "fireworks"
+
+[[target]]
+name = "kimi-k3 · openrouter/modal"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "modal/mxfp4"
+
+[[target]]
+name = "kimi-k3 · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "together"
+
+# OpenRouter upstreams whose Kimi K3 endpoint takes video input (OpenRouter's routing
+# filter "Input Video Support" keeps only these), plus OpenRouter's default routing.
+
+[[target]]
+name = "kimi-k3 · openrouter/alibaba"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "alibaba"
+
+[[target]]
+name = "kimi-k3 · openrouter/wafer"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "wafer"
+
+[[target]]
+name = "kimi-k3 · openrouter/auto"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "auto"
+
+# Takes Kimi K3 video both inline and by URL (found by the Nov 4 control test).
+[[target]]
+name = "kimi-k3 · openrouter/decart"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "decart/mxfp4"

@@ -23,6 +23,7 @@ export interface Limit {
   frames_per_min_short_clip?: number;
   capped?: boolean;
   tokens_per_frame_assumed?: number;
+  per_image?: number;
 }
 
 export interface Entry {
@@ -127,7 +128,8 @@ export function cell(key: string, l: Limit | undefined, e?: Entry): Cell {
       const range = l.fails_at !== undefined ? `Passes at ${fmtNumber(key, l.value ?? 0)}, fails at ${fmtNumber(key, l.fails_at)}` : "";
       const stated = l.stated ? `\nThe error states a limit of ${l.stated.toLocaleString("en-US")}.` : "";
       const extra = [l.note, l.video ? `Clip: ${l.video}${l.repeats ? `, ${l.repeats} runs` : ""}${l.spread_pct ? `, ±${l.spread_pct}%` : ""}` : ""].filter(Boolean).join("\n");
-      return { text: fmtNumber(key, l.value ?? 0), cls: `measured${tone}`, title: [range + stated + ev, extra].filter(Boolean).join("\n").trim(), sort: l.value ?? 0 };
+      const each = l.per_image ? ` (${fmtNumber(key, l.per_image)}/image)` : "";
+      return { text: fmtNumber(key, l.value ?? 0) + each, cls: `measured${tone}`, title: [range + stated + ev, extra].filter(Boolean).join("\n").trim(), sort: l.value ?? 0 };
     }
     case "estimated":
       return { text: `≈ ${fmtNumber(key, l.value ?? 0)}`, cls: "measured", sort: l.value ?? 0,

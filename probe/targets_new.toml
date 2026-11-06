@@ -1,0 +1,125 @@
+# Kimi K3.1 Pro and Nemotron 3.5 Super VL, top providers (Nov 4, 2026). All dimensions;
+# video falls back to inline (base64) when a URL is refused.
+
+# --- Kimi K3.1 Pro: only Moonshot serves it (direct, and both OpenRouter tiers) ---
+
+[[target]]
+name = "kimi-k3.1-pro · moonshot"
+base_url = "https://api.moonshot.ai/v1"
+api_key_env = "MOONSHOT_API_KEY"
+model = "kimi-k3.1-pro"
+rpm = 2.5             # this account's organization limit is 3 requests/min (shared with kimi-k3)
+video_inline = true   # refuses video URLs, takes base64
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/moonshotai"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "moonshotai/mxfp4"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/moonshotai-highspeed"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "moonshotai/highspeed"
+
+# --- Nemotron 3.5 Super VL ---
+
+[[target]]
+name = "nemotron-3.5-super-vl · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "nvidia/NVIDIA-Nemotron-3.5-Super-VL"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "together"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/deepinfra"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "deepinfra/fp4"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/baseten"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "baseten/fp4"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/crusoe"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "crusoe/bf16"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/auto"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "auto"
+
+# --- Kimi K3.1 Pro: new hosts (Nov 5, 2026) ---
+
+[[target]]
+name = "kimi-k3.1-pro · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/kimi-k3p1-pro"
+
+[[target]]
+name = "kimi-k3.1-pro · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "moonshotai/Kimi-K3.1-Pro"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/fireworks"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "fireworks"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "together"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/deepinfra"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "deepinfra/bf16"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/alibaba"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "alibaba"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/modal"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "modal/mxfp4"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/nebius"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "nebius/fp4"
