@@ -13,13 +13,16 @@ const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const nav = [
   ["/", "Overview"],
   ["/#limits", "Compare"],
-  ["/calculator", "Calculator"],
   ["/models", "Models"],
   ["/providers", "Providers"],
+  ["/calculator", "Calculator"],
   ["/table", "Table"],
-  ["/changes", "Changes"],
+  ["/api", "API"],
   ["/methodology", "Methodology"],
 ];
+// The footer lists the change log where the header has the API (the footer links the API
+// docs under Project).
+const explore = nav.map(([href, label]) => (href === "/api" ? ["/changes", "Changes"] : [href, label]));
 // In-page links (the homepage's limits explorer) never mark a page as current.
 const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.includes("#") && path.startsWith(href));
 ---
@@ -106,7 +109,7 @@ const isCurrent = (href: string) => (href === "/" ? path === "/" : !href.include
         </div>
         <div>
           <h4>Explore</h4>
-          {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+          {explore.map(([href, label]) => <a href={href}>{label}</a>)}
         </div>
         <div>
           <h4>Data</h4>
