@@ -1,23 +1,41 @@
 ---
-// One model id, the same 5-minute video, and how much of it each provider actually fed the model.
-import { entries, bars, niceScale, providerLabel, modelSlug, VIDEO_MODEL as SLUG } from "../lib/data";
+// One model id, the same 5-minute video, and how much of it each provider actually fed the model:
+// per-minute rates, the routes that accept the video and show the model nothing, and a count of
+// the routes that refuse it.
+import { entries, bars, niceScale, providerLabel, modelSlug, VIDEO_MODEL as SLUG, type Bar } from "../lib/data";
 
 const pick = entries.filter((e) => modelSlug(e) === SLUG);
-const rows = bars("video_frames_per_min", pick).filter((r) => r.value !== null);
-const { max } = niceScale(Math.max(...rows.map((r) => r.value ?? 0)));
+const all = bars("video_frames_per_min", pick);
+const ignored = (r: Bar) => r.value === null && r.text === "Ignored";
+const rows = all.filter((r) => r.value !== null || ignored(r));
+const measured = rows.filter((r) => r.value !== null);
+const refused = all.filter((r) => r.value === null && r.cls.includes("unsupported"));
+const { max } = niceScale(Math.max(...measured.map((r) => r.value ?? 0)));
 const pct = (v: number) => `${Math.max(0.6, Math.min(100, (v / max) * 100)).toFixed(2)}%`;
 const name = pick[0]?.model.name ?? "";
-const lim = (r: (typeof rows)[number]) => r.entry.limits.video_frames_per_min!;
-const hi = rows[0], lo = rows[rows.length - 1];
-const minutes = hi && lim(hi).video_minutes;
-const clip = minutes ? `${Math.floor(minutes)}:${String(Math.round((minutes % 1) * 60)).padStart(2, "0")}` : "";
-const capped = rows.some((r) => lim(r).capped);
+const lim = (r: Bar) => r.entry.limits.video_frames_per_min;
+const mmss = (m: number) => `${Math.floor(m)}:${String(Math.round((m % 1) * 60)).padStart(2, "0")}`;
+// The reference clip is the longest one measured; a route that could only take its first
+// minute (the full clip timed out or overflowed the context) is marked, not compared as equal.
+const minutes = Math.max(...measured.map((r) => lim(r)?.video_minutes ?? 0));
+const clip = minutes ? mmss(minutes) : "";
+const short = (r: Bar) => r.value !== null && (lim(r)?.video_minutes ?? minutes) < minutes - 0.05;
+const full = measured.filter((r) => !short(r));
+const capped = measured.some((r) => lim(r)?.capped);
 // Most rows are OpenRouter upstreams: say so once, and mark the direct APIs instead.
 const direct = rows.filter((r) => r.entry.provider.via !== "openrouter");
-const label = (r: (typeof rows)[number]) => providerLabel(r.entry).replace(" via OpenRouter", "") + (direct.length && direct.includes(r) ? " (direct)" : "");
+const base = (r: Bar) => providerLabel(r.entry).replace(" via OpenRouter", "");
+const label = (r: Bar) => base(r) + (direct.length && direct.includes(r) ? " (direct)" : "");
 const via = direct.length === 0 ? "All via OpenRouter" : direct.length < rows.length ? "Via OpenRouter unless marked direct" : "";
+const tipValue = (r: Bar) => ignored(r) ? "0 frames: the model never saw it"
+  : short(r) ? `${lim(r)!.frames_per_video} frames of the clip's first minute`
+  : `${lim(r)!.frames_per_video} frames of the ${clip} clip`;
+// The headline numbers: most and fewest frames among routes that took the whole clip.
+const hi = full[0], lo = full[full.length - 1];
+const loPick = full.filter((r) => lim(r)?.frames_per_video === lim(lo)?.frames_per_video).find((r) => direct.includes(r)) ?? lo;
+const names = (rs: Bar[]) => new Intl.ListFormat("en-US", { type: "conjunction" }).format([...new Set(rs.map(base))]);
 ---
-{rows.length > 1 && (
+{measured.length > 1 && (
   <figure class="hero-chart" aria-label={`${name}: frames of the same video each provider fed the model`}>
     <figcaption>
       <span class="eyebrow">Same model · same video <a class="hc-model" href={`/models/${SLUG}`}>{name}</a></span>
@@ -25,18 +43,25 @@ const via = direct.length === 0 ? "All via OpenRouter" : direct.length < rows.le
     </figcaption>
     <ul>
       {rows.map((r) => (
-        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={`${lim(r).frames_per_video} frames of the ${clip} clip`} data-tip-body={r.tip}>
-          <span class="hc-prov">{label(r)}</span>
-          <span class="hc-track"><span class="hc-bar" style={`width:${pct(r.value!)}`}></span></span>
-          <span class="hc-val">{r.text.split(" · ")[0]}</span>
+        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={tipValue(r)} data-tip-body={r.tip}>
+          <span class="hc-prov">{label(r)}{short(r) && " †"}</span>
+          <span class="hc-track">{r.value !== null && <span class="hc-bar" style={`width:${pct(r.value)}`}></span>}</span>
+          <span class:list={["hc-val", { none: r.value === null }]}>{r.text.split(" · ")[0]}</span>
         </li>
       ))}
     </ul>
     <p class="hc-foot">
-      {`${via ? `${via}, the` : "The"} same ${clip} clip. ${label(hi)} fed the model`}
-      {" "}<b>{lim(hi).frames_per_video} frames</b>; {label(lo)} fed it <b>{lim(lo).frames_per_video}</b>.
-      {capped && " ⁎ The provider caps frames per video, so longer videos get even fewer per minute."}
+      {`${via ? `${via}, the` : "The"} same ${clip} clip. `}
+      {hi && lo && lim(hi)?.frames_per_video !== lim(lo)?.frames_per_video
+        ? <>{label(hi)} fed the model <b>{lim(hi)!.frames_per_video} frames</b>; {label(lo)} fed it <b>{lim(lo)!.frames_per_video}</b>.</>
+        : loPick && <>{label(loPick)} fed the model <b>{lim(loPick)!.frames_per_video} frames</b> of it.</>}
+      {refused.length > 0 && ` ${refused.length} more refuse${refused.length === 1 ? "s" : ""} video${refused.every((r) => r.entry.provider.via === "openrouter") ? " via OpenRouter" : ""}: ${names(refused)}.`}
     </p>
+    <div class="hc-notes">
+      {measured.some(short) && <p>† Measured on the clip's first minute: the full {clip} clip timed out or overflowed the context window.</p>}
+      {capped && <p>⁎ The provider caps frames per video, so longer videos get even fewer per minute.</p>}
+      {rows.some(ignored) && <p>Ignored: the request succeeds, but the video adds no tokens.</p>}
+    </div>
     <p class="hc-rank"><a href={`/models/${SLUG}#video_frames_per_min`}>{`See all ${pick.length} ${name} providers →`}</a></p>
   </figure>
 )}

@@ -15,8 +15,20 @@ const videoYes = featured.filter((e) => e.accepts.video === "yes").length;
 const of = (slug: string) => entries.filter((e) => modelSlug(e) === slug);
 const heroFrames = bars("frames_768x432", of(HERO_MODEL)).filter((b) => b.value);
 const [heroHi, heroLo] = [heroFrames[0], heroFrames[heroFrames.length - 1]];
-const fed = bars("video_frames_per_min", of(VIDEO_MODEL)).filter((b) => b.value !== null)
-  .map((b) => b.entry.limits.video_frames_per_min!.frames_per_video!);
+// The video model's routes: the fewest frames of the whole clip, a route that samples so densely
+// the whole clip fails (measured on its first minute), and one that accepts it and shows nothing.
+const vBars = bars("video_frames_per_min", of(VIDEO_MODEL));
+const vLim = (b: (typeof vBars)[number]) => b.entry.limits.video_frames_per_min!;
+const vMeasured = vBars.filter((b) => b.value !== null);
+const vMinutes = Math.max(...vMeasured.map((b) => vLim(b).video_minutes ?? 0));
+const vFull = vMeasured.filter((b) => (vLim(b).video_minutes ?? vMinutes) >= vMinutes - 0.05);
+const vDense = vMeasured.find((b) => !vFull.includes(b));
+const vName = (b: (typeof vBars)[number]) => b.entry.provider.name;
+const vFew = vFull.filter((b) => vLim(b).frames_per_video === vLim(vFull[vFull.length - 1]).frames_per_video)
+  .find((b) => b.entry.provider.via !== "openrouter") ?? vFull[vFull.length - 1];
+const vMany = vFull[0];
+const vIgnored = vBars.find((b) => b.value === null && b.text === "Ignored");
+const videoName = of(VIDEO_MODEL)[0]?.model.name;
 // What was measured, for the strip under the hero.
 const upstreamOnly = entries.length - featured.length;
 const directApis = new Set(entries.filter((e) => e.provider.via !== "openrouter").map((e) => e.provider.id)).size;
@@ -27,10 +39,13 @@ const directApis = new Set(entries.filter((e) => e.provider.via !== "openrouter"
     <span class="eyebrow"><b>●</b> {entries.length} model × provider pairs</span>
     <h1><span class="dim">Same model. Same video.</span> <span class="hl">Different providers. <em>Different views.</em></span></h1>
     <p class="lede">
-      Send the same 5-minute video to the same model, and one provider shows it {Math.max(...fed)} frames while
-      another shows it {Math.min(...fed)}. Both requests succeed, so nothing tells you the model saw less. vlm.fyi
-      measures how much of your video each API actually passes to the model, along with its limits on images, frames,
-      bytes and files.
+      {`Send the same ${Math.round(vMinutes)}-minute video to ${videoName}, and ${vName(vFew)} shows the model `
+        + `${vLim(vFew).frames_per_video} frames of it.`}
+      {vMany && vLim(vMany).frames_per_video !== vLim(vFew).frames_per_video && ` ${vName(vMany)} shows it ${vLim(vMany).frames_per_video}.`}
+      {vDense && ` ${vName(vDense)} samples ${vDense.value} frames a minute, so the whole video times out or overflows the context window.`}
+      {vIgnored && ` ${vName(vIgnored)} accepts it, and the model sees none of it.`}
+      {" "}A successful response never tells you how much the model saw. vlm.fyi measures how much of your video each
+      API actually passes to the model, along with its limits on images, frames, bytes and files.
     </p>
     <div class="actions">
       <a class="pill" href="#limits">See the limits</a>

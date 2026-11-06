@@ -344,9 +344,9 @@ export function overall(e: Entry): { score: number; limits: number } | null {
   return overallCache.get(e)!;
 }
 
-/** The model in the homepage hero (frames per request), and the one in the video density block below it. */
+/** The model in the homepage frames-per-request block, and the one in the video density hero. */
 export const HERO_MODEL = "deepseek-v4.1-flash-1017";
-export const VIDEO_MODEL = "qwen3.8-27b";
+export const VIDEO_MODEL = "kimi-k3.1-pro";
 
 export const OVERALL = "overall";
 /** One-line explanation of the overall score, for tooltips; /methodology#overall-score has the rest. */
