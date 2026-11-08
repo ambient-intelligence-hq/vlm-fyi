@@ -6,13 +6,36 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
 <Base title="Methodology" description="How vlm.fyi measures request limits: synthetic probe requests that isolate one limit at a time.">
   <div class="prose page-head">
     <span class="eyebrow">Methodology</span>
+    <h1>Why we built this?</h1>
+    <br />
+    <p>
+      Vlm.fyi is made by the team behind <a href={ambient("methodology")}>Ambient</a>, the
+      <a href={AMBIENT_REPO}>open-source</a> video engine for AI agents. Ambient sends videos to many providers, and
+      none of them documents these limits fully. So we measured them, and Ambient now sizes each request from this data.
+      We publish it because everyone building with vision models runs into the same walls.
+    <br />
+    <br />
+      At <a href={ambient("methodology")}>Ambient</a>, we have burned our fingers several times because our video requests were randomly routed to a provider
+      that silently downsampled our videos, causing our agent's performance to degrade. Not only that, but even if we
+      pinned a provider for a specific model, the provider would change its limits over time, causing our pipeline to
+      break.
+      <br />
+      <br />
+      To address this, we built an internal service to periodically probe and monitor limits. During the process, we
+      realized that this could be useful to the community at large, so we decided to open-source it. We hope this helps
+      anyone building video pipelines with LLMs create a robust provider-selection process and avoid surprises. This is 
+      not going to be a static dataset, but rather a live dataset that is updated periodically. The updates will be published
+      in our website and API. We are excited to share it with the community and looking forward to your feedback.
+      <br />
+    </p>
+    <br />
+    <br />
     <h1>How we measure</h1>
     <p class="lede">
-      Every number on this site comes from requests we sent to the provider's OpenAI-compatible chat completions API.
-      The current data was measured on {updated}.
+      We run several probe requests to the provider's OpenAI-compatible chat completions API to measure request limits.
     </p>
 
-    <h2>One limit at a time</h2>
+    <h2>Testing the limits</h2>
     <p>
       A real video request can hit several limits at once: the image count, the request size, the decoded pixels, the
       context window. To tell them apart, each probe sends a minimal request ("Reply with OK", 16 output tokens) carrying
@@ -23,7 +46,7 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
       <li><strong>768×432 frames:</strong> real-size frames. 768 px on the long edge is a common working size for video pipelines (providers tile or rescale images around it), and 432 px makes it 16:9, the shape of most video. This reports whichever limit a realistic workload hits first. Limits on pixels and tokens scale with frame size: 1280×720 frames would fit about 2.8× fewer; image-count limits don't change.</li>
       <li><strong>Inline request body:</strong> tiny images padded with JPEG comment segments, which decoders ignore. The body grows; the pixels don't.</li>
       <li><strong>Images by URL:</strong> the same padded images, hosted and sent as https links, so the provider downloads them itself.</li>
-      <li><strong>Video file size:</strong> a 5-second clip padded with an MP4 <code>free</code> box, which players ignore. The file grows; the content doesn't.</li>
+      <li><strong>Video file size:</strong> a 5-second clip padded with an MP4 <code>free</code> box, which players ignore. The file grows; the content doesn't. Providers that refuse video URLs get the same clip inline (base64), up to 96 MB of video in a 128 MB request body.</li>
     </ul>
     <p>
       For each limit we double the size until a request fails, then bisect between the last pass and the first failure.
@@ -31,17 +54,19 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
       the assistant message.
     </p>
 
-    <h2>Video density: how much of a video the model sees</h2>
+    <h2 id="video-density">Video density: how much of a video the model sees</h2>
     <p>
-      Sending a video doesn't tell you how much of it reaches the model. Providers sample frames themselves, and for the
-      same model id the amount differs by more than 100×. To measure it we send one real reference clip (5 minutes 8 seconds)
-      as a <code>video_url</code>, twice, and read the provider's own billing:
+      Sending a video doesn't tell you how much of it reaches the model. Providers sample and resize frames themselves,
+      and for the same model id the amount differs by more than 100×. We measure it from the provider's own billing,
+      never from the model's reply.
     </p>
     <ul>
-      <li><strong>Video tokens per minute</strong> = prompt tokens with the video − prompt tokens for the same prompt without it, divided by the clip's length. This is exact and works for any model.</li>
-      <li><strong>≈ frames per minute</strong> divides by the model's tokens per video frame. We only show it where that is documented: Qwen3-VL family ~169 (338 per 768×432 frame, halved by its 2× temporal merge) and Gemini 66 (its default media resolution). Gemini comes out at exactly 60, its documented 1 frame per second.</li>
+      <li><strong>Video tokens per minute.</strong> We send one real reference clip (5 minutes 8 seconds, 1080p) as a <code>video_url</code>, twice, and subtract the prompt tokens billed for the same prompt without it, divided by the clip's length. This is exact and works for any model. It grows with both the number and the size of the frames, so it is the number that ranks providers.</li>
+      <li><strong>Frames per minute.</strong> We send clips of known length, frame rate and resolution (1 second to 6 minutes, 360p to 1080p, 24 and 30 fps) and record the tokens billed for each. The model's reference preprocessing, from its published processor configuration and the vLLM or transformers video code, says how many frames each clip becomes, how they are grouped and what each group costs. Per-frame timestamp text is counted with the model's own tokenizer. A route gets a frame count only if one setting reproduces the bill for every clip to within one token: the reference itself, or the reference with a provider setting changed (frame rate, frame cap or token budget). That setting must also predict the tokens per minute billed for the reference clip.</li>
+      <li>Models that merge frames before encoding them (Kimi four at a time; Qwen, GLM, Nemotron and Muse Spark two at a time) are billed per group. Frames per minute counts every frame in a group, as the model's architecture requires.</li>
+      <li><strong>Not determined</strong> means the billing is consistent but no setting reproduces it exactly, so only tokens per minute is shown. <strong>Varies</strong> means the same request billed different amounts on different calls.</li>
       <li><strong>Ignored</strong> means the provider accepted the video with HTTP 200, but it added no tokens: the model never saw it.</li>
-      <li>Some providers reject the 40 MB original for size. They get the same clip re-encoded to 360p (under 10 MB), and the result says so. For Gemini this doesn't change the number; for token-per-pixel models it may.</li>
+      <li>Some providers reject the 40 MB original for size or length. They get a 360p, 4-minute or 1-minute copy of the same clip, in that order, and the result says so. A provider that refuses all of them shows its numbers on the longest clip it accepted, and they don't count toward the overall score.</li>
     </ul>
 
     <h2>OpenRouter upstreams</h2>
@@ -49,13 +74,6 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
       OpenRouter serves one model id from many upstream providers and picks one per request. We pin each upstream in turn
       (<code>provider.order</code> with fallbacks off) and measure it separately. When a pinned upstream can't take a
       request, OpenRouter answers "no endpoints found"; after smaller requests passed, we treat that as the upstream's limit.
-    </p>
-
-    <h2>Evidence</h2>
-    <p>
-      Every request and response is recorded: the request body (images replaced by their SHA-256 and size), the status,
-      headers and body, timings, and the provider's request id (OpenRouter's <code>X-Generation-Id</code>, or
-      <code>x-request-id</code> / <code>cf-ray</code>). That lets a provider look up the exact request behind any number here.
     </p>
 
     <h2 id="overall-score">Overall score: ranking a model's providers</h2>
@@ -66,14 +84,19 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
     <ol>
       <li>
         <strong>Limits.</strong> Six limits where higher is better: images per request, 768×432 frames, inline request
-        body, images by URL, video file size and video frames per minute. Token counts are left out, because more tokens
-        per frame isn't better or worse in itself.
+        body, images by URL, video file size and video density. Video density counts as video tokens per minute, because
+        it measures both how many frames reach the model and how large they are; frames per minute alone would rank a
+        provider sending tiny frames as high as one sending full-size frames. Frames per minute is shown next to it but
+        not scored. Tokens per image are left out, because more tokens per image isn't better or worse in itself.
       </li>
       <li>
         <strong>Each limit as a share of the best.</strong> For each limit, among the model's providers measured on it,
         a provider scores its value divided by the best provider's value, capped at 100%. A "≥" value counts at our
-        probe's cap. A rejected, unsupported or ignored input scores 0%. An inconclusive result counts at the largest
-        size that passed, or is skipped if none did. Limits are skipped too when only one provider was measured on them
+        probe's cap. A rejected, unsupported or ignored input scores 0%. A provider that accepts a video but ignores it (bills no tokens for it) also scores 0% on video file size, and doesn't count as the best: the file it accepted never reached the model. An inconclusive result counts at the largest
+        size that passed, or is skipped if none did. A provider that refused the 5-minute video scores 0 on video
+        density even if it took a shorter clip: some providers send a fixed number of frames per video, so rates per
+        minute from clips of different lengths don't compare. A provider that couldn't finish the full clip in time or
+        within its context window is measured on the clip's first minute, and that counts. Limits are skipped too when only one provider was measured on them
         or no provider accepts them (no DeepSeek V4.1 Flash endpoint
         takes a video file, so video file size doesn't count against any of them).
       </li>
@@ -83,13 +106,15 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
       </li>
     </ol>
     <p>
-      For example, Alibaba Cloud serves Qwen3.8 27B with the most images (250) and frames per minute (60), but takes
-      images by URL only up to 28 MB where another provider took at least 128 MB: that limit scores 22%, the other five
-      100%, so its score is 87. A provider at 170 images (68%) and 6.3 frames per minute (11%) scores 39.
+      For example, Fireworks serves Kimi K3.1 Pro with 120 images per request, 12% of Together AI's 999, and 112 768×432
+      frames, 29% of the 384 others took. Its inline body passes our cap (100%), and images by URL stop at 80 MB (63%).
+      Its video file size and video density are the best measured (100% each), so its score is 67. Nebius takes more
+      images and frames but no video at all, and scores 62.
     </p>
     <p>
       Read it with care. Providers aren't always measured on the same limits: most OpenRouter upstreams have only images
-      and video density, while direct APIs have all six. The number of limits behind each score is shown next to it.
+      and video density, while direct APIs have all six. Qwen3.8 27B has no overall score for this reason: most of its
+      providers were measured on 2 limits and a few on 6. The number of limits behind each score is shown next to it.
       And because every limit weighs the same, the score is a summary; the per-limit charts show what it hides.
     </p>
 
@@ -112,20 +137,7 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
 
     <h2>What's not here</h2>
     <p>
-      Self-hosted deployments (for example your own vLLM server) are left out: their limits are set by your configuration,
-      such as <code>--limit-mm-per-prompt</code> and <code>VLLM_MAX_MEDIA_REQUEST_DECODE_BYTES</code>.
-    </p>
-
-    <h2>Why we built this</h2>
-    <p>
-      vlm.fyi is made by the team behind <a href={ambient("methodology")}>Ambient</a>, the
-      <a href={AMBIENT_REPO}>open-source</a> video engine for AI agents. Ambient sends long videos to many providers, and
-      none of them documents these limits fully. So we measured them, and Ambient now sizes each request from this data.
-      We publish it because everyone building with vision models runs into the same walls.
-    </p>
-    <p>
-      The measurements are the same for every provider and model, including the ones Ambient uses. Ambient isn't ranked
-      or scored anywhere on this site.
+      This dataset only track serverless and shared endpoints. Dedicated deployments provided by the providers themselves are left out: their limits might be different.
     </p>
 
     <h2>Corrections and contact</h2>
@@ -133,8 +145,8 @@ import { REPO, AMBIENT_REPO, CONTACT, ambient } from "../lib/site";
       Found a limit that's wrong or out of date? <a href={`${REPO}/issues`}>Open an issue</a> with the request you sent and the error you got.
     </p>
     <p>
-      For anything else, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. Providers: if you'd like an endpoint measured,
-      or think a number is unfair, tell us. Teams running video analysis at scale: we're happy to talk about what Ambient
+      For anything else, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>. <br />Providers: if you'd like an endpoint measured,
+      tell us. <br />Teams running video analysis at scale: we're happy to talk about what Ambient
       can do for you.
     </p>
   </div>

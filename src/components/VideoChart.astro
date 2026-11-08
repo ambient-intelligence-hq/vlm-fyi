@@ -2,7 +2,7 @@
 // One model id, the same 5-minute video, and how much of it each provider actually fed the model:
 // per-minute rates, the routes that accept the video and show the model nothing, and a count of
 // the routes that refuse it.
-import { entries, bars, niceScale, providerLabel, modelSlug, VIDEO_MODEL as SLUG, type Bar } from "../lib/data";
+import { entries, bars, densityRow, providerLabel, modelSlug, VIDEO_MODEL as SLUG, type Bar } from "../lib/data";
 
 const pick = entries.filter((e) => modelSlug(e) === SLUG);
 const all = bars("video_frames_per_min", pick);
@@ -10,13 +10,15 @@ const ignored = (r: Bar) => r.value === null && r.text === "Ignored";
 const rows = all.filter((r) => r.value !== null || ignored(r));
 const measured = rows.filter((r) => r.value !== null);
 const refused = all.filter((r) => r.value === null && r.cls.includes("unsupported"));
-const { max } = niceScale(Math.max(...measured.map((r) => r.value ?? 0)));
-const pct = (v: number) => `${Math.max(0.6, Math.min(100, (v / max) * 100)).toFixed(2)}%`;
+// Frames delivered per minute only; the density charts below put video tokens next to them.
+const dens = new Map(pick.map((e) => [e, densityRow(e)]));
+const fMax = Math.max(...pick.map((e) => dens.get(e)!.fr ?? 0), 1);
+const pct = (v: number) => `${Math.max(0.6, Math.min(100, (v / fMax) * 100)).toFixed(2)}%`;
 const name = pick[0]?.model.name ?? "";
 const lim = (r: Bar) => r.entry.limits.video_frames_per_min;
 const mmss = (m: number) => `${Math.floor(m)}:${String(Math.round((m % 1) * 60)).padStart(2, "0")}`;
 // The reference clip is the longest one measured; a route that could only take its first
-// minute (the full clip timed out or overflowed the context) is marked, not compared as equal.
+// minute (the full clip timed out) is marked, not compared as equal.
 const minutes = Math.max(...measured.map((r) => lim(r)?.video_minutes ?? 0));
 const clip = minutes ? mmss(minutes) : "";
 const short = (r: Bar) => r.value !== null && (lim(r)?.video_minutes ?? minutes) < minutes - 0.05;
@@ -28,7 +30,7 @@ const base = (r: Bar) => providerLabel(r.entry).replace(" via OpenRouter", "");
 const label = (r: Bar) => base(r) + (direct.length && direct.includes(r) ? " (direct)" : "");
 const via = direct.length === 0 ? "All via OpenRouter" : direct.length < rows.length ? "Via OpenRouter unless marked direct" : "";
 const tipValue = (r: Bar) => ignored(r) ? "0 frames: the model never saw it"
-  : short(r) ? `${lim(r)!.frames_per_video} frames of the clip's first minute`
+  : short(r) ? `${lim(r)!.frames_per_video} frames of ${densityRow(r.entry).frClip || "a shorter part of the clip"}`
   : `${lim(r)!.frames_per_video} frames of the ${clip} clip`;
 // The headline numbers: most and fewest frames among routes that took the whole clip.
 const hi = full[0], lo = full[full.length - 1];
@@ -42,13 +44,16 @@ const names = (rs: Bar[]) => new Intl.ListFormat("en-US", { type: "conjunction" 
       <span class="hc-title">Frames the model saw, per minute of video</span>
     </figcaption>
     <ul>
-      {rows.map((r) => (
-        <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={tipValue(r)} data-tip-body={r.tip}>
-          <span class="hc-prov">{label(r)}{short(r) && " †"}</span>
-          <span class="hc-track">{r.value !== null && <span class="hc-bar" style={`width:${pct(r.value)}`}></span>}</span>
-          <span class:list={["hc-val", { none: r.value === null }]}>{r.text.split(" · ")[0]}</span>
-        </li>
-      ))}
+      {rows.map((r) => {
+        const d = dens.get(r.entry)!;
+        return (
+          <li data-tip-title={`${name} · ${providerLabel(r.entry)}`} data-tip-value={tipValue(r)} data-tip-body={d.tip}>
+            <span class="hc-prov">{label(r)}{short(r) && " †"}</span>
+            <span class="hc-track">{d.fr !== null && <span class="hc-bar" style={`width:${pct(d.fr)}`}></span>}</span>
+            <span class:list={["hc-val", { none: d.fr === null }]}>{d.fr !== null ? <>{d.frText}{lim(r)?.capped && " ⁎"}</> : ignored(r) ? "Ignored" : r.text}</span>
+          </li>
+        );
+      })}
     </ul>
     <p class="hc-foot">
       {`${via ? `${via}, the` : "The"} same ${clip} clip. `}
@@ -58,10 +63,11 @@ const names = (rs: Bar[]) => new Intl.ListFormat("en-US", { type: "conjunction" 
       {refused.length > 0 && ` ${refused.length} more refuse${refused.length === 1 ? "s" : ""} video${refused.every((r) => r.entry.provider.via === "openrouter") ? " via OpenRouter" : ""}: ${names(refused)}.`}
     </p>
     <div class="hc-notes">
-      {measured.some(short) && <p>† Measured on the clip's first minute: the full {clip} clip timed out or overflowed the context window.</p>}
+      {measured.some(short) && <p>† Measured on the clip's first minute: the full {clip} clip timed out at 300 s.</p>}
       {capped && <p>⁎ The provider caps frames per video, so longer videos get even fewer per minute.</p>}
       {rows.some(ignored) && <p>Ignored: the request succeeds, but the video adds no tokens.</p>}
     </div>
-    <p class="hc-rank"><a href={`/models/${SLUG}#video_frames_per_min`}>{`See all ${pick.length} ${name} providers →`}</a></p>
+    <p class="hc-rank"><a href={`/models/${SLUG}#video_tokens_per_min`}>{`See all ${pick.length} ${name} providers →`}</a></p>
   </figure>
 )}
+

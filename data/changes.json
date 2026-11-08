@@ -890,5 +890,18 @@
   "date": "2026-11-05",
   "id": "together/kimi-k3.1-pro",
   "change": "added"
+ },
+ {
+  "date": "2026-11-07",
+  "id": "openrouter-deepinfra-bf16/qwen3.8-27b",
+  "change": "limit",
+  "limit": "video_tokens_per_min",
+  "from": {
+   "status": "measured",
+   "value": 2499
+  },
+  "to": {
+   "status": "rejected"
+  }
  }
 ]

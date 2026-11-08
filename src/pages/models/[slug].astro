@@ -3,9 +3,10 @@ import Base from "../../layouts/Base.astro";
 import EntryCard from "../../components/EntryCard.astro";
 import MetricTabs from "../../components/MetricTabs.astro";
 import RankedBars from "../../components/RankedBars.astro";
+import DensityBars from "../../components/DensityBars.astro";
 import Tooltip from "../../components/Tooltip.astro";
 import AmbientNote from "../../components/AmbientNote.astro";
-import { models, bars, METRICS, OVERALL_METRIC } from "../../lib/data";
+import { models, bars, METRICS, OVERALL_METRIC, DENSITY, NO_OVERALL } from "../../lib/data";
 
 export function getStaticPaths() {
   return models().map((m) => ({ params: { slug: m.slug }, props: m }));
@@ -24,12 +25,13 @@ const metrics = n > 1 ? [OVERALL_METRIC, ...METRICS].filter((m) => bars(m.key, e
   <p class="lede">
     Measured on {n} provider{n === 1 ? "" : "s"}.{mods && ` The model card lists ${mods} input; what each provider accepts is below.`}
   </p>
+  {NO_OVERALL[Astro.params.slug!] && <p class="sub">No overall score for this model. {NO_OVERALL[Astro.params.slug!]}</p>}
   <p class="sub"><a href={`/calculator?model=${Astro.params.slug}`}>How much of your video will {name} see? Try the calculator →</a></p>
   </div>
   {metrics.length > 0 && (
     <section class="explorer model-explorer" aria-label={`${name} limits by provider`}>
       <div class="explorer-controls"><MetricTabs metrics={metrics} /></div>
-      {metrics.map((m, i) => <RankedBars metric={m} only={entries} hidden={i > 0} />)}
+      {metrics.map((m, i) => m.key === DENSITY ? <DensityBars metric={m} only={entries} hidden={i > 0} /> : <RankedBars metric={m} only={entries} hidden={i > 0} />)}
     </section>
   )}
   <AmbientNote placement="model-page">

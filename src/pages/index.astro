@@ -1,12 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
 import RankedBars from "../components/RankedBars.astro";
+import DensityBars from "../components/DensityBars.astro";
 import CapabilityGrid from "../components/CapabilityGrid.astro";
 import Tooltip from "../components/Tooltip.astro";
 import MetricTabs from "../components/MetricTabs.astro";
 import HeroChart from "../components/HeroChart.astro";
 import VideoChart from "../components/VideoChart.astro";
-import { entries, featured, METRICS, COLUMNS, providers, bars, modelSlug, HERO_MODEL, VIDEO_MODEL } from "../lib/data";
+import { entries, featured, METRICS, COLUMNS, providers, bars, modelSlug, HERO_MODEL, VIDEO_MODEL, DENSITY } from "../lib/data";
 
 const plural = (n: number, one: string, many: string) => (new Intl.PluralRules("en-US").select(n) === "one" ? one : many);
 const videoYes = featured.filter((e) => e.accepts.video === "yes").length;
@@ -42,7 +43,7 @@ const directApis = new Set(entries.filter((e) => e.provider.via !== "openrouter"
       {`Send the same ${Math.round(vMinutes)}-minute video to ${videoName}, and ${vName(vFew)} shows the model `
         + `${vLim(vFew).frames_per_video} frames of it.`}
       {vMany && vLim(vMany).frames_per_video !== vLim(vFew).frames_per_video && ` ${vName(vMany)} shows it ${vLim(vMany).frames_per_video}.`}
-      {vDense && ` ${vName(vDense)} samples ${vDense.value} frames a minute, so the whole video times out or overflows the context window.`}
+      {vDense && ` ${vName(vDense)} samples ${vDense.value} frames a minute, about ${((vDense.entry.limits.video_tokens_per_min?.value ?? 0) * vMinutes / 1e6).toFixed(1)} million tokens for the whole video.`}
       {vIgnored && ` ${vName(vIgnored)} accepts it, and the model sees none of it.`}
       {" "}A successful response never tells you how much the model saw. vlm.fyi measures how much of your video each
       API actually passes to the model, along with its limits on images, frames, bytes and files.
@@ -112,7 +113,7 @@ const directApis = new Set(entries.filter((e) => e.provider.via !== "openrouter"
     </div>
     </div>
     </div>
-    {METRICS.map((m, i) => <RankedBars metric={m} hidden={i > 0} collapseNo />)}
+    {METRICS.map((m, i) => m.key === DENSITY ? <DensityBars metric={m} hidden={i > 0} /> : <RankedBars metric={m} hidden={i > 0} collapseNo />)}
   </section>
 
   <section class="block">

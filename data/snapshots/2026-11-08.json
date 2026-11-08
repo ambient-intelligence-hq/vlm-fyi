@@ -1,0 +1,6863 @@
+{
+ "$schema": "https://vlm.fyi/schema/capabilities-v1.json",
+ "version": 1,
+ "probe_version": "2",
+ "updated": "2026-11-08",
+ "limits": {
+  "images_per_request": {
+   "label": "Images per request",
+   "unit": "count"
+  },
+  "frames_768x432": {
+   "label": "768×432 frames per request",
+   "unit": "count"
+  },
+  "inline_request_bytes": {
+   "label": "Inline request body",
+   "unit": "bytes"
+  },
+  "url_image_bytes": {
+   "label": "Images by URL (total)",
+   "unit": "bytes"
+  },
+  "video_file_bytes": {
+   "label": "Video file size",
+   "unit": "bytes"
+  },
+  "tokens_per_frame_768x432": {
+   "label": "Tokens per 768×432 frame",
+   "unit": "tokens"
+  },
+  "video_tokens_per_min": {
+   "label": "Video tokens per minute",
+   "unit": "tokens"
+  },
+  "video_frames_per_min": {
+   "label": "Video frames per minute",
+   "unit": "count"
+  }
+ },
+ "entries": [
+  {
+   "id": "openrouter-fireworks/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": "openrouter",
+    "tag": "fireworks"
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "deepseek/deepseek-v4.1-flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 64000000,
+     "fails_at": 128000000,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter: no endpoints found that support input video."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter: no endpoints found that support input video."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "fireworks/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": null
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "accounts/fireworks/models/deepseek-v4p1-flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+   ],
+   "featured": true
+  },
+  {
+   "id": "jarvislabs/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "jarvislabs",
+    "name": "Jarvislabs",
+    "via": null
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "deepseek-v4.1-flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 999,
+     "fails_at": 1000,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 12000000,
+     "fails_at": 14000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the byte limit."
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Inline bodies above ~5–8 MB fail with \"Request body timed out\" (about a 10 s window to receive the body), so the usable inline size depends on upload speed. Hard limit: HTTP 413 at 16 MB. Images by URL avoid both."
+   ],
+   "featured": true
+  },
+  {
+   "id": "modal/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "modal",
+    "name": "Modal",
+    "via": null
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 999,
+     "fails_at": 1000,
+     "failure": "image_count",
+     "stated": 999,
+     "evidence": "At most 999 image(s) may be provided in one prompt. (parameter=image)"
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "other",
+     "evidence": "At most 0 video(s) may be provided in one prompt. (parameter=video)"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "other",
+     "evidence": "At most 0 video(s) may be provided in one prompt. (parameter=video)"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "together/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 839,
+     "fails_at": 840,
+     "failure": "decoded_bytes",
+     "evidence": "Multimodal payload is 1503781440 bytes (1434.1 MiB) which exceeds the gRPC single-message ceiling of 1502189977 bytes (1432.6 MiB). Reduce the number of images, lower their resolution (e.g. `detail="
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Invalid multimodal request: invalid media request for model deepseek_v41: modality video is not supported by model spec deepseek_v41"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Invalid multimodal request: invalid media request for model deepseek_v41: modality video is not supported by model spec deepseek_v41"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Together caps the decoded media in one request at 1,502,189,977 bytes (≈1.43 GB). Images are decoded to tensors before this check, so pixel count matters, not file size."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-google-ai-studio/gemini-3.7-flash",
+   "provider": {
+    "id": "google-ai-studio",
+    "name": "Google AI Studio",
+    "via": "openrouter",
+    "tag": "google-ai-studio"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 960,
+     "fails_at": 1024,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 14000000,
+     "fails_at": 16000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the provider maximum size: 21336274 bytes exceeds the 20000000 byte limit for Google AI Studio"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 14000000,
+     "fails_at": 16000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the provider maximum size: 21334370 bytes exceeds the 20000000 byte limit for Google AI Studio"
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 12000000,
+     "fails_at": 16000000,
+     "failure": "invalid_media",
+     "evidence": "Request contains an invalid argument."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 1100
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3961,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-google-ai-studio-flex/gemini-3.7-flash",
+   "provider": {
+    "id": "google-ai-studio-flex",
+    "name": "Google AI Studio (flex)",
+    "via": "openrouter",
+    "tag": "google-ai-studio/flex"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 896,
+     "fails_at": 1024,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3961,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-google-ai-studio-priority/gemini-3.7-flash",
+   "provider": {
+    "id": "google-ai-studio-priority",
+    "name": "Google AI Studio (priority)",
+    "via": "openrouter",
+    "tag": "google-ai-studio/priority"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 960,
+     "fails_at": 1024,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3961,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-google-vertex-global/gemini-3.7-flash",
+   "provider": {
+    "id": "google-vertex-global",
+    "name": "Google Vertex (global)",
+    "via": "openrouter",
+    "tag": "google-vertex/global"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 768,
+     "fails_at": 1024,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3960,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-google-vertex-global-flex/gemini-3.7-flash",
+   "provider": {
+    "id": "google-vertex-global-flex",
+    "name": "Google Vertex (global, flex)",
+    "via": "openrouter",
+    "tag": "google-vertex/global/flex"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 960,
+     "fails_at": 961,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3960,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-google-vertex-global-priority/gemini-3.7-flash",
+   "provider": {
+    "id": "google-vertex-global-priority",
+    "name": "Google Vertex (global, priority)",
+    "via": "openrouter",
+    "tag": "google-vertex/global/priority"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-03",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 960,
+     "fails_at": 961,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3960,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-google-vertex-us/gemini-3.7-flash",
+   "provider": {
+    "id": "google-vertex-us",
+    "name": "Google Vertex (us)",
+    "via": "openrouter",
+    "tag": "google-vertex/us"
+   },
+   "model": {
+    "id": "google/gemini-3.7-flash",
+    "name": "Gemini 3.7 Flash",
+    "vendor": "Google",
+    "api_id": "google/gemini-3.7-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "file",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 768,
+     "fails_at": 1024,
+     "failure": "context_length",
+     "evidence": "The input token count exceeds the maximum number of tokens allowed 1048576."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 3960,
+     "video": "baker_5min_360p",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 60.0,
+     "capped": false,
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "jarvislabs/gemma-4-31b",
+   "provider": {
+    "id": "jarvislabs",
+    "name": "Jarvislabs",
+    "via": null
+   },
+   "model": {
+    "id": "google/gemma-4-31b-it",
+    "name": "Gemma 4 31B",
+    "vendor": "Google",
+    "api_id": "gemma-4-31b-it",
+    "input_modalities": [
+     "image",
+     "text",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 4,
+     "fails_at": 5,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 4,
+     "fails_at": 5,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 12000000,
+     "fails_at": 14000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the byte limit."
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 1110
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 467,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "frame",
+     "units_per_video": 32,
+     "tokens_per_unit": 66,
+     "frame_size": "528x288",
+     "reference": false,
+     "setting": "all frames when the video has fewer than 32",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 467,
+      "measured_tokens_per_min": 467,
+      "diff_pct": -0.07
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "The deployment accepts at most 4 images per request."
+   ],
+   "featured": true
+  },
+  {
+   "id": "fireworks/glm-5.3-flash",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": null
+   },
+   "model": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "vendor": "Z.ai",
+    "api_id": "accounts/fireworks/models/glm-5p3-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "invalid_media",
+     "evidence": "Invalid image or video input"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "inconclusive",
+     "reason": "provider_error",
+     "evidence": "Cannot process videos: libGL.so.1: cannot open shared object file: No such file or directory"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 450
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 46994,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 777,
+     "frame_size": "1036x588",
+     "reference": true,
+     "setting": "GLM-5.3 reference: 2 fps, 2-frame groups, 240,000-token budget per video",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 46994,
+      "measured_tokens_per_min": 46994,
+      "diff_pct": -0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+   ],
+   "featured": true
+  },
+  {
+   "id": "jarvislabs/glm-5.3-flash",
+   "provider": {
+    "id": "jarvislabs",
+    "name": "Jarvislabs",
+    "via": null
+   },
+   "model": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "vendor": "Z.ai",
+    "api_id": "glm-5.3-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 1024
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 128,
+     "fails_at": 144,
+     "failure": "provider_error",
+     "evidence": "Model request failed."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 12000000,
+     "fails_at": 14000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the byte limit."
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 64000000,
+     "fails_at": 80000000,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 450
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 5834,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 91,
+     "frame_size": "364x196",
+     "reference": false,
+     "setting": "a budget of about 29,750 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 5834,
+      "measured_tokens_per_min": 5834,
+      "diff_pct": -0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "together/glm-5.3-flash",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "vendor": "Z.ai",
+    "api_id": "zai-org/GLM-5.3-Flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 1004,
+     "fails_at": 1005,
+     "failure": "image_count",
+     "stated": 999,
+     "note": "The error states a limit of 999, but 1,004 passed: the enforced limit is the measured one.",
+     "evidence": "Failed to start generation: At most 999 image(s) may be provided in one prompt. (parameter=image)"
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "media_bytes",
+     "stated": 268435456,
+     "evidence": "Could not load the media in this request — video #1: video too large: 320000000 exceeds limit 268435456."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 450
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 952,
+     "video": "baker_5min_360p",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 299,
+     "frame_size": "644x364",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips); a budget of about 29,250 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 952,
+      "measured_tokens_per_min": 952,
+      "diff_pct": 0.02
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Together caps the decoded media in one request at ≈1.43 GB (seen on DeepSeek V4.1 Flash; likely shared)."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-z-ai/glm-5.3-flash",
+   "provider": {
+    "id": "z-ai",
+    "name": "Z.ai",
+    "via": "openrouter",
+    "tag": "z-ai"
+   },
+   "model": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "vendor": "Z.ai",
+    "api_id": "z-ai/glm-5.3-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 13,163 prompt tokens (≈18 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 64000000,
+     "fails_at": 80000000,
+     "failure": "request_bytes",
+     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":413,\"metadata\":{\"raw\":\"Payload Too Large\",\"provider_name\":\"Z.AI\",\"is_byok\":false}},\"user_id\":\"<redacted>\"}",
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 450
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 39134,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 646,
+     "frame_size": "952x532",
+     "reference": false,
+     "setting": "a budget of about 204,000 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 39134,
+      "measured_tokens_per_min": 39134,
+      "diff_pct": -0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": false,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-alibaba/kimi-k3",
+   "provider": {
+    "id": "alibaba",
+    "name": "Alibaba Cloud",
+    "via": "openrouter",
+    "tag": "alibaba"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 250,
+     "fails_at": 251,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 224,
+     "fails_at": 256,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Video inputs are not supported by this model."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Video inputs are not supported by this model."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-baseten-fp8/kimi-k3",
+   "provider": {
+    "id": "baseten-fp8",
+    "name": "Baseten (fp8)",
+    "via": "openrouter",
+    "tag": "baseten/fp8"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 96,
+     "fails_at": 97,
+     "failure": "image_count",
+     "stated": 96,
+     "evidence": "Too many images: 97 (max 96)"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 96,
+     "fails_at": 112,
+     "failure": "image_count",
+     "stated": 96,
+     "evidence": "Too many images: 112 (max 96)"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Unsupported media type: video_url. Supported types: image_url"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": false,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-decart-mxfp4/kimi-k3",
+   "provider": {
+    "id": "decart-mxfp4",
+    "name": "Decart (mxfp4)",
+    "via": "openrouter",
+    "tag": "decart/mxfp4"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 17,
+     "failure": "image_count",
+     "stated": 16,
+     "evidence": "Model 'moonshotai/kimi-k3:openrouter' supports at most 16 images per prompt."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 18,
+     "failure": "image_count",
+     "stated": 16,
+     "evidence": "Model 'moonshotai/kimi-k3:openrouter' supports at most 16 images per prompt."
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "inconclusive",
+     "reason": "download_failed"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 512000000
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 463
+    },
+    "video_tokens_per_min": {
+     "status": "rejected",
+     "failure": "video_duration",
+     "evidence": "Video too long: 308.0s (limit 30s)",
+     "on_clip": {
+      "seconds": 16,
+      "value": 156840
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 128,
+     "video_minutes": 0.27,
+     "clip": "a 16-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 480.0,
+     "capped": false,
+     "unit": "4-frame chunk",
+     "units_per_video": 32,
+     "tokens_per_unit": 1296,
+     "frame_size": "1344x756",
+     "reference": false,
+     "setting": "the 655,360-patch video limit applied across the whole video, so frames shrink once a video passes about 4 seconds"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "fireworks/kimi-k3",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "accounts/fireworks/models/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "EPD video encoding is not supported"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "EPD video encoding is not supported"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Fireworks counts every image in the messages array (\"per conversation\"), not per message."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-fireworks/kimi-k3",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": "openrouter",
+    "tag": "fireworks"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Model not found, inaccessible, and/or not deployed"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Model not found, inaccessible, and/or not deployed"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Model not found, inaccessible, and/or not deployed"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "modal/kimi-k3",
+   "provider": {
+    "id": "modal",
+    "name": "Modal",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/Kimi-K3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 1024
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Kimi-K3 supports image input only"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Kimi-K3 supports image input only"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-modal-mxfp4/kimi-k3",
+   "provider": {
+    "id": "modal-mxfp4",
+    "name": "Modal (mxfp4)",
+    "via": "openrouter",
+    "tag": "modal/mxfp4"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "moonshot/kimi-k3",
+   "provider": {
+    "id": "moonshot",
+    "name": "Moonshot AI",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 488,
+     "evidence": "488 images passed and 496 failed with HTTP 429 \"request reached organization TPM\", reproducibly, each request after a cooldown of over a minute.",
+     "source": "paced bisection, 2026-11-08",
+     "note": "This account's limit, not the API's: Moonshot's rate limiter appears to charge ≈1,024 tokens per image whatever its size (488 × 1,024 ≈ 500k, the account's tokens-per-minute budget). Through OpenRouter, Moonshot's serving accepted 720 images."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "{\"error\":{\"message\":\"Invalid request: unsupported image url: <url>"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 7886,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-moonshotai/kimi-k3",
+   "provider": {
+    "id": "moonshotai",
+    "name": "Moonshot AI",
+    "via": "openrouter",
+    "tag": "moonshotai"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 720,
+     "fails_at": 728,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1053688 tokens (1712 of text input, 1051960 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 720 images actually used 12,584 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 7886,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "together/kimi-k3",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/Kimi-K3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 1024
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 512000000
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "ignored",
+     "value": 0,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "ignored",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Accepts a video_url with HTTP 200, but the video adds no tokens: the model never sees it.",
+    "Together caps the decoded media in one request at ≈1.43 GB (seen on DeepSeek V4.1 Flash; likely shared)."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-together/kimi-k3",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": "openrouter",
+    "tag": "together"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-wafer/kimi-k3",
+   "provider": {
+    "id": "wafer",
+    "name": "Wafer",
+    "via": "openrouter",
+    "tag": "wafer"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3",
+    "name": "Kimi K3",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "other",
+     "evidence": "A remote image URL in the request could not be used. Remote images must be public http(s) URLs on the default port that answer quickly with a PNG, JPEG, GIF, WebP, BMP, TIFF, ICO, AVIF or HEIC image within the size limit. Send the image as a data: URI (base64) instead."
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "video and audio input is not supported for this model"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "video and audio input is not supported for this model"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-alibaba/kimi-k3.1-pro",
+   "provider": {
+    "id": "alibaba",
+    "name": "Alibaba Cloud",
+    "via": "openrouter",
+    "tag": "alibaba"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-05",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 250,
+     "fails_at": 251,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 224,
+     "fails_at": 256,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-deepinfra-bf16/kimi-k3.1-pro",
+   "provider": {
+    "id": "deepinfra-bf16",
+    "name": "DeepInfra (bf16)",
+    "via": "openrouter",
+    "tag": "deepinfra/bf16"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-05",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 30,
+     "fails_at": 31,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Too many images in request: 31 > 30"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 28,
+     "fails_at": 32,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Too many images in request: 32 > 30"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 461
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "fireworks/kimi-k3.1-pro",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "accounts/fireworks/models/kimi-k3p1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-05",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 96000000,
+     "fails_at": 128000000,
+     "failure": "media_bytes",
+     "stated": 100000000,
+     "evidence": "Video <url> download size exceeded maximum size limit of 100.0 MB"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 324240,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 480,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 480.0,
+     "capped": false,
+     "unit": "4-frame chunk",
+     "units_per_video": 120,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": true,
+     "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 324240,
+      "measured_tokens_per_min": 324240,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Video is sampled at 8 frames per second, in groups of 4 at full resolution (~2,700 tokens per group, ~324k tokens per minute). On Nov 5 the full 5-minute clip timed out at 300 s and one minute took ~7 minutes to process. Density was measured on the first minute of the reference clip."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-fireworks/kimi-k3.1-pro",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": "openrouter",
+    "tag": "fireworks"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 96000000,
+     "fails_at": 128000000,
+     "failure": "media_bytes",
+     "stated": 100000000,
+     "evidence": "Video <url> download size exceeded maximum size limit of 100.0 MB"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 324240,
+     "video": "baker_1min_h264",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 480,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 480.0,
+     "capped": false,
+     "unit": "4-frame chunk",
+     "units_per_video": 120,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": true,
+     "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 324240,
+      "measured_tokens_per_min": 324240,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Same sampling as Fireworks direct: 8 frames per second, in groups of 4. The first minute of video took 58 s on Nov 8; on Nov 5 the same request hit OpenRouter's 300 s limit."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-modal-mxfp4/kimi-k3.1-pro",
+   "provider": {
+    "id": "modal-mxfp4",
+    "name": "Modal (mxfp4)",
+    "via": "openrouter",
+    "tag": "modal/mxfp4"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "moonshot/kimi-k3.1-pro",
+   "provider": {
+    "id": "moonshot",
+    "name": "Moonshot AI",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 488,
+     "evidence": "488 images passed and 496 failed with HTTP 429 \"request reached organization TPM\", reproducibly, each request after a full minute's cooldown.",
+     "source": "paced bisection, 2026-11-04",
+     "note": "This account's limit, not the API's: Moonshot's rate limiter appears to charge ≈1,024 tokens per image whatever its size (488 × 1,024 ≈ 500k, the account's tokens-per-minute budget), while 488 images really cost 8,570 prompt tokens. Through OpenRouter, Moonshot's serving accepted 720 images."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "{\"error\":{\"message\":\"Invalid request: unsupported image url: <url>"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 7886,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-moonshotai-highspeed/kimi-k3.1-pro",
+   "provider": {
+    "id": "moonshotai-highspeed",
+    "name": "Moonshot AI (highspeed)",
+    "via": "openrouter",
+    "tag": "moonshotai/highspeed"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 7886,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-moonshotai-mxfp4/kimi-k3.1-pro",
+   "provider": {
+    "id": "moonshotai-mxfp4",
+    "name": "Moonshot AI (mxfp4)",
+    "via": "openrouter",
+    "tag": "moonshotai/mxfp4"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 7886,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-nebius-fp4/kimi-k3.1-pro",
+   "provider": {
+    "id": "nebius-fp4",
+    "name": "Nebius (fp4)",
+    "via": "openrouter",
+    "tag": "nebius/fp4"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-05",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 13,376 prompt tokens (≈18 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 458
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "together/kimi-k3.1-pro",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/Kimi-K3.1-Pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 999,
+     "fails_at": 1000,
+     "failure": "image_count",
+     "stated": 999,
+     "evidence": "Multimodal processing failed: At most 999 image(s) may be provided in one request, got 1000"
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 64000000,
+     "evidence": "Failed to start generation: Failed to generate completions: CannotConnect (a request carrying 128 MB of images by URL)",
+     "source": "probe runs of 2026-11-05 and 2026-11-08",
+     "note": "64 MB passed and 128 MB failed with the same connection error in both runs, so 64 MB is treated as the limit."
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 512000000
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "ignored",
+     "value": 0,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "ignored",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [
+    "Accepts a video_url with HTTP 200, but the video adds no tokens: the model never sees it."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-together/kimi-k3.1-pro",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": "openrouter",
+    "tag": "together"
+   },
+   "model": {
+    "id": "moonshotai/kimi-k3.1-pro",
+    "name": "Kimi K3.1 Pro",
+    "vendor": "MoonshotAI",
+    "api_id": "moonshotai/kimi-k3.1-pro",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
+    },
+    "frames_768x432": {
+     "status": "at_least",
+     "value": 384
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 64000000,
+     "evidence": "Failed to start generation: Failed to generate completions: CannotConnect (a request carrying 128 MB of images by URL)",
+     "source": "probe runs of 2026-11-05 and 2026-11-08",
+     "note": "64 MB passed and 128 MB failed with the same connection error in both runs, so 64 MB is treated as the limit."
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 457
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-baseten-fp4/muse-spark-open",
+   "provider": {
+    "id": "baseten-fp4",
+    "name": "Baseten (fp4)",
+    "via": "openrouter",
+    "tag": "baseten/fp4"
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "meta/muse-spark-open",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 8,
+     "fails_at": 9,
+     "failure": "image_count",
+     "stated": 8,
+     "evidence": "Too many images: 9 (max 8)"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 8,
+     "fails_at": 9,
+     "failure": "image_count",
+     "stated": 8,
+     "evidence": "Too many images: 9 (max 8)"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Media could not be processed (413): Image too large: 10.1 MB (limit 10 MB)"
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 192000000,
+     "fails_at": 256000000,
+     "failure": "media_bytes",
+     "stated": 200000000,
+     "evidence": "Media could not be processed (413): Video too large: 200.1 MB (limit 200 MB)"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 427
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 1824,
+     "video": "baker_4min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider caps video length below the 5-minute reference; measured on its first 4 minutes."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 24.0,
+     "frames_per_video": 96,
+     "video_minutes": 4.0,
+     "clip": "the first 4 minutes of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": true,
+     "unit": "2-frame clip",
+     "units_per_video": 48,
+     "tokens_per_unit": 144,
+     "frame_size": "448x252",
+     "reference": false,
+     "setting": "at most 96 frames per video; 144 tokens per frame instead of 256",
+     "check": {
+      "clip": "baker_4min_h264",
+      "predicted_tokens_per_min": 1824,
+      "measured_tokens_per_min": 1824,
+      "diff_pct": -0.01
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": false,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "fireworks/muse-spark-open",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": null
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "accounts/fireworks/models/muse-spark-open",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Muse Spark serving does not support video inputs yet"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 407
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Muse Spark serving does not support video inputs yet"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Rejects the OpenRouter-style `usage` and `reasoning` request fields. Full agent sessions with 100 frames got no response within 300 s."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-fireworks/muse-spark-open",
+   "provider": {
+    "id": "fireworks",
+    "name": "Fireworks",
+    "via": "openrouter",
+    "tag": "fireworks"
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "meta/muse-spark-open",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Too many images were provided, we currently limit the number of images per conversation to 120"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 407
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-nebius-fp4/muse-spark-open",
+   "provider": {
+    "id": "nebius-fp4",
+    "name": "Nebius (fp4)",
+    "via": "openrouter",
+    "tag": "nebius/fp4"
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "meta/muse-spark-open",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 17,
+     "failure": "image_count",
+     "stated": 16,
+     "evidence": "At most 16 image(s) may be provided in one prompt. (parameter=image)"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 18,
+     "failure": "image_count",
+     "stated": 16,
+     "evidence": "At most 16 image(s) may be provided in one prompt. (parameter=image)"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "download_bytes",
+     "stated": 256000000,
+     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":422,\"metadata\":{\"raw\":\"{\"error\":{\"type\":\"UnprocessableEntityError\",\"message\":\"Failed to fetch media from URL: Remote media download exceeds VLLM_MAX_MEDIA_DOWNLOAD_SIZE_MB=256 (received at least 320000000 bytes) (parameter=image_url, value=<url>>"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 417
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 15195,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 116.9,
+     "frames_per_video": 600,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame clip",
+     "units_per_video": 300,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 15195,
+      "measured_tokens_per_min": 15195,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "together/muse-spark-open",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "meta-models/Muse-Spark-Open-816B-A42B",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "at_least",
+     "value": 1024
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 128,
+     "fails_at": 144,
+     "failure": "decoded_bytes",
+     "evidence": "Multimodal payload is 274341888 bytes (261.6 MiB) which exceeds the gRPC single-message ceiling of 267386880 bytes (255.0 MiB). Reduce the number of images, lower their resolution (e.g. `detail="
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "download_failed",
+     "evidence": "Multimodal processing failed: Failed to finalize multimodal tracker: HTTP error while fetching media: error decoding response body"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 408
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 15601,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame clip",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 15601,
+      "measured_tokens_per_min": 15601,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-together/muse-spark-open",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": "openrouter",
+    "tag": "together"
+   },
+   "model": {
+    "id": "meta/muse-spark-open",
+    "name": "Muse Spark (open)",
+    "vendor": "Meta",
+    "api_id": "meta/muse-spark-open",
+    "input_modalities": [
+     "text",
+     "image",
+     "video",
+     "audio"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 724,
+     "fails_at": 725,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 8,262 prompt tokens (≈11 per image)."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 128,
+     "fails_at": 144,
+     "failure": "decoded_bytes",
+     "evidence": "Multimodal payload is 274341888 bytes (261.6 MiB) which exceeds the gRPC single-message ceiling of 267386880 bytes (255.0 MiB). Reduce the number of images, lower their resolution (e.g. `detail="
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "download_failed",
+     "evidence": "Multimodal processing failed: Failed to finalize multimodal tracker: HTTP error while fetching media: error decoding response body"
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 408
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 15601,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame clip",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 15601,
+      "measured_tokens_per_min": 15601,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-deepinfra-fp4/nemotron-3.5-super-vl",
+   "provider": {
+    "id": "deepinfra-fp4",
+    "name": "DeepInfra (fp4)",
+    "via": "openrouter",
+    "tag": "deepinfra/fp4"
+   },
+   "model": {
+    "id": "nvidia/nemotron-3.5-super-vl",
+    "name": "Nemotron 3.5 Super VL",
+    "vendor": "NVIDIA",
+    "api_id": "nvidia/nemotron-3.5-super-vl",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 33,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Too many images in request: 33 > 32"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 36,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Too many images in request: 36 > 32"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "inconclusive",
+     "reason": "download_failed",
+     "at_least": 96000000
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 340
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 900,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame tubelet",
+     "units_per_video": 16,
+     "tokens_per_unit": 252,
+     "reference": false,
+     "setting": "32 frames per video; no token pruning",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 900,
+      "measured_tokens_per_min": 900,
+      "diff_pct": 0.04
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "together/nemotron-3.5-super-vl",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": null
+   },
+   "model": {
+    "id": "nvidia/nemotron-3.5-super-vl",
+    "name": "Nemotron 3.5 Super VL",
+    "vendor": "NVIDIA",
+    "api_id": "nvidia/NVIDIA-Nemotron-3.5-Super-VL",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 33,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Invalid multimodal request: invalid media request for model nemotron_vl: model spec nemotron_vl supports at most 32 image inputs; got 33"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 36,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Invalid multimodal request: invalid media request for model nemotron_vl: model spec nemotron_vl supports at most 32 image inputs; got 36"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "media_bytes",
+     "evidence": "Could not load the media in this request -- video #1: video input payload exceeds the maximum size of 268435456 bytes."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 345
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 9470,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame tubelet",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 9470,
+      "measured_tokens_per_min": 9470,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-together/nemotron-3.5-super-vl",
+   "provider": {
+    "id": "together",
+    "name": "Together AI",
+    "via": "openrouter",
+    "tag": "together"
+   },
+   "model": {
+    "id": "nvidia/nemotron-3.5-super-vl",
+    "name": "Nemotron 3.5 Super VL",
+    "vendor": "NVIDIA",
+    "api_id": "nvidia/nemotron-3.5-super-vl",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 33,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Invalid multimodal request: invalid media request for model nemotron_vl: model spec nemotron_vl supports at most 32 image inputs; got 33"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 32,
+     "fails_at": 36,
+     "failure": "image_count",
+     "stated": 32,
+     "evidence": "Invalid multimodal request: invalid media request for model nemotron_vl: model spec nemotron_vl supports at most 32 image inputs; got 36"
+    },
+    "inline_request_bytes": {
+     "status": "at_least",
+     "value": 32000000
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "media_bytes",
+     "evidence": "Could not load the media in this request -- video #1: video input payload exceeds the maximum size of 268435456 bytes."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 345
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 9470,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame tubelet",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 9470,
+      "measured_tokens_per_min": 9470,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": true
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "openrouter-akashml-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "akashml-fp8",
+    "name": "AkashML (fp8)",
+    "via": "openrouter",
+    "tag": "akashml/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-atlas-cloud-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "atlas-cloud-fp8",
+    "name": "Atlas Cloud (fp8)",
+    "via": "openrouter",
+    "tag": "atlas-cloud/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 35757,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35641,
+      "measured_tokens_per_min": 35757,
+      "diff_pct": 0.32
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-coreweave-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "coreweave-fp8",
+    "name": "CoreWeave (fp8)",
+    "via": "openrouter",
+    "tag": "coreweave/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2274,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 720,
+     "frame_size": "1152x640",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips)",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2275,
+      "measured_tokens_per_min": 2274,
+      "diff_pct": -0.02
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-darkbloom-fp4/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "darkbloom-fp4",
+    "name": "DarkBloom (fp4)",
+    "via": "openrouter",
+    "tag": "darkbloom/fp4"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 17,
+     "failure": "request_bytes",
+     "evidence": "media input exceeds size limit"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-deepinfra-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "deepinfra-fp8",
+    "name": "DeepInfra (fp8)",
+    "via": "openrouter",
+    "tag": "deepinfra/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 30,
+     "fails_at": 31,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Too many images in request: 31 > 30"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 639,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 1,
+     "frame_size": "32x32",
+     "reference": false,
+     "setting": "a pixel budget of about 1.0 megapixels per video instead of 25.2, so frames are very small",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 639,
+      "measured_tokens_per_min": 639,
+      "diff_pct": 0.01
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-dekallm/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "dekallm",
+    "name": "DekaLLM",
+    "via": "openrouter",
+    "tag": "dekallm"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2330,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "not_determined",
+     "method": "billing",
+     "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-parasail-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "parasail-fp8",
+    "name": "Parasail (fp8)",
+    "via": "openrouter",
+    "tag": "parasail/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min_360p",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-phala/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "phala",
+    "name": "Phala",
+    "via": "openrouter",
+    "tag": "phala"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-08",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "rejected",
+     "failure": "other",
+     "evidence": "The request was rejected as invalid",
+     "note": "Every video request was refused on 2026-11-07."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-siliconflow-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "siliconflow-fp8",
+    "name": "SiliconFlow (fp8)",
+    "via": "openrouter",
+    "tag": "siliconflow/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
+     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 281,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "varies",
+     "method": "billing",
+     "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 38,022 then 1,442"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-venice-fp8/qwen3.6-35b-a3b",
+   "provider": {
+    "id": "venice-fp8",
+    "name": "Venice (fp8)",
+    "via": "openrouter",
+    "tag": "venice/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.6-35b-a3b",
+    "name": "Qwen3.6 35B A3B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.6-35b-a3b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 10,
+     "fails_at": 11,
+     "failure": "image_count",
+     "stated": 10,
+     "evidence": "At most 10 image(s) may be provided in one request."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-akashml-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "akashml-fp8",
+    "name": "AkashML (fp8)",
+    "via": "openrouter",
+    "tag": "akashml/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-alibaba/qwen3.8-27b",
+   "provider": {
+    "id": "alibaba",
+    "name": "Alibaba Cloud",
+    "via": "openrouter",
+    "tag": "alibaba"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 250,
+     "fails_at": 251,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 224,
+     "fails_at": 256,
+     "failure": "image_count",
+     "stated": 250,
+     "evidence": "Exceeded limit on max number of data-uri items : 250"
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 20000000,
+     "fails_at": 24000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "url_image_bytes": {
+     "status": "measured",
+     "value": 28000000,
+     "fails_at": 32000000,
+     "failure": "download_bytes",
+     "stated": 30000000,
+     "evidence": "Downloaded image content cannot exceed 30MB"
+    },
+    "video_file_bytes": {
+     "status": "at_least",
+     "value": 512000000
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 338
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 35640,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35640,
+      "measured_tokens_per_min": 35640,
+      "diff_pct": -0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": false,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "Inline images are capped at 250 data URIs per request; images sent by URL are capped at 30 MB of downloaded content instead."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-cerebras-fp16/qwen3.8-27b",
+   "provider": {
+    "id": "cerebras-fp16",
+    "name": "Cerebras (fp16)",
+    "via": "openrouter",
+    "tag": "cerebras/fp16"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 2,
+     "fails_at": 3,
+     "failure": "request_bytes",
+     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":413,\"metadata\":{\"raw\":\"\"Number of image inputs exceeds maximum of 2\"\",\"provider_name\":\"Cerebras\",\"is_byok\":false}},\"user_id\":\"<redacted>\"}"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-chutes-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "chutes-fp8",
+    "name": "Chutes (fp8)",
+    "via": "openrouter",
+    "tag": "chutes/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-cloudflare/qwen3.8-27b",
+   "provider": {
+    "id": "cloudflare",
+    "name": "Cloudflare",
+    "via": "openrouter",
+    "tag": "cloudflare"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-coreweave-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "coreweave-fp8",
+    "name": "CoreWeave (fp8)",
+    "via": "openrouter",
+    "tag": "coreweave/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2274,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 720,
+     "frame_size": "1152x640",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips)",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2275,
+      "measured_tokens_per_min": 2274,
+      "diff_pct": -0.02
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-darkbloom-fp4/qwen3.8-27b",
+   "provider": {
+    "id": "darkbloom-fp4",
+    "name": "DarkBloom (fp4)",
+    "via": "openrouter",
+    "tag": "darkbloom/fp4"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 64,
+     "fails_at": 65,
+     "failure": "request_bytes",
+     "evidence": "media input exceeds size limit"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "rejected",
+     "failure": "request_bytes",
+     "evidence": "a media file exceeds the maximum allowed size",
+     "on_clip": {
+      "seconds": 192,
+      "value": 330
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 2.5,
+     "frames_per_video": 8,
+     "video_minutes": 3.2,
+     "clip": "a 192-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 16.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 4,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "frames capped at 256 tokens per group; at most 8 frames per video; at least 2 frames"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": null,
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-deepinfra-bf16/qwen3.8-27b",
+   "provider": {
+    "id": "deepinfra-bf16",
+    "name": "DeepInfra (bf16)",
+    "via": "openrouter",
+    "tag": "deepinfra/bf16"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 30,
+     "fails_at": 31,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Too many images in request: 31 > 30"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "rejected",
+     "failure": "other",
+     "evidence": "template error: Unexpected item type in content.",
+     "note": "Every video request was refused on 2026-11-07. It measured 2,499 tokens per minute on 2026-10-31."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-dekallm/qwen3.8-27b",
+   "provider": {
+    "id": "dekallm",
+    "name": "DekaLLM",
+    "via": "openrouter",
+    "tag": "dekallm"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2330,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "not_determined",
+     "method": "billing",
+     "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-ionstream-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "ionstream-fp8",
+    "name": "IonStream (fp8)",
+    "via": "openrouter",
+    "tag": "ionstream/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 8,
+     "fails_at": 9,
+     "failure": "other",
+     "evidence": "litellm.BadRequestError: OpenAIException - Image count 9 exceeds limit 8 per request.  LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "litellm.BadRequestError: OpenAIException - Video count 1 exceeds limit 0 per request.  LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "jarvislabs/qwen3.8-27b",
+   "provider": {
+    "id": "jarvislabs",
+    "name": "Jarvislabs",
+    "via": null
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen-3.8-27b-fp8",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 4,
+     "fails_at": 5,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 4,
+     "fails_at": 5,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 12000000,
+     "fails_at": 14000000,
+     "failure": "request_bytes",
+     "evidence": "Request body exceeds the byte limit."
+    },
+    "url_image_bytes": {
+     "status": "at_least",
+     "value": 128000000
+    },
+    "video_file_bytes": {
+     "status": "measured",
+     "value": 256000000,
+     "fails_at": 320000000,
+     "failure": "invalid_media",
+     "evidence": "The model rejected the request parameters."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 355
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {
+     "stream_options": true,
+     "usage": true,
+     "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [
+    "The deployment accepts at most 4 images per request."
+   ],
+   "featured": true
+  },
+  {
+   "id": "openrouter-mancer-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "mancer-fp8",
+    "name": "Mancer (fp8)",
+    "via": "openrouter",
+    "tag": "mancer/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "rejected",
+     "failure": "decoded_bytes",
+     "evidence": "Bad Parameters.  (No credits charged.)",
+     "on_clip": {
+      "seconds": 32,
+      "value": 22365
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 64,
+     "video_minutes": 0.53,
+     "clip": "a 32-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 32,
+     "tokens_per_unit": 364,
+     "frame_size": "832x448",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": null,
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-modal/qwen3.8-27b",
+   "provider": {
+    "id": "modal",
+    "name": "Modal",
+    "via": "openrouter",
+    "tag": "modal"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-modelrun-fp4/qwen3.8-27b",
+   "provider": {
+    "id": "modelrun-fp4",
+    "name": "ModelRun (fp4)",
+    "via": "openrouter",
+    "tag": "modelrun/fp4"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 16,
+     "fails_at": 17,
+     "failure": "other",
+     "evidence": "failed to translate request: building multimodal request: too many media items in request: 17 exceeds the limit of 16"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2498,
+     "video": "baker_5min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip (H.264 copy)",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min_h264",
+      "predicted_tokens_per_min": 2498,
+      "measured_tokens_per_min": 2498,
+      "diff_pct": -0.02
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-near-ai-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "near-ai-fp8",
+    "name": "NEAR AI (fp8)",
+    "via": "openrouter",
+    "tag": "near-ai/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Content part type 'video_url' is not supported by this model."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-novita/qwen3.8-27b",
+   "provider": {
+    "id": "novita",
+    "name": "Novita",
+    "via": "openrouter",
+    "tag": "novita"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 250,
+     "fails_at": 251,
+     "failure": "other",
+     "evidence": "invalid request error trace_id: <id>"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 35640,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35640,
+      "measured_tokens_per_min": 35640,
+      "diff_pct": -0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-parasail-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "parasail-fp8",
+    "name": "Parasail (fp8)",
+    "via": "openrouter",
+    "tag": "parasail/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-phala/qwen3.8-27b",
+   "provider": {
+    "id": "phala",
+    "name": "Phala",
+    "via": "openrouter",
+    "tag": "phala"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-03",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 650,
+     "fails_at": 651,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "varies",
+     "method": "billing",
+     "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 12,088 then 8,248"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-reka-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "reka-fp8",
+    "name": "Reka (fp8)",
+    "via": "openrouter",
+    "tag": "reka/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-tenstorrent-fp4/qwen3.8-27b",
+   "provider": {
+    "id": "tenstorrent-fp4",
+    "name": "Tenstorrent (fp4)",
+    "via": "openrouter",
+    "tag": "tenstorrent/fp4"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "inconclusive",
+     "reason": "transient"
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-venice-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "venice-fp8",
+    "name": "Venice (fp8)",
+    "via": "openrouter",
+    "tag": "venice/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-10-31",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 10,
+     "fails_at": 11,
+     "failure": "image_count",
+     "stated": 10,
+     "evidence": "At most 10 image(s) may be provided in one request."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min",
+     "repeats": 1,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "yes",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  },
+  {
+   "id": "openrouter-wafer-fp8/qwen3.8-27b",
+   "provider": {
+    "id": "wafer-fp8",
+    "name": "Wafer (fp8)",
+    "via": "openrouter",
+    "tag": "wafer/fp8"
+   },
+   "model": {
+    "id": "qwen/qwen3.8-27b",
+    "name": "Qwen3.8 27B",
+    "vendor": "Qwen",
+    "api_id": "qwen/qwen3.8-27b",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-04",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 170,
+     "fails_at": 171,
+     "failure": "context_length",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Context Length filter).",
+     "note": "OpenRouter removed this upstream before sending the request: its own token estimate exceeded the upstream's context window."
+    },
+    "frames_768x432": {
+     "status": "not_tested"
+    },
+    "inline_request_bytes": {
+     "status": "not_tested"
+    },
+    "url_image_bytes": {
+     "status": "not_tested"
+    },
+    "video_file_bytes": {
+     "status": "not_tested"
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "video and audio input is not supported for this model"
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": true,
+    "video": "no",
+    "request_fields": {}
+   },
+   "behaviour": {
+    "strict_tool_message_order": null
+   },
+   "notes": [],
+   "featured": false
+  }
+ ]
+}

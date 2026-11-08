@@ -1,0 +1,161 @@
+---
+// Video density, two numbers side by side: video tokens per minute (what the provider billed
+// for the video, and what ranks providers) and frames delivered per minute (how many frames
+// that was, and how large). Each model's bars share one scale per column; tokens per minute
+// differ by model architecture, so models aren't drawn against each other.
+import { entries, densityRows, modelSlug, providerSlug, providerLabel, groupBy, type DensityRow, type Entry, type Metric } from "../lib/data";
+
+interface Props {
+  metric: Metric;
+  hidden?: boolean;
+  /** Only these pairs: a model page's providers or a provider page's models. */
+  only?: Entry[];
+  name?: "provider" | "model";
+}
+const { metric, hidden = false, only, name = "provider" } = Astro.props;
+const all = densityRows(only ?? entries);
+const tested = all.filter((r) => !r.untested);
+const untested = all.filter((r) => r.untested);
+// One group per model on the home page; a model or provider page is one list.
+const groups = only
+  ? [{ slug: "", name: "", rows: tested }]
+  : [...groupBy(tested, (r) => modelSlug(r.entry))].map(([slug, rows]) => ({ slug, name: rows[0].entry.model.name, rows }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+const shown = groups.filter((g) => g.rows.some((r) => !r.noVideo));
+const noneTakeVideo = groups.filter((g) => !g.rows.some((r) => !r.noVideo));
+const href = (e: Entry) => (only && name === "provider" ? `/providers/${providerSlug(e)}` : `/models/${modelSlug(e)}`);
+const label = (r: DensityRow) => (only && name === "model" ? r.entry.model.name : providerLabel(r.entry));
+const w = (v: number, max: number) => `${Math.max(0.8, (100 * v) / max).toFixed(2)}%`;
+const scopes = (rs: DensityRow[]) => ({
+  all: rs.length,
+  featured: rs.filter((r) => r.entry.featured).length,
+  upstreams: rs.filter((r) => r.entry.provider.via).length,
+});
+const flag = (rs: DensityRow[], f: (r: DensityRow) => unknown) => (rs.some(f) ? "1" : "0");
+const anyFixed = tested.some((r) => r.fixed);
+---
+<figure class="rb dv" data-metric={metric.key} hidden={hidden} aria-label={metric.question}>
+  <figcaption>
+    <h3>{metric.question}</h3>
+    <p class="sub">{metric.explain}</p>
+  </figcaption>
+
+  <div class="dv-key sub">
+    <span><i class="sw tok"></i><b>Video tokens / min</b> billed for the video; ranks providers</span>
+    <span><i class="sw fr"></i><b>Frames delivered / min</b> and the size each frame was resized to</span>
+  </div>
+
+  <div class="dv-head" aria-hidden="true"><span></span><span>Video tokens / min</span><span>Frames delivered / min</span></div>
+
+  {shown.map((g) => {
+    const rows = g.rows.filter((r) => !r.noVideo);
+    const folded = g.rows.filter((r) => r.noVideo);
+    const tMax = Math.max(...rows.map((r) => r.tok ?? 0), 1);
+    const fMax = Math.max(...rows.map((r) => r.fr ?? 0), 1);
+    const n = scopes(folded);
+    return (
+      <div class="dv-group rb-group" role="group" aria-label={g.name || undefined}
+           data-featured={flag(g.rows, (r) => r.entry.featured)} data-or={flag(g.rows, (r) => r.entry.provider.via)}>
+        {g.name && <a class="rb-ghead" href={`/models/${g.slug}`}>{g.name}</a>}
+        {rows.map((r) => (
+          <a class="dv-row" href={href(r.entry)} data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}
+             data-tip-title={`${r.entry.model.name} · ${providerLabel(r.entry)}`}
+             data-tip-value={r.tok !== null ? `${r.tokText} tokens/min${r.fr !== null ? ` · ${r.frText} frames/min` : ""}` : r.tokText}
+             data-tip-body={r.tip}>
+            <span class="dv-label">{label(r)}</span>
+            <span class="dv-cell">
+              {r.tok !== null ? (
+                <span class="dv-line"><i class="dv-bar tok" style={`width:${w(r.tok, tMax)}`}></i><span class="dv-num">{r.tokText}</span></span>
+              ) : <span class="dv-none">{r.tokText}</span>}
+              {r.tokClip && <span class="dv-meta">on {r.tokClip}</span>}
+            </span>
+            <span class="dv-cell">
+              {r.fr !== null ? (
+                <span class="dv-line"><i class="dv-bar fr" style={`width:${w(r.fr, fMax)}`}></i><span class="dv-num">{r.frText}</span></span>
+              ) : <span class="dv-none">{r.frText}</span>}
+              {(r.frSize || r.frClip || r.fixed) && (
+                <span class="dv-meta">{[r.frSize && `at ${r.frSize}`, r.frClip && `on ${r.frClip}`, r.fixed && "fixed per video"].filter(Boolean).join(" · ")}</span>
+              )}
+            </span>
+          </a>
+        ))}
+        {folded.length > 0 && (
+          <p class:list={["dv-fold", Object.entries(n).filter(([, c]) => c).map(([s]) => `has-${s}`)]}>
+            {Object.entries(n).map(([s, c]) => <span class="rb-n" data-for={s}>+ {c} {c === 1 ? "provider" : "providers"} did not accept video: {new Intl.ListFormat("en-US").format(folded.filter((r) => s === "all" || (s === "featured" ? r.entry.featured : r.entry.provider.via)).map(label))}</span>)}
+          </p>
+        )}
+      </div>
+    );
+  })}
+
+  {!only && noneTakeVideo.length > 0 && (
+    <p class="dv-fold dv-none-models">No provider accepted video for {new Intl.ListFormat("en-US").format(noneTakeVideo.map((g) => g.name))}.</p>
+  )}
+  {only && shown.length === 0 && <p class="dv-fold">No provider accepted video.</p>}
+
+  <div class="dv-notes sub">
+    {tested.some((r) => r.refused) && <p>"On a 32 s clip" and similar: the provider refused the 5-minute video. Both numbers describe the longest clip it accepted, and they don't count toward the overall score.</p>}
+    {tested.some((r) => !r.refused && (r.tokClip || r.frClip)) && <p>"On the first minute", "on a 360p copy": the provider couldn't take the original file whole, so it got the first part or a smaller copy of the same video. That counts.</p>}
+    {anyFixed && <p>Fixed per video: the provider sends the same number of frames however long the video is, so longer videos get fewer per minute.</p>}
+    <p>Bars are scaled within each model. Hover a row for how the frames were worked out. <a href="/methodology#video-density">How we measure</a>.</p>
+  </div>
+
+  {untested.length > 0 && (
+    <details class:list={["rb-untested sub", Object.entries(scopes(untested)).filter(([, n]) => n).map(([s]) => `has-${s}`)]}>
+      <summary>
+        Not tested on this metric:
+        {Object.entries(scopes(untested)).map(([s, n]) => <span class="rb-n" data-for={s}>{n} {n === 1 ? "pair" : "pairs"}</span>)}
+      </summary>
+      <ul>
+        {untested.map((r) => <li data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}>{r.entry.model.name} · {providerLabel(r.entry)}</li>)}
+      </ul>
+    </details>
+  )}
+
+  <details class="rb-table">
+    <summary>Show as table</summary>
+    <table>
+      <thead><tr><th>Model</th><th>Provider</th><th class="num">Video tokens / min</th><th class="num">Frames / min</th><th>Frame size</th><th>Measured on</th></tr></thead>
+      <tbody>
+        {tested.map((r) => (
+          <tr data-featured={r.entry.featured ? "1" : "0"} data-or={r.entry.provider.via ? "1" : "0"}>
+            <td>{r.entry.model.name}</td><td>{providerLabel(r.entry)}</td>
+            <td class="num">{r.noVideo ? "No video" : r.tokText}</td><td class="num">{r.frText}{r.fixed ? " (fixed per video)" : ""}</td>
+            <td>{r.frSize}</td><td>{r.tokClip || r.frClip || (r.tok !== null ? "the 5-minute clip" : "")}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </details>
+</figure>
+
+<style>
+  .dv { --tok: var(--bar); --fr: #0f766e; }
+  :global(:root[data-theme="dark"]) .dv { --fr: #2dd4bf; }
+  @media (prefers-color-scheme: dark) { :global(:root:not([data-theme="light"])) .dv { --fr: #2dd4bf; } }
+  .dv-key { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 4px 0 14px; }
+  .dv-key b { color: var(--fg-2); font-weight: 560; margin: 0 4px 0 6px; }
+  .sw { display: inline-block; width: 12px; height: 10px; border-radius: 0 3px 3px 0; vertical-align: -1px; }
+  .sw.tok, .dv-bar.tok { background: var(--tok); }
+  .sw.fr, .dv-bar.fr { background: var(--fr); }
+  .dv-head, .dv-row { display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr) minmax(0, 1fr); gap: 0 24px; align-items: center; }
+  .dv-head { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .dv-row { min-height: 42px; padding: 5px 0; color: inherit; box-shadow: inset 0 -1px 0 var(--line-2); }
+  @media (hover: hover) and (pointer: fine) { .dv-row:hover { background: var(--line-2); text-decoration: none; } }
+  .dv-label { font-size: 0.86rem; color: var(--fg); overflow-wrap: anywhere; line-height: 1.25; }
+  .dv-cell { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .dv-line { display: flex; align-items: center; gap: 8px; min-width: 0; padding-right: 72px; }
+  .dv-bar { display: block; height: 12px; min-width: 2px; border-radius: 0 4px 4px 0; flex: none; }
+  .dv-num { font-size: 0.84rem; font-variant-numeric: tabular-nums; font-weight: 520; white-space: nowrap; }
+  .dv-none { color: var(--muted); font-size: 0.82rem; }
+  .dv-meta { color: var(--muted); font-size: 0.74rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dv-fold { margin: 0; min-height: 30px; line-height: 1.4; padding: 6px 0; font-size: 0.8rem; color: var(--muted); box-shadow: inset 0 -1px 0 var(--line-2); }
+  .dv-none-models { box-shadow: none; margin-top: 10px; }
+  .dv-notes { margin-top: 14px; }
+  .dv-notes p { margin: 4px 0 0; font-size: 0.78rem; line-height: 1.5; }
+  .dv .rb-group:first-of-type .rb-ghead { padding-top: 12px; }
+  @media (max-width: 760px) {
+    .dv-head { display: none; }
+    .dv-row { grid-template-columns: 1fr; gap: 4px; padding: 8px 0; }
+  }
+</style>

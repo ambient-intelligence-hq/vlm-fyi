@@ -1,7 +1,8 @@
 import dataset from "../../data/capabilities.json";
 import changesData from "../../data/changes.json";
 
-export type Status = "measured" | "at_least" | "stated" | "estimated" | "inconclusive" | "unsupported" | "rejected" | "ignored" | "not_tested";
+export type Status = "measured" | "at_least" | "stated" | "estimated" | "inconclusive" | "unsupported" | "rejected" | "ignored" | "not_tested"
+  | "varies" | "not_determined";
 
 export interface Limit {
   status: Status;
@@ -24,6 +25,18 @@ export interface Limit {
   capped?: boolean;
   tokens_per_frame_assumed?: number;
   per_image?: number;
+  // video_frames_per_min (billing-only frame curve)
+  method?: string;
+  unit?: string;
+  units_per_video?: number;
+  tokens_per_unit?: number;
+  frame_size?: string;
+  clip?: string;
+  reference?: boolean;
+  setting?: string;
+  check?: { clip?: string; predicted_tokens_per_min: number; measured_tokens_per_min: number; diff_pct: number };
+  // video_tokens_per_min on a route that refused the reference clip: the longest clip it took
+  on_clip?: { seconds: number; value: number };
 }
 
 export interface Entry {
@@ -61,7 +74,7 @@ export const COLUMNS: { key: string; short: string; help: string }[] = [
   { key: "url_image_bytes", short: "Images by URL", help: "Total size of images the provider downloads from URLs. Probe cap: 128 MB." },
   { key: "video_file_bytes", short: "Video file", help: "Size of a video sent as video_url. Probe cap: 512 MB." },
   { key: "video_tokens_per_min", short: "Video tok/min", help: "Visual tokens billed per minute of a real 5-minute reference clip: how much of the video the model is actually fed." },
-  { key: "video_frames_per_min", short: "Frames/min", help: "Distinct frames the model receives per minute of the 5-minute clip, measured with a frame-counter calibration clip." },
+  { key: "video_frames_per_min", short: "Frames/min", help: "Frames the model receives per minute of a 1080p video, worked out from the provider's billing and checked against the model's own preprocessing code. No model output is used." },
 ];
 
 const UNIT: Record<string, "count" | "bytes" | "tokens"> = {
@@ -109,16 +122,18 @@ export function cell(key: string, l: Limit | undefined, e?: Entry): Cell {
   const severe = v !== undefined && SEVERE[key] !== undefined && v < SEVERE[key];
   const tone = severe ? " severe" : tight ? " tight" : "";
   const ev = l.evidence ? `\n\nProvider said: “${l.evidence}”` : "";
+  if (key === "video_tokens_per_min" && l.on_clip && l.status !== "measured") {
+    // Shown, but scored as the status says (rejected: 0; inconclusive: skipped): per-minute rates from
+    // clips of different lengths don't compare when a provider sends a fixed number of frames per video.
+    return { text: `${fmtNumber(key, l.on_clip.value)} †`, cls: l.status === "rejected" ? "unsupported" : "inconclusive", sort: l.on_clip.value,
+      title: `Refused the 5-minute reference clip; ${fmtNumber(key, l.on_clip.value)} video tokens per minute on a `
+        + `${l.on_clip.seconds}-second clip, the longest it accepted.${ev}` };
+  }
   switch (l.status) {
     case "measured": {
       if (key === "video_frames_per_min") {
-        const lines = [
-          `${l.frames_per_video} distinct frames over the ${l.video_minutes}-minute clip.`,
-          `Measured: ${l.tokens_per_frame} tokens per frame (the model read frame numbers from a 30 s counter clip: ${l.frames_per_min_short_clip}/min there).`,
-          l.capped ? "Capped: the provider limits frames per video, so longer videos get fewer frames per minute." : "",
-        ];
         return { text: `${fmtNumber(key, l.value ?? 0)}${l.capped ? " ⁎" : ""}`, cls: "measured", sort: l.value ?? 0,
-          title: lines.filter(Boolean).join("\n") };
+          title: frameLines(l).join("\n") };
       }
       if (!l.value && l.fails_at !== undefined) {
         // Failed at the smallest size probed: all we know is the upper bound.
@@ -138,10 +153,19 @@ export function cell(key: string, l: Limit | undefined, e?: Entry): Cell {
       return { text: "Ignored", cls: "measured tight", sort: -0.4,
         title: "Accepted with HTTP 200, but the video added no tokens: the model never saw it." };
     case "rejected":
-      return { text: "Rejected", cls: "unsupported", sort: -0.6, title: `The reference video was rejected as too large.${ev}` };
+      return { text: "Rejected", cls: "unsupported", sort: -0.6, title: `${l.note ?? "The reference video was rejected as too large."}${ev}` };
+    case "varies":
+      return { text: "Varies", cls: "inconclusive", sort: -0.3,
+        title: e?.provider.id === "auto" ? (l.note ?? "Depends on the upstream OpenRouter picks.")
+          : `The same request billed different amounts of video on different calls, so there is no single frame count.\n${l.note ?? ""}`.trim() };
+    case "not_determined":
+      return { text: "Not determined", cls: "inconclusive", sort: -0.3,
+        title: `${l.note ?? "Billing does not match any preprocessing setting exactly."}${e?.limits.video_tokens_per_min?.value ? `\nVideo tokens per minute: ${fmtNumber("video_tokens_per_min", e.limits.video_tokens_per_min.value)}.` : ""}` };
     case "stated":
       return { text: fmtNumber(key, l.value ?? 0), cls: `measured${tone}`, title: `Limit stated by the provider${l.source ? ` (seen in ${l.source})` : ""}.${ev}`, sort: l.value ?? 0 };
     case "at_least":
+      if (key === "video_frames_per_min")
+        return { text: `≥ ${fmtNumber(key, l.value ?? 0)}`, cls: "atleast", sort: (l.value ?? 0) + 0.5, title: frameLines(l).join("\n") };
       return { text: `≥ ${fmtNumber(key, l.value ?? 0)}`, cls: "atleast", title: "No failure up to the probe's cap; the real limit is higher.", sort: (l.value ?? 0) + 0.5 };
     case "inconclusive":
       return {
@@ -154,6 +178,20 @@ export function cell(key: string, l: Limit | undefined, e?: Entry): Cell {
       return { text: key === "video_file_bytes" ? "No video" : "No", cls: "unsupported", title: `Not accepted.${ev}`, sort: -0.5 };
   }
   return { text: "—", cls: "na", title: "", sort: -1 };
+}
+
+/** Tooltip lines for a billing-derived frame count. */
+function frameLines(l: Limit): string[] {
+  const group = l.unit && l.unit !== "frame" ? ` in ${l.units_per_video} ${l.unit}s` : "";
+  return [
+    `${l.status === "at_least" ? "At least " : ""}${l.frames_per_video} frames from ${l.clip ?? `a ${l.video_minutes}-minute video`}${group}, `
+      + `${l.tokens_per_unit} tokens each${l.frame_size ? ` (frames resized to ${l.frame_size.replace("x", "×")})` : ""}.`,
+    l.reference ? "Same as the model's reference preprocessing." : l.setting ? `Provider setting: ${l.setting}.` : "",
+    l.capped ? "⁎ A fixed number of frames per video: longer videos get fewer frames per minute." : "",
+    l.check ? `Check: this predicts ${fmtNumber("video_tokens_per_min", l.check.predicted_tokens_per_min)} video tokens per minute on the reference clip; `
+      + `the provider billed ${fmtNumber("video_tokens_per_min", l.check.measured_tokens_per_min)}.` : "",
+    l.note ?? "",
+  ].filter(Boolean);
 }
 
 export function providerLabel(e: Entry): string {
@@ -212,9 +250,9 @@ export interface Metric {
 
 export const METRICS: Metric[] = [
   {
-    key: "video_frames_per_min", tab: "Video density",
+    key: "video_tokens_per_min", tab: "Video density",
     question: "How much of a video does the model actually see?",
-    explain: "Distinct frames the model receives per minute of the same 5-minute clip, measured with a frame-counter clip. ⁎ means the provider caps frames per video, so longer videos get fewer per minute.",
+    explain: "Every route got the same 5-minute 1080p video. Video tokens per minute is what the provider billed for it: the amount of visual input the model got, and what ranks providers. Frames per minute is how many frames that was, and how large, worked out from the bills and the model's own preprocessing code.",
   },
   {
     key: "frames_768x432", tab: "Frames per request",
@@ -279,7 +317,7 @@ export function bars(key: string, list: Entry[] = entries): Bar[] {
   return out.sort((a, b) => barRank(b) - barRank(a) || a.entry.model.name.localeCompare(b.entry.model.name));
 }
 
-/** Frames per minute needs video to work and a frame calibration. Without a value, say
+/** Frames per minute needs video to work and a billing frame curve. Without a value, say
  *  which: a pair whose video was refused or ignored was tested, not "not tested". */
 function videoVerdict(e: Entry): Cell {
   const tok = e.limits.video_tokens_per_min;
@@ -290,14 +328,82 @@ function videoVerdict(e: Entry): Cell {
     case "ignored":
       return cell("video_frames_per_min", tok, e);
     case "measured":
-      return { text: "Not calibrated", cls: "inconclusive", sort: -0.3,
-        title: `Video works (${fmtNumber("video_tokens_per_min", tok.value ?? 0)} tokens per minute), but the frame-counter `
-          + "calibration did not complete, so frames per minute is unknown." };
+      return { text: "Not measured", cls: "inconclusive", sort: -0.3,
+        title: `Video works (${fmtNumber("video_tokens_per_min", tok.value ?? 0)} tokens per minute), but frames per minute `
+          + "hasn't been measured on this route with the billing method yet." };
+    case "rejected":
+      return cell("video_tokens_per_min", tok, e);
     case "inconclusive":
       return { text: "?", cls: "inconclusive", sort: -0.3,
         title: `The video probe got no verdict (${tok.reason ?? tok.failure ?? "error"}).${ev}` };
   }
   return cell("video_frames_per_min", undefined, e);
+}
+
+// --------------------------------------------------------------------------
+// Video density: tokens per minute (ranked) with frames delivered beside it
+// --------------------------------------------------------------------------
+
+export const DENSITY = "video_tokens_per_min";
+
+/** A clip shorter than the 5-minute reference, in words. */
+export function clipLabel(minutes: number): string {
+  return Math.abs(minutes - 1) < 0.02 ? "the first minute" : Math.abs(minutes - 4) < 0.02 ? "the first 4 minutes"
+    : `a ${Math.round(minutes * 60)} s clip`;
+}
+const VARIANT_LABEL: Record<string, string> = { baker_1min_h264: "the first minute", baker_4min_h264: "the first 4 minutes",
+  baker_5min_360p: "a 360p copy" };
+
+export interface DensityRow {
+  entry: Entry;
+  tok: number | null;        // video tokens per minute (bar), or null
+  tokText: string;           // value, or what happened instead
+  tokClip: string;           // "the first minute" etc., when not the full reference clip
+  fr: number | null;         // frames delivered per minute (bar), or null
+  frText: string;
+  frSize: string;            // "1932×1092"
+  frClip: string;
+  fixed: boolean;            // a fixed number of frames per video
+  noVideo: boolean;          // refused video: folded into one line
+  refused: boolean;          // refused the 5-minute video; numbers are from a shorter clip (scored 0)
+  untested: boolean;
+  tip: string;
+}
+
+export function densityRow(e: Entry): DensityRow {
+  const t = e.limits.video_tokens_per_min, f = e.limits.video_frames_per_min;
+  const tokC = cell(DENSITY, t, e);
+  const tok = t?.status === "measured" ? t.value ?? null : t?.on_clip ? t.on_clip.value : null;
+  const tokClip = !t ? "" : t.status !== "measured" ? (t.on_clip ? clipLabel(t.on_clip.seconds / 60) : "")
+    : VARIANT_LABEL[(t.video ?? "").split(",")[0].trim()] ?? "";
+  const frOk = !!f && ["measured", "at_least"].includes(f.status) && !!f.value;
+  const frText = frOk ? `${f!.status === "at_least" ? "≥ " : ""}${fmtNumber("video_frames_per_min", f!.value!)}`
+    : f?.status === "varies" ? "Varies between identical requests"
+    : f?.status === "not_determined" ? "Not determined"
+    : tok !== null ? "Not measured" : "";
+  const frClip = !frOk ? "" : f!.clip?.startsWith("the first") ? f!.clip.replace(/ of the reference clip.*/, "")
+    : f!.clip?.includes("360p") ? "a 360p copy"
+    : f!.video_minutes && f!.video_minutes < 5 ? clipLabel(f!.video_minutes) : "";
+  const tokText = tok !== null ? fmtNumber(DENSITY, tok)
+    : t?.status === "ignored" ? "Ignored: billed 0 tokens" : t?.status === "rejected" ? "Rejected"
+    : t?.status === "inconclusive" ? "No verdict" : tokC.text;
+  const tip = [
+    tok !== null ? `${fmtNumber(DENSITY, tok)} video tokens per minute, billed by the provider${tokClip ? `, on ${tokClip}` : ""}.` : tokC.title,
+    frOk ? frameLines(f!).join("\n") : f && f.status !== "not_tested" ? cell("video_frames_per_min", f, e).title : "",
+  ].filter(Boolean).join("\n\n");
+  return {
+    entry: e, tok, tokText, tokClip, fr: frOk ? f!.value! : null, frText,
+    frSize: frOk && f!.frame_size ? f!.frame_size.replace("x", "×") : "", frClip, fixed: frOk && !!f!.capped,
+    noVideo: t?.status === "unsupported", refused: !!t && t.status !== "measured" && !!t.on_clip, untested: !t || t.status === "not_tested", tip,
+  };
+}
+
+/** Density rows in score order: routes that took the video (most tokens first), then routes that
+ *  refused it but took a shorter clip (shown, scored 0), then what happened instead. */
+export function densityRows(list: Entry[]): DensityRow[] {
+  const tier = (r: DensityRow) => (r.tok !== null ? (r.refused ? 3 : 4) : r.tokText.startsWith("Ignored") ? 2 : r.noVideo ? 0 : 1);
+  return list.map(densityRow).sort((a, b) => tier(b) - tier(a) || (b.tok ?? 0) - (a.tok ?? 0) || (b.fr ?? 0) - (a.fr ?? 0)
+    || a.entry.model.name.localeCompare(b.entry.model.name));
 }
 
 /** Sort key for a bar: higher is better; an open "≥" value edges out the same measured one. */
@@ -309,8 +415,10 @@ const ORDINAL = new Intl.PluralRules("en-US", { type: "ordinal" });
 const SUFFIX: Record<string, string> = { one: "st", two: "nd", few: "rd", other: "th" };
 export const ordinal = (n: number) => `${n}${SUFFIX[ORDINAL.select(n)]}`;
 
-// Token counts aren't better or worse when higher, so they don't count toward standing.
-const UNRANKED = new Set(["tokens_per_frame_768x432", "video_tokens_per_min"]);
+// Tokens per image aren't better or worse when higher, so they don't count toward standing.
+// Video density counts as video tokens per minute: it grows with both the number and the size
+// of the frames. Frames per minute is shown next to it, as context, but not scored.
+const UNRANKED = new Set(["tokens_per_frame_768x432", "video_frames_per_min"]);
 /** Limits where higher is better, in column order. */
 export const RANKED: string[] = COLUMNS.map((c) => c.key).filter((k) => !UNRANKED.has(k));
 
@@ -323,8 +431,13 @@ export function peers(key: string, e: Entry): Bar[] {
  *  null when it wasn't measured, no other provider was, or no provider accepts it.
  *  A rejected or unsupported input scores 0; an inconclusive one counts at the largest
  *  size that passed, or is left out if none did. */
+// A route that accepts a video and bills 0 tokens for it shows the model nothing: the file it
+// accepted is no capability, so it scores 0 on video file size and doesn't set the best.
+const ignoresVideo = (e: Entry) => e.limits.video_tokens_per_min?.status === "ignored" || e.accepts.video === "ignored";
+
 export function shareOfBest(key: string, e: Entry): number | null {
-  const ps = peers(key, e);
+  const ps = key === "video_file_bytes" ? peers(key, e).filter((b) => b.entry === e || !ignoresVideo(b.entry)) : peers(key, e);
+  if (key === "video_file_bytes" && ignoresVideo(e) && ps.length >= 2) return 0;
   const me = ps.find((b) => b.entry === e);
   const best = ps[0]?.value ?? null;
   // No provider takes it at all (e.g. video files on every DeepSeek endpoint): nothing to compare.
@@ -336,7 +449,13 @@ export function shareOfBest(key: string, e: Entry): number | null {
 /** The overall score that ranks a model's providers: its limits as a share of the best
  *  provider's, averaged over the limits it was measured on, 0–100. Needs two limits. */
 const overallCache = new Map<Entry, { score: number; limits: number } | null>();
+/** Models with no overall score, and why: their providers weren't measured on the same limits,
+ *  so an average over whatever each one has would compare unlike things. (docs/TODO-reruns.md) */
+export const NO_OVERALL: Record<string, string> = {
+  "qwen3.8-27b": "Most of its OpenRouter providers were measured only on images per request and video density, so their scores would rest on 2 limits against 6 for the others. Compare providers on each limit instead.",
+};
 export function overall(e: Entry): { score: number; limits: number } | null {
+  if (NO_OVERALL[modelSlug(e)]) return null;
   if (!overallCache.has(e)) {
     const s = RANKED.map((k) => shareOfBest(k, e)).filter((x): x is number => x !== null);
     overallCache.set(e, s.length >= 2 ? { score: Math.round((100 * s.reduce((a, b) => a + b, 0)) / s.length), limits: s.length } : null);
@@ -354,7 +473,7 @@ export const OVERALL_HELP = "Each limit as a percentage of the best provider's f
 export const OVERALL_METRIC: Metric = {
   key: OVERALL, tab: "Overall",
   question: "Which provider gives this model the most room overall?",
-  explain: "Each limit as a percentage of the best provider's for this model, averaged over the limits that provider was measured on (token counts left out). 100 means it matches the best provider on every limit. Providers measured on fewer than two limits aren't scored.",
+  explain: "Each limit as a percentage of the best provider's for this model, averaged over the limits that provider was measured on. Video density counts as video tokens per minute; tokens per image are left out. 100 means it matches the best provider on every limit. Providers measured on fewer than two limits aren't scored.",
 };
 
 /** A round axis maximum and 4–6 ticks covering `max`. */

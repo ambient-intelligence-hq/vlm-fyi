@@ -3,9 +3,10 @@ import Base from "../../layouts/Base.astro";
 import EntryCard from "../../components/EntryCard.astro";
 import MetricTabs from "../../components/MetricTabs.astro";
 import RankedBars from "../../components/RankedBars.astro";
+import DensityBars from "../../components/DensityBars.astro";
 import Tooltip from "../../components/Tooltip.astro";
 import CompareStrip from "../../components/CompareStrip.astro";
-import { providers, bars, METRICS, overall } from "../../lib/data";
+import { providers, bars, METRICS, overall, DENSITY } from "../../lib/data";
 
 export function getStaticPaths() {
   return providers().map((p) => ({ params: { slug: p.slug }, props: p }));
@@ -27,7 +28,7 @@ const compared = entries.filter((e) => overall(e) !== null);
   {metrics.length > 0 && (
     <section class="explorer model-explorer" aria-label={`${name} limits by model`}>
       <div class="explorer-controls"><MetricTabs metrics={metrics} /></div>
-      {metrics.map((m, i) => <RankedBars metric={m} only={entries} name="model" hidden={i > 0} />)}
+      {metrics.map((m, i) => m.key === DENSITY ? <DensityBars metric={m} only={entries} name="model" hidden={i > 0} /> : <RankedBars metric={m} only={entries} name="model" hidden={i > 0} />)}
     </section>
   )}
   {compared.length > 0 && (

@@ -1,0 +1,287 @@
+# Routes for read_long.py (5-minute counter clip, 3 runs).
+[[target]]
+name = "glm-5.3-flash · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/glm-5p3-flash"
+
+[[target]]
+name = "glm-5.3-flash · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "zai-org/GLM-5.3-Flash"
+
+[[target]]
+name = "glm-5.3-flash · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "glm-5.3-flash"
+
+[[target]]
+name = "gemma-4-31b · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "gemma-4-31b-it"
+
+[[target]]
+name = "nemotron-3.5-super-vl · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "nvidia/NVIDIA-Nemotron-3.5-Super-VL"
+
+[[target]]
+name = "muse-spark-open · together"
+base_url = "https://api.together.ai/v1"
+api_key_env = "TOGETHER_API_KEY"
+model = "meta-models/Muse-Spark-Open-816B-A42B"
+
+[[target]]
+name = "kimi-k3.1-pro · moonshot"
+base_url = "https://api.moonshot.ai/v1"
+api_key_env = "MOONSHOT_API_KEY"
+model = "kimi-k3.1-pro"
+rpm = 2.5
+video_inline = true
+
+[[target]]
+name = "qwen3.8-27b · jarvislabs"
+base_url = "https://models.jarvislabs.net/v1"
+api_key_env = "JARVISLABS_API_KEY"
+model = "qwen-3.8-27b-fp8"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-ai-studio"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-ai-studio"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-ai-studio/flex"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-ai-studio/flex"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-ai-studio/priority"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-ai-studio/priority"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-vertex/global"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-vertex/global"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-vertex/global/flex"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-vertex/global/flex"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-vertex/global/priority"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-vertex/global/priority"
+
+[[target]]
+name = "gemini-3.7-flash · openrouter/google-vertex/us"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "google/gemini-3.7-flash"
+openrouter_provider = "google-vertex/us"
+
+[[target]]
+name = "glm-5.3-flash · openrouter/z-ai"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "z-ai/glm-5.3-flash"
+openrouter_provider = "z-ai"
+
+[[target]]
+name = "muse-spark-open · openrouter/nebius/fp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "nebius/fp4"
+
+[[target]]
+name = "muse-spark-open · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "together"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/deepinfra/fp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "deepinfra/fp4"
+
+[[target]]
+name = "nemotron-3.5-super-vl · openrouter/together"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "nvidia/nemotron-3.5-super-vl"
+openrouter_provider = "together"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/akashml/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "akashml/fp8"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/atlas-cloud/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "atlas-cloud/fp8"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/coreweave/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "coreweave/fp8"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/deepinfra/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "deepinfra/fp8"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/dekallm"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "dekallm"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/parasail/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "parasail/fp8"
+
+[[target]]
+name = "qwen3.6-35b-a3b · openrouter/siliconflow/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.6-35b-a3b"
+openrouter_provider = "siliconflow/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/akashml/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "akashml/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/alibaba"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "alibaba"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/chutes/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "chutes/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/cloudflare"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "cloudflare"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/coreweave/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "coreweave/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/darkbloom/fp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "darkbloom/fp4"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/dekallm"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "dekallm"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/mancer/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "mancer/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/modelrun/fp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "modelrun/fp4"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/novita"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "novita"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/parasail/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "parasail/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/phala"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "phala"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/reka/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "reka/fp8"
+
+[[target]]
+name = "qwen3.8-27b · openrouter/venice/fp8"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "qwen/qwen3.8-27b"
+openrouter_provider = "venice/fp8"
+[[target]]
+name = "kimi-k3.1-pro · fireworks"
+base_url = "https://api.fireworks.ai/inference/v1"
+api_key_env = "FIREWORKS_API_KEY"
+model = "accounts/fireworks/models/kimi-k3p1-pro"
+

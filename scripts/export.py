@@ -145,7 +145,12 @@ def scrub(text: Optional[str], limit: int = 400) -> Optional[str]:
                 f"OpenRouter: no endpoints found that support {what.group(1).strip()}." if what else
                 "OpenRouter had no endpoint to route this to.")[:limit]
     # Prefer the human-readable message inside a JSON error, if there is one.
-    msgs = re.findall(r'\\?"message\\?"\s*:\s*\\?"((?:[^"\\]|\\.)+?)\\?"', text)
+    # Errors wrapped by a gateway arrive JSON-escaped several times over: unescape first.
+    flat = text
+    for _ in range(4):
+        flat = flat.replace('\\\\', '\\').replace('\\"', '"')
+    msgs = [m for m in re.findall(r'"message"\s*:\s*"([^"]+)(?=")', flat) if not m.rstrip().endswith("{")] or \
+        re.findall(r'\\?"message\\?"\s*:\s*\\?"((?:[^"\\]|\\.)+?)\\?"', text)
     msgs = [m for m in msgs if m.lower() not in ("provider returned error", "error")]
     if msgs:
         text = msgs[-1]
@@ -279,7 +284,21 @@ def entry_from_target(t: dict, catalog: list[dict], overrides: list[dict], measu
                 limits[key] = {"status": "unsupported" if st == "rejected" else st, "reason": res["kind"],
                                "evidence": scrub(res.get("message"))}
                 continue
+            inline_sent = bool((res or {}).get("sent_inline"))
+            inline_cap = (res or {}).get("inline_cap_mb", 24)
             res = (res or {}).get("bytes")
+            limits[key] = to_limit(res, unit, scale=MB if unit == "bytes" else 1)
+            if inline_sent and limits[key]["status"] != "not_tested":
+                limits[key]["note"] = ("Sent inline (base64): this provider refuses video URLs. The inline probe stops at "
+                                       f"{inline_cap:g} MB of video (a {inline_cap / 0.75:g} MB request body).")
+            continue
+        if dim == "url_bytes" and not res:
+            ii = r.get("image_input") or {}
+            if ii.get("url") is False and str(ii.get("url_error", "")).startswith("url_unsupported"):
+                # Image URLs refused outright: nothing to search, and the limit is "not accepted".
+                limits[key] = {"status": "unsupported", "reason": "url_unsupported",
+                               "evidence": scrub(str(ii["url_error"]).split(": ", 1)[-1])}
+                continue
         limits[key] = to_limit(res, unit, scale=MB if unit == "bytes" else 1)
     est_note = estimated_context_note(r.get("image_count"))
     if est_note:
@@ -296,6 +315,13 @@ def entry_from_target(t: dict, catalog: list[dict], overrides: list[dict], measu
     limits.update(density_limits(r.get("video_density"), t["model"], r.get("video_frames"), has_video, peers))
     if video == "ignored":
         limits["video_tokens_per_min"]["status"] = "ignored"
+    # The density request failed without a clear verdict, but the route's other video
+    # requests were refused outright ("no video") while images work: the route takes no video.
+    vt = limits["video_tokens_per_min"]
+    explicit = next((x for x in (r.get("video_bytes") or {}, r.get("video_frames") or {}) if x.get("kind") == "no_video"), None)
+    if vt["status"] == "inconclusive" and explicit:
+        limits["video_tokens_per_min"] = {"status": "unsupported", "failure": "no_video",
+                                          "evidence": scrub(explicit.get("message"))}
 
     ii = r.get("image_input") or {}
     params = r.get("params") or {}
@@ -323,10 +349,11 @@ def entry_from_target(t: dict, catalog: list[dict], overrides: list[dict], measu
     if (r.get("video_bytes") or {}).get("inline_only"):
         inline_density = (r.get("video_density") or {}).get("video_inline") and \
             (r.get("video_density") or {}).get("visual_tokens_per_min") is not None
+        sized_inline = (r.get("video_bytes") or {}).get("sent_inline")
         entry["notes"].append("Takes video only inline (base64): video URLs are refused. "
-                              + ("Video density was measured with the video sent inline; the URL-based file-size probe "
-                                 "could not run." if inline_density else
-                                 "The URL-based video size and density probes could not run."))
+                              + ("Video density and file size were measured with the video sent inline." if inline_density and sized_inline
+                                 else "Video density was measured with the video sent inline; the file-size probe could not run." if inline_density
+                                 else "The URL-based video size and density probes could not run."))
     if service == "openrouter" and not upstream:
         entry["notes"].append("Auto-routed: OpenRouter picks an upstream for each request, so these limits can come "
                               "from different upstreams and may change between requests.")
@@ -440,7 +467,7 @@ def density_limits(d: Optional[dict], model: str, cal: Optional[dict] = None, ha
             tok["note"] = "The 40 MB original was rejected; measured on a 360p copy of the same clip."
         if any("1min" in v for v in d.get("video_used", [])):
             tok["note"] = ((tok.get("note", "") + " ") if tok.get("note") else "") + \
-                "The full 5-minute clip timed out or exceeded the context window; measured on its first minute."
+                "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
         if any("4min" in v for v in d.get("video_used", [])):
             tok["note"] = ((tok.get("note", "") + " ") if tok.get("note") else "") + \
                 "The provider caps video length below the 5-minute reference; measured on its first 4 minutes."
@@ -515,6 +542,49 @@ def bracket(res: Any) -> float:
 
 
 
+FRAMES_FILE = DATA / "frames.json"
+FRAME_FIELDS = ("value", "frames_per_video", "video_minutes", "clip", "frames_per_min_short_clip", "capped", "unit",
+                "units_per_video", "tokens_per_unit", "frame_size", "reference", "setting", "note", "check")
+
+
+def apply_frames(entries: list[dict]) -> None:
+    """Frames per minute come only from the billing-only frame curve (data/frames.json,
+    built by scripts/frames_from_curve.py). Counter-clip readings, which depend on the
+    model's reply, are no longer published."""
+    frames = json.loads(FRAMES_FILE.read_text()) if FRAMES_FILE.exists() else {}
+    for e in entries:
+        e["limits"].pop("video_frames_per_min", None)
+        fr = frames.get(e["id"])
+        if not fr:
+            continue
+        st = fr["status"]
+        if st in ("measured", "at_least"):
+            e["limits"]["video_frames_per_min"] = {"status": st, "method": "billing",
+                                                   **{k: fr[k] for k in FRAME_FIELDS if fr.get(k) is not None}}
+            tok = e["limits"].get("video_tokens_per_min", {})
+            if fr.get("clip_tokens_per_min") and tok.get("status") != "measured":
+                # The reference clip was refused; give tokens for the same shorter clip the frames describe.
+                tok["on_clip"] = {"seconds": fr["clip_seconds"], "value": fr["clip_tokens_per_min"]}
+                rl = fr.get("refused_long")
+                if rl and tok.get("status") == "inconclusive":
+                    # The density request got no verdict, but a longer clip than the reference was refused
+                    # outright in the frame-curve run: the reference clip is refused too.
+                    inner = re.search(r"(Video too long: [0-9.]+s \(limit [0-9.]+s\))", rl["message"])
+                    tok.update(status="rejected", failure=rl["kind"], evidence=inner[1] if inner else scrub(rl["message"]),
+                               note=f"Refused a {rl['seconds']}-second clip, longer than the 5-minute reference, on {rl.get('date') or 'the frame-curve run'}.")
+                    tok.pop("reason", None)
+                e["limits"]["video_tokens_per_min"] = tok
+        elif st in ("varies", "not_determined"):
+            e["limits"]["video_frames_per_min"] = {"status": st, "method": "billing", "note": fr.get("note")}
+        elif st == "no_data" and fr.get("kinds") and not set(fr["kinds"]) & set(SOFT_KINDS) - {"provider_error"}:
+            # Every clip refused with the same non-transient error: video no longer works on this route.
+            tok = e["limits"].get("video_tokens_per_min", {})
+            was = f" It measured {tok['value']:,} tokens per minute on {e['measured_at']}." if tok.get("value") else ""
+            e["limits"]["video_tokens_per_min"] = {"status": "rejected", "failure": fr["kinds"][0], "evidence": scrub(fr.get("evidence")),
+                                                   "note": f"Every video request was refused on 2026-11-07.{was}"}
+            e["accepts"]["video"] = "no"
+
+
 def apply_observations(entries: list[dict], names: dict[str, str]) -> None:
     if not OBSERVATIONS_FILE.exists():
         return
@@ -533,6 +603,21 @@ def apply_observations(entries: list[dict], names: dict[str, str]) -> None:
             e["notes"].append(ob["note"])
 
 
+def is_move(key: str, a: dict, b: dict) -> bool:
+    """Did the provider's limit move, or did our measurement improve? The changes page and its
+    feed tell readers a provider changed something, so only the first kind belongs there."""
+    if a.get("status") in (None, "not_tested", "inconclusive", "not_determined", "varies"):
+        return False                                     # a first answer, not a change
+    if key == "video_frames_per_min" and (a.get("method") != "billing" or b.get("method") != "billing"):
+        return False                                     # moved from counted frames to the billing method
+    if {a.get("status"), b.get("status")} == {"at_least", "measured"} and a.get("value") == b.get("value"):
+        return False                                     # same number, better evidence
+    if a.get("status") == "rejected" and b.get("status") == "measured" and \
+            any(v in (b.get("video") or "") for v in ("1min", "4min", "360p")):
+        return False                                     # a fallback clip we added, not the provider
+    return True
+
+
 def diff(old: list[dict], new: list[dict], on: str) -> list[dict]:
     """Changes between two datasets: added / removed entries and changed limit values."""
     o, n = {e["id"]: e for e in old}, {e["id"]: e for e in new}
@@ -540,13 +625,14 @@ def diff(old: list[dict], new: list[dict], on: str) -> list[dict]:
     for eid in sorted(n.keys() - o.keys()):
         out.append({"date": on, "id": eid, "change": "added"})
     for eid in sorted(o.keys() - n.keys()):
-        out.append({"date": on, "id": eid, "change": "removed"})
+        if o[eid]["provider"]["id"] != "auto":           # auto-routed entries were our choice to drop
+            out.append({"date": on, "id": eid, "change": "removed"})
     for eid in sorted(n.keys() & o.keys()):
         for k in sorted(set(n[eid]["limits"]) | set(o[eid]["limits"])):
             a, b = o[eid]["limits"].get(k, {}), n[eid]["limits"].get(k, {})
             fa = (a.get("status"), a.get("value"), a.get("stated"))
             fb = (b.get("status"), b.get("value"), b.get("stated"))
-            if fa != fb:
+            if fa != fb and is_move(k, a, b):
                 out.append({"date": on, "id": eid, "change": "limit", "limit": k,
                             "from": {k2: a.get(k2) for k2 in ("status", "value", "stated") if a.get(k2) is not None},
                             "to": {k2: b.get(k2) for k2 in ("status", "value", "stated") if b.get(k2) is not None}})
@@ -606,14 +692,17 @@ def main() -> None:
         if e:
             entries.append(e)
             names[t["name"]] = e["id"]
+    apply_frames(entries)
     apply_observations(entries, names)
+    # OpenRouter's auto-routing picks a different upstream per request: not a stable route to track.
+    entries = [e for e in entries if e["provider"]["id"] != "auto"]
     entries.sort(key=lambda e: (e["model"]["name"].lower(), e["provider"]["name"].lower()))
 
     dataset = {"$schema": SCHEMA, "version": 1, "probe_version": PROBE_VERSION, "updated": args.date,
                "limits": {k: {"label": lbl, "unit": unit} for k, (_d, unit, lbl) in LIMITS.items()}
                | {"tokens_per_frame_768x432": {"label": "Tokens per 768×432 frame", "unit": "tokens"},
                   "video_tokens_per_min": {"label": "Video tokens per minute", "unit": "tokens"},
-                  "video_frames_per_min": {"label": "Video frames per minute (estimated)", "unit": "count"}},
+                  "video_frames_per_min": {"label": "Video frames per minute", "unit": "count"}},
                "entries": entries}
 
     snaps = sorted(p for p in (DATA / "snapshots").glob("*.json") if p.stem != args.date)

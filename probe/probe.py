@@ -537,7 +537,8 @@ async def call(http: aiohttp.ClientSession, t: Target, messages: list[dict], ext
     data = json.dumps(body).encode()
     url = t.base_url.rstrip("/") + "/chat/completions"
     headers = {"Authorization": f"Bearer {t.key}", "Content-Type": "application/json",
-               "Accept": "text/event-stream" if stream else "application/json"}
+               "Accept": "text/event-stream" if stream else "application/json",
+               "Accept-Encoding": "gzip, deflate"}   # some gateways send brotli the client can't always decode
     ctx = CTX.get()
     req_summary = {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(), "body": redact(body)}
 
@@ -761,6 +762,7 @@ async def density(http: aiohttp.ClientSession, t: Target, fx: Fixtures, videos: 
     for which in videos:
         variant: Optional[str] = DENSITY_START if DENSITY_START and which in MINUTE_VARIANT else None
         ref = ref_spec(which, variant)
+        tried = {variant}            # variants already sent, so the fallbacks below can't loop
         for rep in range(repeats):
             while True:
                 msgs = [{"role": "user", "content": [{"type": "text", "text": DENSITY_PROMPT},
@@ -774,16 +776,20 @@ async def density(http: aiohttp.ClientSession, t: Target, fx: Fixtures, videos: 
                     # The video URL was refused or filtered out (OpenRouter drops upstreams that
                     # can't fetch URLs): that's about URLs, so try the same video inline.
                     note, inline = "video URL refused; retrying inline (base64)", True
-                elif r.kind in ("timeout", "context_length") and variant not in ("minute",) and which in MINUTE_VARIANT:
+                elif r.kind in ("timeout", "context_length") and "minute" not in tried and which in MINUTE_VARIANT:
                     note, variant = "too many tokens or too slow for the full clip; retrying with its first minute", "minute"
-                elif r.kind == "video_duration" and variant != "trim" and which in TRIM_VARIANT:
+                elif r.kind == "video_duration" and "trim" not in tried and which in TRIM_VARIANT:
                     note, variant = "longer than the provider's video length limit; retrying with the first 4 minutes", "trim"
-                elif r.kind == "codec" and variant is None and which in H264_VARIANT:
+                elif r.kind == "codec" and "h264" not in tried and which in H264_VARIANT:
                     note, variant = "the provider can't decode VP9; retrying with an H.264 copy", "h264"
-                elif r.kind in SIZE_REJECTIONS and variant != "small" and which in SMALL_VARIANT:
+                elif r.kind in SIZE_REJECTIONS and "small" not in tried and which in SMALL_VARIANT:
                     note, variant = "retrying with the 360p copy", "small"
+                elif (r.kind in SIZE_REJECTIONS or r.kind == "video_duration") and "minute" not in tried and which in MINUTE_VARIANT:
+                    # Still too large or too long: the last fallback is the clip's first minute.
+                    note, variant = "still refused; retrying with the clip's first minute", "minute"
                 else:
                     break
+                tried.add(variant)
                 out["runs"].append({"video": ref["name"], "repeat": rep + 1, "ok": False, "kind": r.kind,
                                     "message": r.message[:400], "request_id": r.request_id, "note": note})
                 ref = ref_spec(which, variant)
@@ -969,6 +975,17 @@ async def probe_target(http: aiohttp.ClientSession, t: Target, fx: Fixtures, ski
                 res.update({"video_input": known(inline), "video_url": False, "inline_only": inline.ok,
                             "url_kind": first.kind, "kind": last.kind, "message": last.message[:300],
                             "request_id": last.request_id})
+                if inline.ok:
+                    # The same size search, with the padded clip sent inline (base64). Base64 adds a third,
+                    # so the inline request-body cap allows video up to 3/4 of it.
+                    CTX.set({"dimension": "video_bytes", "value": "inline"})
+
+                    async def probe_video_inline(v: float) -> Result:
+                        uri = f"data:video/mp4;base64,{base64.b64encode(pad_mp4(mp4, int(v * MB))).decode()}"
+                        return await call(http, t, vid(uri))
+                    res["bytes"] = await search(probe_video_inline, 2, args.inline_cap_mb * 0.75, integer=False, tol=0.25)
+                    res["sent_inline"] = True
+                    res["inline_cap_mb"] = args.inline_cap_mb * 0.75
             elif first.ok:
                 CTX.set({"dimension": "video_bytes"})
 
@@ -1228,11 +1245,17 @@ def relabel(t: Target, results: dict) -> dict:
 def merge_runs() -> Path:
     """Combine all probe runs (oldest first). Per target and dimension, a later
     result replaces an earlier one unless it is only an error or inconclusive and
-    the earlier one was conclusive."""
+    the earlier one was conclusive or got further."""
     def weak(r: Any) -> bool:
         return isinstance(r, dict) and (bool(r.get("error")) or bool(r.get("inconclusive"))
+                                        # video_bytes keeps its search one level down
+                                        or (isinstance(r.get("bytes"), dict) and bool(r["bytes"].get("inconclusive")))
                                         # a baseline lost to billing/rate limits says nothing about the provider
                                         or (r.get("ok") is False and r.get("kind") in INCONCLUSIVE))
+
+    def passed(r: Any) -> float:
+        x = r.get("bytes", r) if isinstance(r, dict) else None
+        return (x.get("max_ok") or 0) if isinstance(x, dict) else 0
 
     merged: dict[str, Target] = {}
     runs = sorted(RESULTS.glob("probe-2*/probe.json"), key=lambda f: f.stat().st_mtime)
@@ -1243,7 +1266,8 @@ def merge_runs() -> Path:
             tgt.requests += t.get("requests", 0)
             tgt.prompt_tokens += t.get("prompt_tokens", 0)
             for dim, res in relabel(tgt, t["results"]).items():
-                if dim in tgt.out and weak(res) and not weak(tgt.out[dim]):
+                # A search that stopped early doesn't replace a conclusive result, or one that got further.
+                if dim in tgt.out and weak(res) and (not weak(tgt.out[dim]) or passed(res) < passed(tgt.out[dim])):
                     continue
                 prev = tgt.out.get(dim)
                 if isinstance(prev, dict) and isinstance(res, dict):

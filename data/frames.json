@@ -1,0 +1,5167 @@
+{
+ "openrouter-google-ai-studio/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-ai-studio",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 71
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 269
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 533
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2117
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4229
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8453
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12677
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23765
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 533
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 335
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 137,
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4229,
+    "billed": 4229
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": -0.0,
+   "a": 5.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 19,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3961,
+   "measured_tokens_per_min": 3961,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-ai-studio-flex/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-ai-studio/flex",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 71
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 269
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 533
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2117
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4229
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8453
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12677
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23765
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 533
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 335
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 137,
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4229,
+    "billed": 4229
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": -0.0,
+   "a": 5.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 19,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3961,
+   "measured_tokens_per_min": 3961,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-ai-studio-priority/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-ai-studio/priority",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 71
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 269
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 533
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2117
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4229
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8453
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12677
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23765
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": null,
+    "error": ""
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1061
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 335
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 137,
+    "billed": 137
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4229,
+    "billed": 4229
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": -0.0,
+   "a": 5.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 19,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3961,
+   "measured_tokens_per_min": 3961,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-vertex-global/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-vertex/global",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 66
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 264
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2112
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4224
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8448
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12672
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23760
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 330
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 132,
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4224,
+    "billed": 4224
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": 0.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 17,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3960,
+   "measured_tokens_per_min": 3960,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-vertex-global-flex/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-vertex/global/flex",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 66
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 264
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2112
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4224
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8448
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12672
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23760
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": null,
+    "error": "timeout"
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 132,
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4224,
+    "billed": 4224
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": 0.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 19,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3960,
+   "measured_tokens_per_min": 3960,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-vertex-global-priority/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-vertex/global/priority",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 66
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 264
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2112
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4224
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8448
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12672
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23760
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 330
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 132,
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4224,
+    "billed": 4224
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": 0.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 17,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3960,
+   "measured_tokens_per_min": 3960,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-google-vertex-us/gemini-3.7-flash": {
+  "target": "gemini-3.7-flash · openrouter/google-vertex/us",
+  "run": "curve-20261107-182110-79240",
+  "family": "gemini",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 66
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 264
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2112
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4224
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 8448
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 12672
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 23760
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 528
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1056
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 330
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 132,
+    "billed": 132
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4224,
+    "billed": 4224
+   }
+  ],
+  "verdict": "matches reference (other settings also fit)",
+  "ruled_out_by_reference_clip": 0,
+  "status": "measured",
+  "reference": false,
+  "setting": "",
+  "knobs": {},
+  "fit": {
+   "k": 0.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 308,
+  "units_per_video": 308,
+  "tokens_per_unit": 66,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 60.0,
+  "frames_per_min_short_clip": 60.0,
+  "hypotheses": 17,
+  "capped": false,
+  "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 3960,
+   "measured_tokens_per_min": 3960,
+   "diff_pct": 0.0
+  }
+ },
+ "jarvislabs/gemma-4-31b": {
+  "target": "gemma-4-31b · jarvislabs",
+  "run": "curve-20261107-194740-84466",
+  "family": "gemma",
+  "unit": "frame",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 2249
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 2399
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 2399,
+    "billed": 2399
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 2399,
+    "billed": 2399
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "all frames when the video has fewer than 32",
+  "knobs": {
+   "num_frames": 32,
+   "max_soft": 70,
+   "clamp": true
+  },
+  "fit": {
+   "k": 9.0,
+   "a": -1.0,
+   "d": 0
+  },
+  "frames_per_video": 32,
+  "units_per_video": 32,
+  "tokens_per_unit": 66,
+  "frame_size": "528x288",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 6.2,
+  "frames_per_min_short_clip": 64.0,
+  "hypotheses": 1,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 467,
+   "measured_tokens_per_min": 467,
+   "diff_pct": -0.07
+  }
+ },
+ "fireworks/glm-5.3-flash": {
+  "target": "glm-5.3-flash · fireworks",
+  "run": "curve-20261107-175425-converted+curve-20261107-182110-79240",
+  "family": "glm",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_2s.mp4",
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_4s.mp4",
+    "billed": 10790
+   },
+   {
+    "clip": "counter_1920x1080_8s.mp4",
+    "billed": 21578
+   },
+   {
+    "clip": "counter_1920x1080_16s.mp4",
+    "billed": 43154
+   },
+   {
+    "clip": "counter_1920x1080_32s.mp4",
+    "billed": 86306
+   },
+   {
+    "clip": "counter_1920x1080_64s.mp4",
+    "billed": 172610
+   },
+   {
+    "clip": "counter_1920x1080_128s.mp4",
+    "billed": 234242
+   },
+   {
+    "clip": "counter_640x360_8s.mp4",
+    "billed": 2442
+   },
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 10790
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 21578
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 43154
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 86306
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 172610
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 234242
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 235779
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 234836
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2442
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 19234
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 13487
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 5396,
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 172610,
+    "billed": 172610
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "GLM-5.3 reference: 2 fps, 2-frame groups, 240,000-token budget per video",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 777,
+  "frame_size": "1036x588",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 7,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 46994,
+   "measured_tokens_per_min": 46994,
+   "diff_pct": -0.0
+  }
+ },
+ "jarvislabs/glm-5.3-flash": {
+  "target": "glm-5.3-flash · jarvislabs",
+  "run": "curve-20261107-194740-84466",
+  "family": "glm",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 10790
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 21578
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 29634
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 30082
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 28930
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 28803
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 29996
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2442
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 19234
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 13487
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 5396,
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 30082,
+    "billed": 30082
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "a budget of about 29,750 tokens per video instead of 240,000",
+  "knobs": {
+   "fps": 2,
+   "budget": 29750,
+   "fixed_frames": null
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 91,
+  "frame_size": "364x196",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 2,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 5834,
+   "measured_tokens_per_min": 5834,
+   "diff_pct": -0.0
+  }
+ },
+ "openrouter-z-ai/glm-5.3-flash": {
+  "target": "glm-5.3-flash · openrouter/z-ai",
+  "run": "curve-20261107-175425-converted+curve-20261107-182110-79240",
+  "family": "glm",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_2s.mp4",
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_4s.mp4",
+    "billed": 10790
+   },
+   {
+    "clip": "counter_1920x1080_8s.mp4",
+    "billed": 21578
+   },
+   {
+    "clip": "counter_1920x1080_16s.mp4",
+    "billed": 43154
+   },
+   {
+    "clip": "counter_1920x1080_32s.mp4",
+    "billed": 86306
+   },
+   {
+    "clip": "counter_1920x1080_64s.mp4",
+    "billed": 172610
+   },
+   {
+    "clip": "counter_1920x1080_128s.mp4",
+    "billed": 204290
+   },
+   {
+    "clip": "counter_640x360_8s.mp4",
+    "billed": 2442
+   },
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 10790
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 21578
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 43154
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 172610
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 204290
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 199299
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 203156
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2442
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 19234
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 13487
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 5396,
+    "billed": 5396
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 172610,
+    "billed": 172610
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "a budget of about 204,000 tokens per video instead of 240,000",
+  "knobs": {
+   "fps": 2,
+   "budget": 204000,
+   "fixed_frames": null
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 646,
+  "frame_size": "952x532",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 39134,
+   "measured_tokens_per_min": 39134,
+   "diff_pct": -0.0
+  }
+ },
+ "together/glm-5.3-flash": {
+  "target": "glm-5.3-flash · together",
+  "run": "curve-20261107-175425-converted+curve-20261107-182110-79240",
+  "family": "glm",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_2s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_4s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_8s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_16s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_32s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_64s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_128s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_640x360_8s.mp4",
+    "billed": 4882
+   },
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 2699
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 29285
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4882
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 19234
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 29282
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 29282,
+    "billed": 29282
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 29282,
+    "billed": 29282
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "32 frames per video (fewer for very short clips); a budget of about 29,250 tokens per video instead of 240,000",
+  "knobs": {
+   "fps": 1,
+   "budget": 29250,
+   "fixed_frames": 32
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 32,
+  "units_per_video": 16,
+  "tokens_per_unit": 299,
+  "frame_size": "644x364",
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 6.2,
+  "frames_per_min_short_clip": 64.0,
+  "hypotheses": 8,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 952,
+   "measured_tokens_per_min": 952,
+   "diff_pct": 0.02
+  }
+ },
+ "moonshot/kimi-k3": {
+  "target": "kimi-k3 · moonshot",
+  "run": "curve-20261108-101911-98436",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38505
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 26990
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10802,
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 40480,
+    "billed": 40480
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+  "knobs": {
+   "sample_fps": 8,
+   "max_tokens": 40448,
+   "size_text": true
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 5.0,
+   "d": 1
+  },
+  "frames_per_video": 60,
+  "units_per_video": 15,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 11.7,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 21,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 7886,
+   "measured_tokens_per_min": 7886,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-decart-mxfp4/kimi-k3": {
+  "target": "kimi-k3 · openrouter/decart/mxfp4",
+  "run": "curve-20261108-101911-98436",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5404
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10808
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21616
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 41520
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 41824
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": null,
+    "error": "video_duration"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "video_duration"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "video_duration"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "video_duration"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "video_duration"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4960
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38624
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 27020
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10808,
+    "billed": 10808
+   }
+  ],
+  "verdict": "provider settings found",
+  "clip_tokens_per_min": 156840,
+  "clip_seconds": 16,
+  "refused_long": {
+   "seconds": 360,
+   "kind": "video_duration",
+   "message": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\\"error\\\":{\\\"type\\\":\\\"invalid_request_error\\\",\\\"code\\\":\\\"backend_invalid_argument\\\",\\\"message\\\":\\\"ValueError: BackendInvalidArgument: {\\\\\\\"message\\\\\\\":\\\\\\\"Video too long: 360.0s (limit 30s)\\\\\\\",\\\\\\\"code\\\\\\\":400,\\\\\\\"type\\\\\\\"",
+   "date": "2026-11-08"
+  },
+  "status": "measured",
+  "reference": false,
+  "setting": "the 655,360-patch video limit applied across the whole video, so frames shrink once a video passes about 4 seconds",
+  "knobs": {
+   "sample_fps": 8,
+   "video_budget": true,
+   "size_text": false
+  },
+  "fit": {
+   "k": 11.0,
+   "a": 0.0,
+   "d": 0
+  },
+  "frames_per_video": 128,
+  "units_per_video": 32,
+  "tokens_per_unit": 1296,
+  "frame_size": "1344x756",
+  "video_minutes": 0.27,
+  "clip": "a 16-second 1080p clip, the longest this route accepted",
+  "value": 480.0,
+  "frames_per_min_short_clip": 480.0,
+  "hypotheses": 2,
+  "capped": false
+ },
+ "openrouter-moonshotai/kimi-k3": {
+  "target": "kimi-k3 · openrouter/moonshotai",
+  "run": "curve-20261108-101911-98436",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38505
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 26990
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10802,
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 40480,
+    "billed": 40480
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+  "knobs": {
+   "sample_fps": 8,
+   "max_tokens": 40448,
+   "size_text": true
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 5.0,
+   "d": 1
+  },
+  "frames_per_video": 60,
+  "units_per_video": 15,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 11.7,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 21,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 7886,
+   "measured_tokens_per_min": 7886,
+   "diff_pct": 0.0
+  }
+ },
+ "fireworks/kimi-k3.1-pro": {
+  "target": "kimi-k3.1-pro · fireworks",
+  "run": "curve-20261107-175425-converted",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_1f.mp4",
+    "billed": 2702
+   },
+   {
+    "clip": "counter_1920x1080_1s.mp4",
+    "billed": 5404
+   },
+   {
+    "clip": "counter_1920x1080_2s.mp4",
+    "billed": 10808
+   },
+   {
+    "clip": "counter_1920x1080_4s.mp4",
+    "billed": 21616
+   },
+   {
+    "clip": "counter_1920x1080_8s.mp4",
+    "billed": 43232
+   },
+   {
+    "clip": "counter_1920x1080_16s.mp4",
+    "billed": 86464
+   },
+   {
+    "clip": "counter_1920x1080_32s.mp4",
+    "billed": 172928
+   },
+   {
+    "clip": "counter_640x360_8s.mp4",
+    "billed": 4960
+   }
+  ],
+  "repeats": [],
+  "verdict": "matches reference",
+  "ruled_out_by_reference_clip": 434,
+  "status": "measured",
+  "reference": true,
+  "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+  "knobs": {},
+  "fit": {
+   "k": 11.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 480,
+  "units_per_video": 120,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 480.0,
+  "frames_per_min_short_clip": 480.0,
+  "hypotheses": 5,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 324240,
+   "measured_tokens_per_min": 324240,
+   "diff_pct": 0.0
+  }
+ },
+ "moonshot/kimi-k3.1-pro": {
+  "target": "kimi-k3.1-pro · moonshot",
+  "run": "curve-20261107-175425-converted+curve-20261107-182110-79240",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_1f.mp4",
+    "billed": 2708
+   },
+   {
+    "clip": "counter_1920x1080_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38505
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 26990
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10802,
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 40480,
+    "billed": 40480
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+  "knobs": {
+   "sample_fps": 8,
+   "max_tokens": 40448,
+   "size_text": true
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 5.0,
+   "d": 1
+  },
+  "frames_per_video": 60,
+  "units_per_video": 15,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 11.7,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 21,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 7886,
+   "measured_tokens_per_min": 7886,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-fireworks/kimi-k3.1-pro": {
+  "target": "kimi-k3.1-pro · openrouter/fireworks",
+  "run": "curve-20261108-101911-98435",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5404
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10808
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21616
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 43232
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 86464
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 172928
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4960
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38624
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 27020
+   }
+  ],
+  "repeats": [],
+  "verdict": "matches reference",
+  "ruled_out_by_reference_clip": 434,
+  "status": "measured",
+  "reference": true,
+  "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+  "knobs": {},
+  "fit": {
+   "k": 11.0,
+   "a": -0.0,
+   "d": 0
+  },
+  "frames_per_video": 480,
+  "units_per_video": 120,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 480.0,
+  "frames_per_min_short_clip": 480.0,
+  "hypotheses": 5,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 324240,
+   "measured_tokens_per_min": 324240,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-moonshotai-highspeed/kimi-k3.1-pro": {
+  "target": "kimi-k3.1-pro · openrouter/moonshotai/highspeed",
+  "run": "curve-20261108-101911-98436",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38505
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 26990
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10802,
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 40480,
+    "billed": 40480
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+  "knobs": {
+   "sample_fps": 8,
+   "max_tokens": 40448,
+   "size_text": true
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 5.0,
+   "d": 1
+  },
+  "frames_per_video": 60,
+  "units_per_video": 15,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 11.7,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 21,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 7886,
+   "measured_tokens_per_min": 7886,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-moonshotai-mxfp4/kimi-k3.1-pro": {
+  "target": "kimi-k3.1-pro · openrouter/moonshotai/mxfp4",
+  "run": "curve-20261108-101911-98436",
+  "family": "kimi",
+  "unit": "4-frame chunk",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 5406
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 21594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 40480
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4904
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 38505
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 26990
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 10802,
+    "billed": 10802
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 40480,
+    "billed": 40480
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+  "knobs": {
+   "sample_fps": 8,
+   "max_tokens": 40448,
+   "size_text": true
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 5.0,
+   "d": 1
+  },
+  "frames_per_video": 60,
+  "units_per_video": 15,
+  "tokens_per_unit": 2691,
+  "frame_size": "1932x1092",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 11.7,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 21,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 7886,
+   "measured_tokens_per_min": 7886,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-baseten-fp4/muse-spark-open": {
+  "target": "muse-spark-open · openrouter/baseten/fp4",
+  "run": "curve-20261107-182110-79240+curve-20261108-101911-98436+curve-20261108-104208-164",
+  "family": "muse",
+  "unit": "2-frame clip",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 153
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 305
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 609
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 1217
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 2433
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 4865
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 7297
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 7297
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 7297
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "transient"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1217
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 2433
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 761
+   },
+   {
+    "clip": "counter_160x90_30fps_8s.mp4",
+    "billed": 185
+   },
+   {
+    "clip": "counter_160x90_30fps_16s.mp4",
+    "billed": 369
+   },
+   {
+    "clip": "counter_320x180_30fps_8s.mp4",
+    "billed": 593
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 305,
+    "billed": 305
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 7297,
+    "billed": 7297
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "at most 96 frames per video; 144 tokens per frame instead of 256",
+  "knobs": {
+   "fps": 2,
+   "max_frames": 96,
+   "max_tok_frame": 144
+  },
+  "fit": {
+   "k": 1.0,
+   "a": 1.0,
+   "d": 1
+  },
+  "frames_per_video": 96,
+  "units_per_video": 48,
+  "tokens_per_unit": 144,
+  "frame_size": "448x252",
+  "video_minutes": 4.0,
+  "clip": "the first 4 minutes of the reference clip",
+  "value": 24.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 1,
+  "capped": true,
+  "check": {
+   "clip": "baker_4min_h264",
+   "predicted_tokens_per_min": 1824,
+   "measured_tokens_per_min": 1824,
+   "diff_pct": -0.01
+  }
+ },
+ "openrouter-nebius-fp4/muse-spark-open": {
+  "target": "muse-spark-open · openrouter/nebius/fp4",
+  "run": "curve-20261107-182110-79240+curve-20261108-104208-164",
+  "family": "muse",
+  "unit": "2-frame clip",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 261
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1041
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 8321
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 16641
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 33281
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 49921
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 78001
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1301
+   },
+   {
+    "clip": "counter_160x90_30fps_8s.mp4",
+    "billed": 185
+   },
+   {
+    "clip": "counter_160x90_30fps_16s.mp4",
+    "billed": 369
+   },
+   {
+    "clip": "counter_320x180_30fps_8s.mp4",
+    "billed": 593
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 521,
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 16641,
+    "billed": 16641
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+  "knobs": {},
+  "fit": {
+   "k": 1.0,
+   "a": 1.0,
+   "d": 1
+  },
+  "frames_per_video": 600,
+  "units_per_video": 300,
+  "tokens_per_unit": 252,
+  "frame_size": "588x336",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 116.9,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 2,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 15195,
+   "measured_tokens_per_min": 15195,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-together/muse-spark-open": {
+  "target": "muse-spark-open · openrouter/together",
+  "run": "curve-20261107-182110-79240+curve-20261108-104208-164",
+  "family": "muse",
+  "unit": "2-frame clip",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 261
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1041
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 8321
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 16641
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1301
+   },
+   {
+    "clip": "counter_160x90_30fps_8s.mp4",
+    "billed": 185
+   },
+   {
+    "clip": "counter_160x90_30fps_16s.mp4",
+    "billed": 369
+   },
+   {
+    "clip": "counter_320x180_30fps_8s.mp4",
+    "billed": 593
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 521,
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 16641,
+    "billed": 16641
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+  "knobs": {},
+  "fit": {
+   "k": 1.0,
+   "a": 1.0,
+   "d": 1
+  },
+  "frames_per_video": 120,
+  "units_per_video": 60,
+  "tokens_per_unit": 252,
+  "frame_size": "588x336",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 7,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 15601,
+   "measured_tokens_per_min": 15601,
+   "diff_pct": 0.0
+  }
+ },
+ "together/muse-spark-open": {
+  "target": "muse-spark-open · together",
+  "run": "curve-20261107-182110-79240+curve-20261108-104208-164",
+  "family": "muse",
+  "unit": "2-frame clip",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 261
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1041
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 8321
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 16641
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "media_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 2081
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4161
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1301
+   },
+   {
+    "clip": "counter_160x90_30fps_8s.mp4",
+    "billed": 185
+   },
+   {
+    "clip": "counter_160x90_30fps_16s.mp4",
+    "billed": 369
+   },
+   {
+    "clip": "counter_320x180_30fps_8s.mp4",
+    "billed": 593
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 521,
+    "billed": 521
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 16641,
+    "billed": 16641
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+  "knobs": {},
+  "fit": {
+   "k": 1.0,
+   "a": 1.0,
+   "d": 1
+  },
+  "frames_per_video": 120,
+  "units_per_video": 60,
+  "tokens_per_unit": 252,
+  "frame_size": "588x336",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 7,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 15601,
+   "measured_tokens_per_min": 15601,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-deepinfra-fp4/nemotron-3.5-super-vl": {
+  "target": "nemotron-3.5-super-vl · openrouter/deepinfra/fp4",
+  "run": "curve-20261107-182110-79240",
+  "family": "nemotron",
+  "unit": "2-frame tubelet",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4281
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4567
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 4567
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4567
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4579
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 4589
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 4594
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 4603
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 4612
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 4621
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 4567
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4579
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 4567
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4567,
+    "billed": 4567
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 4594,
+    "billed": 4594
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "32 frames per video; no token pruning",
+  "knobs": {
+   "num_frames": 32,
+   "fps": -1,
+   "target": 1024,
+   "q": 0.0
+  },
+  "fit": {
+   "k": 7.0,
+   "a": 0.0,
+   "d": 1
+  },
+  "frames_per_video": 32,
+  "units_per_video": 16,
+  "tokens_per_unit": 252,
+  "frame_size": null,
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 6.2,
+  "frames_per_min_short_clip": 64.0,
+  "hypotheses": 3,
+  "capped": true,
+  "size_range": [
+   "1344x768",
+   "672x384",
+   "960x544"
+  ],
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 900,
+   "measured_tokens_per_min": 900,
+   "diff_pct": 0.04
+  }
+ },
+ "openrouter-together/nemotron-3.5-super-vl": {
+  "target": "nemotron-3.5-super-vl · openrouter/together",
+  "run": "curve-20261107-182110-79240",
+  "family": "nemotron",
+  "unit": "2-frame tubelet",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 279
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 307
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 615
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 1238
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 2498
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 5026
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 10110
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1238
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 2498
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 770
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 307,
+    "billed": 307
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 10110,
+    "billed": 10110
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+  "knobs": {
+   "num_frames": 128,
+   "fps": 2,
+   "target": 1024,
+   "q": 0.5
+  },
+  "fit": {
+   "k": 3.0,
+   "a": -1.0,
+   "d": 1
+  },
+  "frames_per_video": 120,
+  "units_per_video": 60,
+  "tokens_per_unit": 252,
+  "frame_size": "672x384",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 4,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 9470,
+   "measured_tokens_per_min": 9470,
+   "diff_pct": 0.0
+  }
+ },
+ "together/nemotron-3.5-super-vl": {
+  "target": "nemotron-3.5-super-vl · together",
+  "run": "curve-20261107-182110-79240",
+  "family": "nemotron",
+  "unit": "2-frame tubelet",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 279
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 307
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 615
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 1238
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 2498
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 5026
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 10110
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1238
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 2498
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 770
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 307,
+    "billed": 307
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 10110,
+    "billed": 10110
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+  "knobs": {
+   "num_frames": 128,
+   "fps": 2,
+   "target": 1024,
+   "q": 0.5
+  },
+  "fit": {
+   "k": 3.0,
+   "a": -1.0,
+   "d": 1
+  },
+  "frames_per_video": 120,
+  "units_per_video": 60,
+  "tokens_per_unit": 252,
+  "frame_size": "672x384",
+  "video_minutes": 1.0,
+  "clip": "the first minute of the reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 4,
+  "capped": false,
+  "check": {
+   "clip": "baker_1min_h264",
+   "predicted_tokens_per_min": 9470,
+   "measured_tokens_per_min": 9470,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-akashml-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/akashml/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   }
+  ],
+  "verdict": "matches reference",
+  "ruled_out_by_reference_clip": 9,
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 4,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-atlas-cloud-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/atlas-cloud/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 2382
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4758
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 9510
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 19014
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 38022
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 76038
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 114054
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 213846
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1766
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 9510
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 2976
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1194,
+    "billed": 1194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 38022,
+    "billed": 38022
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+  "knobs": {
+   "fps": 2,
+   "min_frames": 2,
+   "max_frames": 768,
+   "capped": true,
+   "max_video_tokens": 640,
+   "budget": 10000000000
+  },
+  "fit": {
+   "k": 0.0,
+   "a": 6.0,
+   "d": 0
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 594,
+  "frame_size": "1056x576",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 2,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 35641,
+   "measured_tokens_per_min": 35757,
+   "diff_pct": 0.32
+  }
+ },
+ "openrouter-coreweave-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/coreweave/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11661
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 11663
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 11669
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 11673
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 11676
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 3650
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 11650
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 11650,
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 11663,
+    "billed": 11663
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "32 frames per video (fewer for very short clips)",
+  "knobs": {
+   "fixed_frames": 32,
+   "budget": 23986176
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 32,
+  "units_per_video": 16,
+  "tokens_per_unit": 720,
+  "frame_size": "1152x640",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 6.2,
+  "frames_per_min_short_clip": 64.0,
+  "hypotheses": 10,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2275,
+   "measured_tokens_per_min": 2274,
+   "diff_pct": -0.02
+  }
+ },
+ "openrouter-deepinfra-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/deepinfra/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 458
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 458
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 482
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 466
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 584
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 600
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 952
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 1428
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 2196
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 3852
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 466
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 584
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 497
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 458,
+    "billed": 458
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 952,
+    "billed": 952
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "a pixel budget of about 1.0 megapixels per video instead of 25.2, so frames are very small",
+  "knobs": {
+   "fps": 2,
+   "max_frames": 768,
+   "capped": false,
+   "budget": 983040
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 1,
+  "frame_size": "32x32",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 639,
+   "measured_tokens_per_min": 639,
+   "diff_pct": 0.01
+  }
+ },
+ "openrouter-dekallm/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/dekallm",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2338
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4677
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 9357
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 11933
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 11942
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 11951
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 11960
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 914
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4677
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1170
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1170,
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 11933,
+    "billed": 11933
+   }
+  ],
+  "verdict": "unexplained",
+  "status": "not_determined",
+  "closest": {
+   "fps": 1,
+   "min_frames": 4,
+   "max_frames": 64,
+   "capped": true,
+   "max_video_tokens": 640,
+   "budget": 25165824
+  },
+  "closest_residual": 482.52,
+  "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
+ },
+ "openrouter-parasail-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/parasail/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   }
+  ],
+  "verdict": "matches reference",
+  "ruled_out_by_reference_clip": 9,
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "a 360p copy of the 5-minute reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 4,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min_360p",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-phala/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/phala",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": null,
+    "error": "other"
+   }
+  ],
+  "repeats": [],
+  "verdict": "too few clips",
+  "status": "no_data",
+  "kinds": [
+   "other"
+  ],
+  "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\\"error\\\":{\\\"message\\\":\\\"The request was rejected as invalid\\\",\\\"type\\\":\\\"invalid_request_error\\\",\\\"code\\\":null,\\\"param\\\":null}}\",\"provider_name\":\"Phala\",\"is_byok\"",
+  "note": "no clip was billed (other)"
+ },
+ "openrouter-siliconflow-fp8/qwen3.6-35b-a3b": {
+  "target": "qwen3.6-35b-a3b · openrouter/siliconflow/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 1442
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": null,
+    "error": "timeout"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4758
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 9510
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 19014
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 38022
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 1442
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 114054
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 213846
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 442
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 9510
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1442
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1194,
+    "billed": 1194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 38022,
+    "billed": 1442
+   }
+  ],
+  "verdict": "unexplained",
+  "status": "varies",
+  "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 38,022 then 1,442"
+ },
+ "jarvislabs/qwen3.8-27b": {
+  "target": "qwen3.8-27b · jarvislabs",
+  "run": "curve-20261107-194740-84466",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-akashml-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/akashml/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   }
+  ],
+  "verdict": "matches reference",
+  "ruled_out_by_reference_clip": 9,
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 4,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-alibaba/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/alibaba",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1190
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 2378
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4754
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 9506
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 19010
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 38018
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 76034
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 114050
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 213842
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1762
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 9506
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 2972
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1190,
+    "billed": 1190
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 38018,
+    "billed": 38018
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+  "knobs": {
+   "fps": 2,
+   "min_frames": 2,
+   "max_frames": 768,
+   "capped": true,
+   "max_video_tokens": 640,
+   "budget": 10000000000
+  },
+  "fit": {
+   "k": -0.0,
+   "a": 2.0,
+   "d": 0
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 594,
+  "frame_size": "1056x576",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 2,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 35640,
+   "measured_tokens_per_min": 35640,
+   "diff_pct": -0.0
+  }
+ },
+ "openrouter-chutes-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/chutes/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-cloudflare/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/cloudflare",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-coreweave-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/coreweave/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11661
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 11663
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 11669
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 11673
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 11676
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 3650
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 11650
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 11650,
+    "billed": 11650
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 11663,
+    "billed": 11663
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "32 frames per video (fewer for very short clips)",
+  "knobs": {
+   "fixed_frames": 32,
+   "budget": 23986176
+  },
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 32,
+  "units_per_video": 16,
+  "tokens_per_unit": 720,
+  "frame_size": "1152x640",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 6.2,
+  "frames_per_min_short_clip": 64.0,
+  "hypotheses": 10,
+  "capped": true,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2275,
+   "measured_tokens_per_min": 2274,
+   "diff_pct": -0.02
+  }
+ },
+ "openrouter-darkbloom-fp4/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/darkbloom/fp4",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 301
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 553
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "request_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 929
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 1057
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1057
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 553,
+    "billed": 553
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 1057,
+    "billed": 1057
+   }
+  ],
+  "verdict": "provider settings found",
+  "clip_tokens_per_min": 330,
+  "clip_seconds": 192,
+  "refused_long": {
+   "seconds": 360,
+   "kind": "request_bytes",
+   "message": "{\"error\":{\"message\":\"Provider returned error\",\"code\":413,\"metadata\":{\"raw\":\"{\\\"error\\\":{\\\"code\\\":\\\"media_too_large\\\",\\\"message\\\":\\\"a media file exceeds the maximum allowed size\\\",\\\"param\\\":\\\"messages\\\",\\\"type\\\":\\\"media_too_large\\\"}}\\n\",\"provider_name\":\"Darkbloom\",\"is_byok\":false,\"provider_error_code",
+   "date": "2026-11-07"
+  },
+  "status": "measured",
+  "reference": false,
+  "setting": "frames capped at 256 tokens per group; at most 8 frames per video; at least 2 frames",
+  "knobs": {
+   "fps": 2,
+   "min_frames": 2,
+   "max_frames": 8,
+   "capped": true,
+   "max_video_tokens": 256,
+   "budget": 25165824
+  },
+  "fit": {
+   "k": -0.0,
+   "a": 49.0,
+   "d": 0
+  },
+  "frames_per_video": 8,
+  "units_per_video": 4,
+  "tokens_per_unit": 252,
+  "frame_size": "672x384",
+  "video_minutes": 3.2,
+  "clip": "a 192-second 1080p clip, the longest this route accepted",
+  "value": 2.5,
+  "frames_per_min_short_clip": 16.0,
+  "hypotheses": 2,
+  "capped": true
+ },
+ "openrouter-deepinfra-bf16/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/deepinfra/bf16",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": null,
+    "error": "other"
+   }
+  ],
+  "repeats": [],
+  "verdict": "too few clips",
+  "status": "no_data",
+  "kinds": [
+   "other"
+  ],
+  "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\\"error\\\":{\\\"message\\\":\\\"template error: Unexpected item type in content.\\\",\\\"type\\\":\\\"invalid_request_error\\\",\\\"param\\\":null,\\\"code\\\":null}}\",\"provider_name\":\"Dee",
+  "note": "no clip was billed (other)"
+ },
+ "openrouter-dekallm/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/dekallm",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 2338
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 4677
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 9357
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 11933
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 11942
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 11951
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 11960
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 914
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 4677
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 1170
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1170,
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 11933,
+    "billed": 11933
+   }
+  ],
+  "verdict": "unexplained",
+  "status": "not_determined",
+  "closest": {
+   "fps": 1,
+   "min_frames": 4,
+   "max_frames": 64,
+   "capped": true,
+   "max_video_tokens": 640,
+   "budget": 25165824
+  },
+  "closest_residual": 482.52,
+  "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
+ },
+ "openrouter-mancer-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/mancer/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": null,
+    "error": "decoded_bytes"
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   }
+  ],
+  "verdict": "matches reference",
+  "clip_tokens_per_min": 22365,
+  "clip_seconds": 32,
+  "refused_long": {
+   "seconds": 360,
+   "kind": "decoded_bytes",
+   "message": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\\\"error\\\":{\\\"data\\\":\\\"Request decoded media exceeds APHRODITE_MAX_MEDIA_REQUEST_DECODE_BYTES=715827880 (4478976000 bytes).\\\",\\\"message\\\":\\\"Bad Parameters. \\\\n(No credits charged.)\\\",\\\"type\\\":\\\"BAD_PARAMETERS\\\"}}\\n\",\"provide",
+   "date": "2026-11-07"
+  },
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 64,
+  "units_per_video": 32,
+  "tokens_per_unit": 364,
+  "frame_size": "832x448",
+  "video_minutes": 0.53,
+  "clip": "a 32-second 1080p clip, the longest this route accepted",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 13,
+  "capped": false
+ },
+ "openrouter-modelrun-fp4/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/modelrun/fp4",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4095
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4095
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8191
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12127
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11653
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11925
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12085
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12817
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13329
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13569
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1823
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11653
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10239
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4095,
+    "billed": 4095
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12085,
+    "billed": 12085
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": -1.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip (H.264 copy)",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min_h264",
+   "predicted_tokens_per_min": 2498,
+   "measured_tokens_per_min": 2498,
+   "diff_pct": -0.02
+  }
+ },
+ "openrouter-novita/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/novita",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": null,
+    "error": "other"
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1190
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 2378
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4754
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 9506
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 19010
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 38018
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 76034
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 114050
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 213842
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1762
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 9506
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 2972
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1190,
+    "billed": 1190
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 38018,
+    "billed": 38018
+   }
+  ],
+  "verdict": "provider settings found",
+  "status": "measured",
+  "reference": false,
+  "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+  "knobs": {
+   "fps": 2,
+   "min_frames": 2,
+   "max_frames": 768,
+   "capped": true,
+   "max_video_tokens": 640,
+   "budget": 10000000000
+  },
+  "fit": {
+   "k": -0.0,
+   "a": 2.0,
+   "d": 0
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 594,
+  "frame_size": "1056x576",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 2,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 35640,
+   "measured_tokens_per_min": 35640,
+   "diff_pct": -0.0
+  }
+ },
+ "openrouter-parasail-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/parasail/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-phala/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/phala",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 2338
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 4674
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 7816
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 7672
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 7572
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 7956
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 9972
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 9352
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 2922
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 1170,
+    "billed": 1170
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 8248
+   }
+  ],
+  "verdict": "unexplained",
+  "status": "varies",
+  "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 12,088 then 8,248"
+ },
+ "openrouter-reka-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/reka/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ },
+ "openrouter-venice-fp8/qwen3.8-27b": {
+  "target": "qwen3.8-27b · openrouter/venice/fp8",
+  "run": "curve-20261107-182110-79240",
+  "family": "qwen",
+  "unit": "2-frame group",
+  "bills": [
+   {
+    "clip": "counter_1920x1080_30fps_1s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_4s.mp4",
+    "billed": 8194
+   },
+   {
+    "clip": "counter_1920x1080_30fps_8s.mp4",
+    "billed": 12130
+   },
+   {
+    "clip": "counter_1920x1080_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_30fps_32s.mp4",
+    "billed": 11928
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "billed": 12088
+   },
+   {
+    "clip": "counter_1920x1080_30fps_128s.mp4",
+    "billed": 12820
+   },
+   {
+    "clip": "counter_1920x1080_30fps_192s.mp4",
+    "billed": 13332
+   },
+   {
+    "clip": "counter_1920x1080_30fps_360s.mp4",
+    "billed": 13572
+   },
+   {
+    "clip": "counter_640x360_30fps_8s.mp4",
+    "billed": 1826
+   },
+   {
+    "clip": "counter_1280x720_30fps_16s.mp4",
+    "billed": 11656
+   },
+   {
+    "clip": "counter_1920x1080_24fps_5s.mp4",
+    "billed": 10242
+   }
+  ],
+  "repeats": [
+   {
+    "clip": "counter_1920x1080_30fps_2s.mp4",
+    "first": 4098,
+    "billed": 4098
+   },
+   {
+    "clip": "counter_1920x1080_30fps_64s.mp4",
+    "first": 12088,
+    "billed": 12088
+   }
+  ],
+  "verdict": "matches reference",
+  "status": "measured",
+  "reference": true,
+  "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+  "knobs": {},
+  "fit": {
+   "k": 2.0,
+   "a": 2.0,
+   "d": 1
+  },
+  "frames_per_video": 616,
+  "units_per_video": 308,
+  "tokens_per_unit": 32,
+  "frame_size": "256x128",
+  "video_minutes": 5.13,
+  "clip": "the 5-minute 1080p reference clip",
+  "value": 120.0,
+  "frames_per_min_short_clip": 120.0,
+  "hypotheses": 3,
+  "capped": false,
+  "check": {
+   "clip": "baker_5min",
+   "predicted_tokens_per_min": 2499,
+   "measured_tokens_per_min": 2499,
+   "diff_pct": 0.0
+  }
+ }
+}

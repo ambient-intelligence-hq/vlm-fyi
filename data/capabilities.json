@@ -2,7 +2,7 @@
  "$schema": "https://vlm.fyi/schema/capabilities-v1.json",
  "version": 1,
  "probe_version": "2",
- "updated": "2026-11-05",
+ "updated": "2026-11-08",
  "limits": {
   "images_per_request": {
    "label": "Images per request",
@@ -33,7 +33,7 @@
    "unit": "tokens"
   },
   "video_frames_per_min": {
-   "label": "Video frames per minute (estimated)",
+   "label": "Video frames per minute",
    "unit": "count"
   }
  },
@@ -487,13 +487,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 59.8,
-     "tokens_per_frame": 66.2,
-     "frames_per_video": 307,
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -566,13 +578,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 59.8,
-     "tokens_per_frame": 66.2,
-     "frames_per_video": 307,
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -639,13 +663,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 59.8,
-     "tokens_per_frame": 66.2,
-     "frames_per_video": 307,
+     "method": "billing",
+     "value": 60.0,
+     "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3961,
+      "measured_tokens_per_min": 3961,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -712,13 +748,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
+     "method": "billing",
      "value": 60.0,
-     "tokens_per_frame": 66.0,
      "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -785,13 +833,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
+     "method": "billing",
      "value": 60.0,
-     "tokens_per_frame": 66.0,
      "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -858,13 +918,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
+     "method": "billing",
      "value": 60.0,
-     "tokens_per_frame": 66.0,
      "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -931,13 +1003,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
+     "method": "billing",
      "value": 60.0,
-     "tokens_per_frame": 66.0,
      "frames_per_video": 308,
      "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
      "frames_per_min_short_clip": 60.0,
      "capped": false,
-     "calibration_reply": "0014 0044 0074 0104 0134 0164 0194 0224 0254 0284 0314 0344 0374 0404 0434 0464 0494 0524 0554 0584 0614 0644 0674 0704 0734 0764 0794 0824 0854 0884"
+     "unit": "frame",
+     "units_per_video": 308,
+     "tokens_per_unit": 66,
+     "reference": false,
+     "setting": "",
+     "note": "Billing shows 66 tokens per second of video. The frame count follows Google's documented one frame per second: billing alone can't tell one 66-token frame from two 33-token frames.",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 3960,
+      "measured_tokens_per_min": 3960,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -1017,13 +1101,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
+     "method": "billing",
      "value": 6.2,
-     "tokens_per_frame": 75.0,
      "frames_per_video": 32,
      "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
      "frames_per_min_short_clip": 64.0,
      "capped": true,
-     "calibration_reply": "0000 0029 0058 0087 0116 0145 0174 0203 0232 0261 0290 0319 0348 0377 0406 0435 0464 0493 0522 0551 0580 0609 0638 0667 0696 0725 0754 0783 0812 0841 0870 0899"
+     "unit": "frame",
+     "units_per_video": 32,
+     "tokens_per_unit": 66,
+     "frame_size": "528x288",
+     "reference": false,
+     "setting": "all frames when the video has fewer than 32",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 467,
+      "measured_tokens_per_min": 467,
+      "diff_pct": -0.07
+     }
     }
    },
    "accepts": {
@@ -1064,7 +1160,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -1108,6 +1204,28 @@
      "video": "baker_5min",
      "repeats": 2,
      "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 777,
+     "frame_size": "1036x588",
+     "reference": true,
+     "setting": "GLM-5.3 reference: 2 fps, 2-frame groups, 240,000-token budget per video",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 46994,
+      "measured_tokens_per_min": 46994,
+      "diff_pct": -0.0
+     }
     }
    },
    "accepts": {
@@ -1148,7 +1266,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-03",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "at_least",
@@ -1184,9 +1302,33 @@
      "value": 450
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
-     "failure": "provider_error",
-     "evidence": "Model request failed."
+     "status": "measured",
+     "value": 5834,
+     "video": "baker_5min",
+     "repeats": 2,
+     "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 91,
+     "frame_size": "364x196",
+     "reference": false,
+     "setting": "a budget of about 29,750 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 5834,
+      "measured_tokens_per_min": 5834,
+      "diff_pct": -0.0
+     }
     }
    },
    "accepts": {
@@ -1270,13 +1412,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 3.1,
-     "tokens_per_frame": 305.1,
-     "frames_per_video": 16,
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 32.0,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 64.0,
      "capped": true,
-     "calibration_reply": "0029 0087 0145 0203 0261 0319 0377 0435 0493 0551 0609 0667 0725 0783 0841 0899"
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 299,
+     "frame_size": "644x364",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips); a budget of about 29,250 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 952,
+      "measured_tokens_per_min": 952,
+      "diff_pct": 0.02
+     }
     }
    },
    "accepts": {
@@ -1318,7 +1472,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -1341,7 +1495,12 @@
      "value": 128000000
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "measured",
+     "value": 64000000,
+     "fails_at": 80000000,
+     "failure": "request_bytes",
+     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":413,\"metadata\":{\"raw\":\"Payload Too Large\",\"provider_name\":\"Z.AI\",\"is_byok\":false}},\"user_id\":\"<redacted>\"}",
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -1357,14 +1516,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 14.5,
-     "tokens_per_frame": 2697.1,
-     "frames_per_video": 74,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0015 0035 0055 0095 0135 0155 0185 0225 0245 0275 0315 0335 0355 0395 0435 0455 0485 0525 0545 0575 0615 0635 0655 0695 0735 0755 0785 0825 0845 0875",
-     "note": "The model listed 8 of the counter clip's frames here. On Jarvislabs the same clip cost the same prompt tokens (80,954 vs 80,954), so it received the same frames, and there it listed 30: that count is used."
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 646,
+     "frame_size": "952x532",
+     "reference": false,
+     "setting": "a budget of about 204,000 tokens per video instead of 240,000",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 39134,
+      "measured_tokens_per_min": 39134,
+      "diff_pct": -0.0
+     }
     }
    },
    "accepts": {
@@ -1383,8 +1553,7 @@
     "strict_tool_message_order": false
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run.",
-    "This upstream doesn't accept video input for the model; OpenRouter answers a video request with 404 \"No allowed providers\"."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -1472,101 +1641,6 @@
     "strict_tool_message_order": false
    },
    "notes": [],
-   "featured": true
-  },
-  {
-   "id": "openrouter-auto/kimi-k3",
-   "provider": {
-    "id": "auto",
-    "name": "Auto-routed",
-    "via": "openrouter",
-    "tag": null
-   },
-   "model": {
-    "id": "moonshotai/kimi-k3",
-    "name": "Kimi K3",
-    "vendor": "MoonshotAI",
-    "api_id": "moonshotai/kimi-k3",
-    "input_modalities": [
-     "text",
-     "image",
-     "video"
-    ]
-   },
-   "measured_at": "2026-11-04",
-   "limits": {
-    "images_per_request": {
-     "status": "measured",
-     "value": 724,
-     "fails_at": 725,
-     "failure": "context_length",
-     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
-     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 12,652 prompt tokens (≈17 per image)."
-    },
-    "frames_768x432": {
-     "status": "at_least",
-     "value": 384
-    },
-    "inline_request_bytes": {
-     "status": "at_least",
-     "value": 32000000
-    },
-    "url_image_bytes": {
-     "status": "measured",
-     "value": 28000000,
-     "fails_at": 32000000,
-     "failure": "download_bytes",
-     "stated": 30000000,
-     "evidence": "Downloaded image content cannot exceed 30MB"
-    },
-    "video_file_bytes": {
-     "status": "measured",
-     "value": 20000000,
-     "fails_at": 24000000,
-     "failure": "no_video",
-     "evidence": "Model not found, inaccessible, and/or not deployed"
-    },
-    "tokens_per_frame_768x432": {
-     "status": "measured",
-     "value": 457
-    },
-    "video_tokens_per_min": {
-     "status": "measured",
-     "value": 7886,
-     "video": "baker_5min",
-     "repeats": 2,
-     "spread_pct": 0.0,
-     "note": "Measured with the video sent inline (base64): this provider refuses video URLs."
-    },
-    "video_frames_per_min": {
-     "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
-     "capped": true,
-     "calibration_reply": "0036 0095 0132 0298 0254 0336 0386 0437 0518 0594 0625 0786 0767 0828 0869"
-    }
-   },
-   "accepts": {
-    "image_inline": true,
-    "image_url": true,
-    "video": "yes",
-    "request_fields": {
-     "stream_options": true,
-     "usage": true,
-     "reasoning": true,
-     "response_format": true,
-     "tools": true
-    }
-   },
-   "behaviour": {
-    "strict_tool_message_order": false
-   },
-   "notes": [
-    "Auto-routed: OpenRouter picks an upstream for each request, so these limits can come from different upstreams and may change between requests."
-   ],
    "featured": true
   },
   {
@@ -1666,7 +1740,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -1701,9 +1775,29 @@
      "value": 463
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
-     "failure": "codec",
-     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\"error\":{\"type\":\"invalid_request_error\",\"code\":\"backend_invalid_argument\",\"message\":\"ValueError: BackendUnknown: MissingMediaDecoderError: Cannot decode video: this video (codec 'vp9') has no decoder in this image: shipped images decode only H.264/H.265 (in hardware, via NVDEC), and the software decoder 'deco"
+     "status": "rejected",
+     "failure": "video_duration",
+     "evidence": "Video too long: 308.0s (limit 30s)",
+     "on_clip": {
+      "seconds": 16,
+      "value": 156840
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 128,
+     "video_minutes": 0.27,
+     "clip": "a 16-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 480.0,
+     "capped": false,
+     "unit": "4-frame chunk",
+     "units_per_video": 32,
+     "tokens_per_unit": 1296,
+     "frame_size": "1344x756",
+     "reference": false,
+     "setting": "the 655,360-patch video limit applied across the whole video, so frames shrink once a video passes about 4 seconds"
     }
    },
    "accepts": {
@@ -1742,7 +1836,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -1783,9 +1877,9 @@
      "value": 457
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
-     "failure": "timeout",
-     "evidence": "no complete response within 300s"
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "EPD video encoding is not supported"
     }
    },
    "accepts": {
@@ -1827,7 +1921,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -1859,24 +1953,24 @@
      "evidence": "Model not found, inaccessible, and/or not deployed"
     },
     "video_file_bytes": {
-     "status": "inconclusive",
-     "reason": "other",
-     "evidence": "Model not found, inaccessible, and/or not deployed"
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
      "value": 457
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
-     "failure": "other",
-     "evidence": "Model not found, inaccessible, and/or not deployed"
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "OpenRouter had no endpoint to route this to (removed by its Input Video Support filter)."
     }
    },
    "accepts": {
     "image_inline": true,
     "image_url": true,
-    "video": null,
+    "video": "no",
     "request_fields": {
      "stream_options": true,
      "usage": true,
@@ -2052,12 +2146,14 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
-     "status": "inconclusive",
-     "reason": "transient",
-     "at_least": 256
+     "status": "at_least",
+     "value": 488,
+     "evidence": "488 images passed and 496 failed with HTTP 429 \"request reached organization TPM\", reproducibly, each request after a cooldown of over a minute.",
+     "source": "paced bisection, 2026-11-08",
+     "note": "This account's limit, not the API's: Moonshot's rate limiter appears to charge ≈1,024 tokens per image whatever its size (488 × 1,024 ≈ 500k, the account's tokens-per-minute budget). Through OpenRouter, Moonshot's serving accepted 720 images."
     },
     "frames_768x432": {
      "status": "at_least",
@@ -2068,10 +2164,14 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "not_tested"
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "{\"error\":{\"message\":\"Invalid request: unsupported image url: <url>"
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -2087,13 +2187,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0036 0095 0132 0293 0294 0336 0386 0432 0588 0594 0645 0786 0767 0898 0869"
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -2112,7 +2224,7 @@
     "strict_tool_message_order": true
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -2135,7 +2247,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -2166,7 +2278,9 @@
      "evidence": "Downloaded image content cannot exceed 30MB"
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -2182,13 +2296,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0046 0095 0132 0293 0254 0336 0385 0432 0518 0594 0645 0786 0737 0893 0869"
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -2207,7 +2333,7 @@
     "strict_tool_message_order": true
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -2666,17 +2792,29 @@
      "video": "baker_1min_h264",
      "repeats": 2,
      "spread_pct": 0.0,
-     "note": "The full 5-minute clip timed out or exceeded the context window; measured on its first minute."
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 120.0,
-     "tokens_per_frame": 2703.1,
-     "frames_per_video": 120,
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 480,
      "video_minutes": 1.0,
-     "frames_per_min_short_clip": 120.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 480.0,
      "capped": false,
-     "calibration_reply": "0000 0023 0034 0045 0064 0079 0094 0103 0124 0149 0154 0169 0184 0293 0214 0239 0244 0269 0278 0299 0304 0329 0339 0354 0369 0384 0399 0416 0429 0446 0459 0476 0489 0504 0519 0534 0549 0564 0579 0594 0603 0624 0639 0655 0676 0685 0709 0715 0736 0749 0756 0779 0786 0805 0826 0839 0846 0869 0874 0899"
+     "unit": "4-frame chunk",
+     "units_per_video": 120,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": true,
+     "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 324240,
+      "measured_tokens_per_min": 324240,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -2695,7 +2833,7 @@
     "strict_tool_message_order": false
    },
    "notes": [
-    "Video is fed at 2 frames per second at full resolution (~2,700 tokens per 1080p frame, ~324k tokens per minute): about 3 minutes of video fill the 1M-token context, and one minute takes ~7 minutes to process. Density was measured on the first minute of the reference clip."
+    "Video is sampled at 8 frames per second, in groups of 4 at full resolution (~2,700 tokens per group, ~324k tokens per minute). On Nov 5 the full 5-minute clip timed out at 300 s and one minute took ~7 minutes to process. Density was measured on the first minute of the reference clip."
    ],
    "featured": true
   },
@@ -2718,7 +2856,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-05",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -2762,9 +2900,34 @@
      "value": 457
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
-     "failure": "timeout",
-     "evidence": "The operation was aborted"
+     "status": "measured",
+     "value": 324240,
+     "video": "baker_1min_h264",
+     "repeats": 1,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 480.0,
+     "frames_per_video": 480,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 480.0,
+     "capped": false,
+     "unit": "4-frame chunk",
+     "units_per_video": 120,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": true,
+     "setting": "Kimi K3.x reference: 8 fps, 4-frame chunks, up to 16,384 patches per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 324240,
+      "measured_tokens_per_min": 324240,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -2783,7 +2946,7 @@
     "strict_tool_message_order": false
    },
    "notes": [
-    "Video works (Fireworks direct feeds 2 frames per second at ~2,700 tokens each), but OpenRouter aborts requests at 300 s and Fireworks needs ~420 s to process one minute of video at that density, so video longer than about 40 seconds times out through OpenRouter."
+    "Same sampling as Fireworks direct: 8 frames per second, in groups of 4. The first minute of video took 58 s on Nov 8; on Nov 5 the same request hit OpenRouter's 300 s limit."
    ],
    "featured": true
   },
@@ -2806,7 +2969,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-05",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -2825,9 +2988,8 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "inconclusive",
-     "reason": "download_timeout",
-     "at_least": 16000000
+     "status": "at_least",
+     "value": 128000000
     },
     "video_file_bytes": {
      "status": "unsupported",
@@ -2880,7 +3042,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "at_least",
@@ -2898,10 +3060,14 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "not_tested"
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "{\"error\":{\"message\":\"Invalid request: unsupported image url: <url>"
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -2917,13 +3083,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0046 0095 0132 0293 0254 0336 0386 0437 0598 0564 0645 0786 0737 0893 0864"
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -2942,7 +3120,7 @@
     "strict_tool_message_order": true
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -2965,7 +3143,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -2996,7 +3174,9 @@
      "evidence": "Downloaded image content cannot exceed 30MB"
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -3012,13 +3192,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0046 0095 0132 0293 0254 0336 0386 0437 0588 0564 0645 0786 0767 0898 0869"
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -3037,7 +3229,7 @@
     "strict_tool_message_order": true
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -3060,7 +3252,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -3091,7 +3283,9 @@
      "evidence": "Downloaded image content cannot exceed 30MB"
     },
     "video_file_bytes": {
-     "status": "not_tested"
+     "status": "at_least",
+     "value": 96000000,
+     "note": "Sent inline (base64): this provider refuses video URLs. The inline probe stops at 96 MB of video (a 128 MB request body)."
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -3107,13 +3301,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 2.9,
-     "tokens_per_frame": 2698.7,
-     "frames_per_video": 15,
+     "method": "billing",
+     "value": 11.7,
+     "frames_per_video": 60,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0046 0096 0132 0298 0254 0336 0386 0422 0518 0564 0615 0786 0732 0898 0854"
+     "unit": "4-frame chunk",
+     "units_per_video": 15,
+     "tokens_per_unit": 2691,
+     "frame_size": "1932x1092",
+     "reference": false,
+     "setting": "each video limited to about 40,000 visual tokens, which is 15 chunks (60 frames) at 1080p",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 7886,
+      "measured_tokens_per_min": 7886,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -3132,7 +3338,7 @@
     "strict_tool_message_order": true
    },
    "notes": [
-    "Takes video only inline (base64): video URLs are refused. Video density was measured with the video sent inline; the URL-based file-size probe could not run."
+    "Takes video only inline (base64): video URLs are refused. Video density and file size were measured with the video sent inline."
    ],
    "featured": true
   },
@@ -3228,7 +3434,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-05",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -3247,9 +3453,11 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "inconclusive",
-     "reason": "transient",
-     "at_least": 64000000
+     "status": "measured",
+     "value": 64000000,
+     "evidence": "Failed to start generation: Failed to generate completions: CannotConnect (a request carrying 128 MB of images by URL)",
+     "source": "probe runs of 2026-11-05 and 2026-11-08",
+     "note": "64 MB passed and 128 MB failed with the same connection error in both runs, so 64 MB is treated as the limit."
     },
     "video_file_bytes": {
      "status": "at_least",
@@ -3306,7 +3514,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-05",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -3325,9 +3533,11 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "inconclusive",
-     "reason": "transient",
-     "at_least": 64000000
+     "status": "measured",
+     "value": 64000000,
+     "evidence": "Failed to start generation: Failed to generate completions: CannotConnect (a request carrying 128 MB of images by URL)",
+     "source": "probe runs of 2026-11-05 and 2026-11-08",
+     "note": "64 MB passed and 128 MB failed with the same connection error in both runs, so 64 MB is treated as the limit."
     },
     "video_file_bytes": {
      "status": "unsupported",
@@ -3360,85 +3570,6 @@
     "strict_tool_message_order": true
    },
    "notes": [],
-   "featured": true
-  },
-  {
-   "id": "openrouter-auto/muse-spark-open",
-   "provider": {
-    "id": "auto",
-    "name": "Auto-routed",
-    "via": "openrouter",
-    "tag": null
-   },
-   "model": {
-    "id": "meta/muse-spark-open",
-    "name": "Muse Spark (open)",
-    "vendor": "Meta",
-    "api_id": "meta/muse-spark-open",
-    "input_modalities": [
-     "text",
-     "image",
-     "video",
-     "audio"
-    ]
-   },
-   "measured_at": "2026-11-04",
-   "limits": {
-    "images_per_request": {
-     "status": "measured",
-     "value": 724,
-     "fails_at": 725,
-     "failure": "context_length",
-     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
-     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 8,262 prompt tokens (≈11 per image)."
-    },
-    "frames_768x432": {
-     "status": "at_least",
-     "value": 384
-    },
-    "inline_request_bytes": {
-     "status": "at_least",
-     "value": 32000000
-    },
-    "url_image_bytes": {
-     "status": "at_least",
-     "value": 128000000
-    },
-    "video_file_bytes": {
-     "status": "measured",
-     "value": 256000000,
-     "fails_at": 320000000,
-     "failure": "other",
-     "evidence": "An exception occurred while loading VIDEO data at index 0: Error while loading data <url> Remote media exceeds the 67108864 byte download limit"
-    },
-    "tokens_per_frame_768x432": {
-     "status": "measured",
-     "value": 408
-    },
-    "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "media_bytes",
-     "evidence": "Media could not be processed (400): Video too long: 308.0s (limit 300s)\\\\"
-    }
-   },
-   "accepts": {
-    "image_inline": true,
-    "image_url": true,
-    "video": "yes",
-    "request_fields": {
-     "stream_options": true,
-     "usage": true,
-     "reasoning": true,
-     "response_format": true,
-     "tools": true
-    }
-   },
-   "behaviour": {
-    "strict_tool_message_order": false
-   },
-   "notes": [
-    "Auto-routed: OpenRouter picks an upstream for each request, so these limits can come from different upstreams and may change between requests."
-   ],
    "featured": true
   },
   {
@@ -3490,7 +3621,7 @@
      "failure": "image_bytes",
      "per_image": 10000000,
      "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
-     "evidence": "Media could not be processed (413): Image too large: 10.1 MB (limit 10 MB)\\\\"
+     "evidence": "Media could not be processed (413): Image too large: 10.1 MB (limit 10 MB)"
     },
     "video_file_bytes": {
      "status": "measured",
@@ -3498,7 +3629,7 @@
      "fails_at": 256000000,
      "failure": "media_bytes",
      "stated": 200000000,
-     "evidence": "Media could not be processed (413): Video too large: 200.1 MB (limit 200 MB)\\\\"
+     "evidence": "Media could not be processed (413): Video too large: 200.1 MB (limit 200 MB)"
     },
     "tokens_per_frame_768x432": {
      "status": "measured",
@@ -3514,13 +3645,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 12.0,
-     "tokens_per_frame": 152.0,
-     "frames_per_video": 48,
+     "method": "billing",
+     "value": 24.0,
+     "frames_per_video": 96,
      "video_minutes": 4.0,
-     "frames_per_min_short_clip": 60.0,
+     "clip": "the first 4 minutes of the reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": true,
-     "calibration_reply": "0005 0035 0066 0096 0131 0152 0182 0223 0243 0284 0304 0335 0385 0396 0426 0452 0482 0538 0548 0594 0604 0639 0685 0706 0736 0761 0892 0838 0853 0883"
+     "unit": "2-frame clip",
+     "units_per_video": 48,
+     "tokens_per_unit": 144,
+     "frame_size": "448x252",
+     "reference": false,
+     "setting": "at most 96 frames per video; 144 tokens per frame instead of 256",
+     "check": {
+      "clip": "baker_4min_h264",
+      "predicted_tokens_per_min": 1824,
+      "measured_tokens_per_min": 1824,
+      "diff_pct": -0.01
+     }
     }
    },
    "accepts": {
@@ -3560,7 +3703,7 @@
      "audio"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -3583,9 +3726,13 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "inconclusive",
-     "reason": "download_timeout",
-     "at_least": 14000000
+     "status": "measured",
+     "value": 80000000,
+     "fails_at": 96000000,
+     "failure": "image_bytes",
+     "per_image": 10000000,
+     "note": "The limit is per image: 10 MB each, stated by the provider. The probe sends 8 images, so 80 MB passed in total; a single image over 10 MB fails.",
+     "evidence": "Image <url> download size exceeded maximum size limit of 10.0 MB"
     },
     "video_file_bytes": {
      "status": "unsupported",
@@ -3773,13 +3920,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 58.4,
-     "tokens_per_frame": 260.0,
-     "frames_per_video": 300,
+     "method": "billing",
+     "value": 116.9,
+     "frames_per_video": 600,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": false,
-     "calibration_reply": "0005 0035 0066 0096 0137 0152 0182 0223 0243 0289 0309 0335 0365 0396 0426 0452 0482 0538 0543 0599 0609 0639 0685 0706 0746 0761 0792 0838 0853 0883"
+     "unit": "2-frame clip",
+     "units_per_video": 300,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 15195,
+      "measured_tokens_per_min": 15195,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -3819,7 +3978,7 @@
      "audio"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "at_least",
@@ -3852,9 +4011,34 @@
      "value": 408
     },
     "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "media_bytes",
-     "evidence": "Multimodal processing failed: Failed to finalize multimodal tracker: video too large: 3732480000 exceeds limit 1073741824"
+     "status": "measured",
+     "value": 15601,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame clip",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 15601,
+      "measured_tokens_per_min": 15601,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -3895,7 +4079,7 @@
      "audio"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -3910,7 +4094,7 @@
      "value": 128,
      "fails_at": 144,
      "failure": "decoded_bytes",
-     "evidence": "Multimodal payload is 274341888 bytes (261.6 MiB) which exceeds the gRPC single-message ceiling of 267386880 bytes (255.0 MiB). Reduce the number of images, lower their resolution (e.g. `detail=\\\\"
+     "evidence": "Multimodal payload is 274341888 bytes (261.6 MiB) which exceeds the gRPC single-message ceiling of 267386880 bytes (255.0 MiB). Reduce the number of images, lower their resolution (e.g. `detail="
     },
     "inline_request_bytes": {
      "status": "at_least",
@@ -3932,9 +4116,34 @@
      "value": 408
     },
     "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "media_bytes",
-     "evidence": "Multimodal processing failed: Failed to finalize multimodal tracker: video too large: 3732480000 exceeds limit 1073741824"
+     "status": "measured",
+     "value": 15601,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame clip",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "588x336",
+     "reference": true,
+     "setting": "Muse Spark reference (vLLM): 2 fps up to 600 frames, 2-frame clips, at most 256 tokens per frame",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 15601,
+      "measured_tokens_per_min": 15601,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -3956,104 +4165,6 @@
    "featured": true
   },
   {
-   "id": "openrouter-auto/nemotron-3.5-super-vl",
-   "provider": {
-    "id": "auto",
-    "name": "Auto-routed",
-    "via": "openrouter",
-    "tag": null
-   },
-   "model": {
-    "id": "nvidia/nemotron-3.5-super-vl",
-    "name": "Nemotron 3.5 Super VL",
-    "vendor": "NVIDIA",
-    "api_id": "nvidia/nemotron-3.5-super-vl",
-    "input_modalities": [
-     "text",
-     "image",
-     "video"
-    ]
-   },
-   "measured_at": "2026-11-04",
-   "limits": {
-    "images_per_request": {
-     "status": "measured",
-     "value": 724,
-     "fails_at": 725,
-     "failure": "context_length",
-     "evidence": "This endpoint's maximum context length is 1048576 tokens. However, you requested about 1049347 tokens (1706 of text input, 1047625 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
-     "note": "OpenRouter refuses this before sending it: it estimates ≈1,445 tokens per image against the context window, but 724 images actually used 191,242 prompt tokens (≈264 per image)."
-    },
-    "frames_768x432": {
-     "status": "at_least",
-     "value": 384
-    },
-    "inline_request_bytes": {
-     "status": "measured",
-     "value": 28000000,
-     "fails_at": 32000000,
-     "failure": "download_bytes",
-     "stated": 30000000,
-     "evidence": "Downloaded image content cannot exceed 30MB"
-    },
-    "url_image_bytes": {
-     "status": "measured",
-     "value": 28000000,
-     "fails_at": 32000000,
-     "failure": "download_bytes",
-     "stated": 30000000,
-     "evidence": "Downloaded image content cannot exceed 30MB"
-    },
-    "video_file_bytes": {
-     "status": "measured",
-     "value": 320000000,
-     "fails_at": 384000000,
-     "failure": "media_bytes",
-     "evidence": "Could not load the media in this request -- video #1: video input payload exceeds the maximum size of 268435456 bytes."
-    },
-    "tokens_per_frame_768x432": {
-     "status": "measured",
-     "value": 344
-    },
-    "video_tokens_per_min": {
-     "status": "measured",
-     "value": 900,
-     "video": "baker_5min",
-     "repeats": 2,
-     "spread_pct": 0.0
-    },
-    "video_frames_per_min": {
-     "status": "measured",
-     "value": 6.1,
-     "tokens_per_frame": 148.0,
-     "frames_per_video": 31,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 62.0,
-     "capped": true,
-     "calibration_reply": "0029 0058 0087 0116 0145 0174 0203 0232 0261 0290 0319 0348 0377 0406 0435 0464 0493 0522 0551 0580 0609 0638 0667 0696 0725 0754 0783 0812 0841 0870 0899"
-    }
-   },
-   "accepts": {
-    "image_inline": true,
-    "image_url": true,
-    "video": "yes",
-    "request_fields": {
-     "stream_options": true,
-     "usage": true,
-     "reasoning": true,
-     "response_format": true,
-     "tools": true
-    }
-   },
-   "behaviour": {
-    "strict_tool_message_order": false
-   },
-   "notes": [
-    "Auto-routed: OpenRouter picks an upstream for each request, so these limits can come from different upstreams and may change between requests."
-   ],
-   "featured": true
-  },
-  {
    "id": "openrouter-deepinfra-fp4/nemotron-3.5-super-vl",
    "provider": {
     "id": "deepinfra-fp4",
@@ -4072,7 +4183,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -4095,8 +4206,8 @@
      "value": 32000000
     },
     "url_image_bytes": {
-     "status": "inconclusive",
-     "reason": "download_failed"
+     "status": "at_least",
+     "value": 128000000
     },
     "video_file_bytes": {
      "status": "inconclusive",
@@ -4116,13 +4227,24 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.1,
-     "tokens_per_frame": 148.0,
-     "frames_per_video": 31,
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 62.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
      "capped": true,
-     "calibration_reply": "0029 0058 0087 0116 0145 0174 0203 0232 0261 0290 0319 0348 0377 0406 0435 0464 0493 0522 0551 0580 0609 0638 0667 0696 0725 0754 0783 0812 0841 0870 0899"
+     "unit": "2-frame tubelet",
+     "units_per_video": 16,
+     "tokens_per_unit": 252,
+     "reference": false,
+     "setting": "32 frames per video; no token pruning",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 900,
+      "measured_tokens_per_min": 900,
+      "diff_pct": 0.04
+     }
     }
    },
    "accepts": {
@@ -4161,7 +4283,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -4199,9 +4321,34 @@
      "value": 345
     },
     "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "decoded_bytes",
-     "evidence": "{\"error\":{\"type\":\"invalid_request_error\",\"code\":\"invalid_media_url\",\"message\":\"Could not load the media in this request -- video #1: video decode error: buffered OpenCV decode failed: video decode error: decoded video RGB payload would be 1592524800 bytes, exceeding SMG_VIDEO_MAX_DECODED_BYTES=1073741824; tempfile fallback failed: video decode error: OpenCV decode failed: video decode error: decod"
+     "status": "measured",
+     "value": 9470,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame tubelet",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 9470,
+      "measured_tokens_per_min": 9470,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -4241,7 +4388,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -4279,9 +4426,34 @@
      "value": 345
     },
     "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "decoded_bytes",
-     "evidence": "{\"error\":{\"message\":\"Provider returned error\",\"code\":400,\"metadata\":{\"raw\":\"{\"error\":{\"type\":\"invalid_request_error\",\"code\":\"invalid_media_url\",\"message\":\"Could not load the media in this request -- video #1: video decode error: buffered OpenCV decode failed: video decode error: decoded video RGB payload would be 1592524800 bytes, exceeding SMG_VIDEO_MAX_DECODED_BYTES=1073741824; temp"
+     "status": "measured",
+     "value": 9470,
+     "video": "baker_1min_h264",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The provider refused or couldn't finish the full 5-minute clip (too large, too long for its context window, or too slow); measured on its first minute."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 120,
+     "video_minutes": 1.0,
+     "clip": "the first minute of the reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame tubelet",
+     "units_per_video": 60,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "at most 128 frames per video; 2 fps; EVS keeps 50% of video tokens",
+     "check": {
+      "clip": "baker_1min_h264",
+      "predicted_tokens_per_min": 9470,
+      "measured_tokens_per_min": 9470,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -4352,13 +4524,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 12.5,
-     "tokens_per_frame": 199.4,
-     "frames_per_video": 64,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
      "frames_per_min_short_clip": 120.0,
-     "capped": true,
-     "calibration_reply": "0000 0015 0030 0046 0061 0076 0091 0107 0122 0137 0152 0168 0183 0198 0213 0229 0244 0259 0274 0290 0305 0320 0335 0350 0366 0381 0396 0411 0427 0442 0457 0472 0488 0503 0518 0533 0549 0564 0579 0594 0609 0625 0640 0655 0670 0686 0701 0716 0731 0747 0762 0777 0792 0808 0823 0838 0853 0869 0884 0899"
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -4423,13 +4607,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 118.4,
-     "tokens_per_frame": 302.1,
-     "frames_per_video": 608,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 118.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": false,
-     "calibration_reply": "0000 0015 0030 0045 0060 0075 0090 0105 0120 0135 0150 0165 0180 0195 0210 0225 0240 0255 0270 0285 0300 0315 0330 0345 0360 0375 0390 0405 0420 0435 0450 0465 0480 0495 0510 0525 0540 0555 0570 0585 0600 0615 0630 0645 0660 0675 0690 0705 0720 0735 0750 0765 0780 0795 0810 0825 0840 0855 0870"
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35641,
+      "measured_tokens_per_min": 35757,
+      "diff_pct": 0.32
+     }
     }
    },
    "accepts": {
@@ -4443,97 +4639,6 @@
    },
    "notes": [],
    "featured": false
-  },
-  {
-   "id": "openrouter-auto/qwen3.6-35b-a3b",
-   "provider": {
-    "id": "auto",
-    "name": "Auto-routed",
-    "via": "openrouter",
-    "tag": null
-   },
-   "model": {
-    "id": "qwen/qwen3.6-35b-a3b",
-    "name": "Qwen3.6 35B A3B",
-    "vendor": "Qwen",
-    "api_id": "qwen/qwen3.6-35b-a3b",
-    "input_modalities": [
-     "text",
-     "image",
-     "video"
-    ]
-   },
-   "measured_at": "2026-10-31",
-   "limits": {
-    "images_per_request": {
-     "status": "measured",
-     "value": 170,
-     "fails_at": 171,
-     "failure": "context_length",
-     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 263079 tokens (407 of text input, 262656 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.",
-     "note": "OpenRouter refuses this before sending it: it estimates ≈1,536 tokens per image against the context window, but 170 images actually used 11,290 prompt tokens (≈66 per image)."
-    },
-    "frames_768x432": {
-     "status": "measured",
-     "value": 160,
-     "fails_at": 176,
-     "failure": "context_length",
-     "evidence": "This endpoint's maximum context length is 262144 tokens. However, you requested about 270770 tokens (418 of text input, 270336 of image input, 16 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically."
-    },
-    "inline_request_bytes": {
-     "status": "at_least",
-     "value": 32000000
-    },
-    "url_image_bytes": {
-     "status": "at_least",
-     "value": 128000000
-    },
-    "video_file_bytes": {
-     "status": "at_least",
-     "value": 512000000
-    },
-    "tokens_per_frame_768x432": {
-     "status": "measured",
-     "value": 338
-    },
-    "video_tokens_per_min": {
-     "status": "measured",
-     "value": 2274,
-     "video": "baker_5min",
-     "repeats": 1,
-     "spread_pct": 0.0
-    },
-    "video_frames_per_min": {
-     "status": "measured",
-     "value": 11.4,
-     "tokens_per_frame": 199.4,
-     "frames_per_video": 59,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 120.0,
-     "capped": true,
-     "calibration_reply": "0000 0015 0030 0046 0061 0076 0091 0107 0122 0137 0152 0168 0183 0198 0213 0229 0244 0259 0274 0290 0305 0320 0335 0350 0366 0381 0396 0411 0427 0442 0457 0472 0488 0503 0518 0533 0549 0564 0579 0594 0609 0625 0640 0655 0670 0686 0701 0716 0731 0747 0762 0777 0792 0808 0823 0838 0853 0869 0884 0899",
-     "note": "The model listed 30 of the counter clip's frames here. On AkashML (fp8) via OpenRouter the same clip cost the same prompt tokens (12,002 vs 12,002), so it received the same frames, and there it listed 60: that count is used."
-    }
-   },
-   "accepts": {
-    "image_inline": true,
-    "image_url": true,
-    "video": "yes",
-    "request_fields": {
-     "stream_options": true,
-     "usage": true,
-     "reasoning": true,
-     "response_format": true,
-     "tools": true
-    }
-   },
-   "behaviour": {
-    "strict_tool_message_order": false
-   },
-   "notes": [
-    "Auto-routed: OpenRouter picks an upstream for each request, so these limits can come from different upstreams and may change between requests."
-   ],
-   "featured": true
   },
   {
    "id": "openrouter-coreweave-fp8/qwen3.6-35b-a3b",
@@ -4582,6 +4687,28 @@
      "video": "baker_5min",
      "repeats": 1,
      "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 720,
+     "frame_size": "1152x640",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips)",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2275,
+      "measured_tokens_per_min": 2274,
+      "diff_pct": -0.02
+     }
     }
    },
    "accepts": {
@@ -4704,13 +4831,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 27.0,
-     "tokens_per_frame": 23.7,
-     "frames_per_video": 138,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0000 0031 0062 0093 0124 0155 0186 0217 0248 0279 0300 0331 0362 0393 0424 0455 0486 0517 0548 0579 0600 0631 0662 0693 0724 0755 0786 0817 0848 0879"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 1,
+     "frame_size": "32x32",
+     "reference": false,
+     "setting": "a pixel budget of about 1.0 megapixels per video instead of 25.2, so frames are very small",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 639,
+      "measured_tokens_per_min": 639,
+      "diff_pct": 0.01
+     }
     }
    },
    "accepts": {
@@ -4772,6 +4911,11 @@
      "video": "baker_5min",
      "repeats": 1,
      "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "not_determined",
+     "method": "billing",
+     "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
     }
    },
    "accepts": {
@@ -4805,7 +4949,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-10-31",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -4828,15 +4972,40 @@
      "status": "not_tested"
     },
     "video_tokens_per_min": {
-     "status": "rejected",
-     "failure": "decoded_bytes",
-     "evidence": "Request decoded media exceeds VLLM_MAX_MEDIA_REQUEST_DECODE_BYTES=715827880 (3832012800 bytes)."
+     "status": "measured",
+     "value": 2499,
+     "video": "baker_5min_360p",
+     "repeats": 2,
+     "spread_pct": 0.0,
+     "note": "The 40 MB original was rejected; measured on a 360p copy of the same clip."
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "a 360p copy of the 5-minute reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min_360p",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
     "image_inline": true,
     "image_url": true,
-    "video": null,
+    "video": "yes",
     "request_fields": {}
    },
    "behaviour": {
@@ -4864,7 +5033,7 @@
      "video"
     ]
    },
-   "measured_at": "2026-11-04",
+   "measured_at": "2026-11-08",
    "limits": {
     "images_per_request": {
      "status": "measured",
@@ -4887,15 +5056,16 @@
      "status": "not_tested"
     },
     "video_tokens_per_min": {
-     "status": "inconclusive",
+     "status": "rejected",
      "failure": "other",
-     "evidence": "The request was rejected as invalid"
+     "evidence": "The request was rejected as invalid",
+     "note": "Every video request was refused on 2026-11-07."
     }
    },
    "accepts": {
     "image_inline": true,
     "image_url": true,
-    "video": null,
+    "video": "no",
     "request_fields": {}
    },
    "behaviour": {
@@ -4953,15 +5123,9 @@
      "spread_pct": 0.0
     },
     "video_frames_per_min": {
-     "status": "measured",
-     "value": 0.9,
-     "tokens_per_frame": 302.1,
-     "frames_per_video": 5,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 118.0,
-     "capped": true,
-     "calibration_reply": "0000 0015 0030 0045 0060 0075 0090 0105 0120 0135 0150 0165 0180 0195 0210 0225 0240 0255 0270 0285 0300 0315 0330 0345 0360 0375 0390 0405 0420 0435 0450 0465 0480 0495 0510 0525 0540 0555 0570 0585 0600 0615 0630 0645 0660 0675 0690 0705 0720 0735 0750 0765 0780 0795 0810 0825 0840 0855 0870",
-     "note": "The model listed 30 of the counter clip's frames here. On Atlas Cloud (fp8) via OpenRouter the same clip cost the same prompt tokens (17,866 vs 17,866), so it received the same frames, and there it listed 59: that count is used."
+     "status": "varies",
+     "method": "billing",
+     "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 38,022 then 1,442"
     }
    },
    "accepts": {
@@ -5085,13 +5249,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0056 0030 0061 0091 0122 0152 0183 0213 0244 0294 0320 0335 0366 0396 0422 0452 0483 0513 0549 0599 0625 0640 0670 0701 0731 0762 0792 0823 0853 0884"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -5176,13 +5352,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 60.0,
-     "tokens_per_frame": 594.1,
-     "frames_per_video": 308,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
      "capped": false,
-     "calibration_reply": "0005 0035 0065 0095 0125 0155 0185 0215 0245 0275 0305 0335 0365 0395 0425 0455 0485 0515 0545 0575 0605 0635 0665 0695 0725 0755 0785 0815 0845 0875"
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35640,
+      "measured_tokens_per_min": 35640,
+      "diff_pct": -0.0
+     }
     }
    },
    "accepts": {
@@ -5313,14 +5501,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0005 0030 0061 0091 0122 0152 0183 0213 0244 0274 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0610 0640 0671 0701 0732 0762 0793 0823 0854 0884",
-     "note": "The model gave an unusable list of 21 of the counter clip's frames here. On Jarvislabs the same clip cost the same prompt tokens (12,044 vs 12,044), so it received the same frames, and there it listed 30: that count is used."
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -5386,13 +5585,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0059 0038 0066 0101 0122 0152 0183 0219 0244 0274 0305 0335 0366 0396 0422 0452 0488 0518 0549 0579 0610 0640 0670 0706 0731 0762 0792 0823 0853 0884"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -5454,6 +5665,28 @@
      "video": "baker_5min",
      "repeats": 1,
      "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 6.2,
+     "frames_per_video": 32,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 64.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 16,
+     "tokens_per_unit": 720,
+     "frame_size": "1152x640",
+     "reference": false,
+     "setting": "32 frames per video (fewer for very short clips)",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2275,
+      "measured_tokens_per_min": 2274,
+      "diff_pct": -0.02
+     }
     }
    },
    "accepts": {
@@ -5511,7 +5744,27 @@
     "video_tokens_per_min": {
      "status": "rejected",
      "failure": "request_bytes",
-     "evidence": "a media file exceeds the maximum allowed size"
+     "evidence": "a media file exceeds the maximum allowed size",
+     "on_clip": {
+      "seconds": 192,
+      "value": 330
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 2.5,
+     "frames_per_video": 8,
+     "video_minutes": 3.2,
+     "clip": "a 192-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 16.0,
+     "capped": true,
+     "unit": "2-frame group",
+     "units_per_video": 4,
+     "tokens_per_unit": 252,
+     "frame_size": "672x384",
+     "reference": false,
+     "setting": "frames capped at 256 tokens per group; at most 8 frames per video; at least 2 frames"
     }
    },
    "accepts": {
@@ -5568,27 +5821,16 @@
      "status": "not_tested"
     },
     "video_tokens_per_min": {
-     "status": "measured",
-     "value": 2499,
-     "video": "baker_5min",
-     "repeats": 1,
-     "spread_pct": 0.0
-    },
-    "video_frames_per_min": {
-     "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0005 0030 0061 0091 0122 0152 0183 0213 0244 0274 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0610 0640 0671 0701 0732 0762 0792 0823 0854 0884"
+     "status": "rejected",
+     "failure": "other",
+     "evidence": "template error: Unexpected item type in content.",
+     "note": "Every video request was refused on 2026-11-07. It measured 2,499 tokens per minute on 2026-10-31."
     }
    },
    "accepts": {
     "image_inline": true,
     "image_url": true,
-    "video": "yes",
+    "video": "no",
     "request_fields": {}
    },
    "behaviour": {
@@ -5646,14 +5888,9 @@
      "spread_pct": 0.0
     },
     "video_frames_per_min": {
-     "status": "measured",
-     "value": 4.0,
-     "tokens_per_frame": 584.8,
-     "frames_per_video": 20,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 30.0,
-     "capped": true,
-     "calibration_reply": "0060 0062 0134 0186 0248 0310 0372 0434 0496 0558 0620 0682 0744 0806 0868"
+     "status": "not_determined",
+     "method": "billing",
+     "note": "Billing is consistent, but no preprocessing setting reproduces it exactly, so only tokens are published."
     }
    },
    "accepts": {
@@ -5694,7 +5931,7 @@
      "value": 8,
      "fails_at": 9,
      "failure": "other",
-     "evidence": "litellm.BadRequestError: OpenAIException - Image count 9 exceeds limit 8 per request.\\ \\ LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
+     "evidence": "litellm.BadRequestError: OpenAIException - Image count 9 exceeds limit 8 per request.  LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
     },
     "frames_768x432": {
      "status": "not_tested"
@@ -5711,7 +5948,7 @@
     "video_tokens_per_min": {
      "status": "unsupported",
      "failure": "no_video",
-     "evidence": "litellm.BadRequestError: OpenAIException - Video count 1 exceeds limit 0 per request.\\ \\ LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
+     "evidence": "litellm.BadRequestError: OpenAIException - Video count 1 exceeds limit 0 per request.  LiteLLM: model group 'qwen/qwen3.8-27b-fp8' failed with the error above. No fallback was attempted."
     }
    },
    "accepts": {
@@ -5791,13 +6028,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0005 0030 0061 0091 0122 0152 0183 0213 0244 0274 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0610 0640 0671 0701 0732 0762 0793 0823 0854 0884"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -5864,7 +6113,27 @@
     "video_tokens_per_min": {
      "status": "rejected",
      "failure": "decoded_bytes",
-     "evidence": "Bad Parameters. \\ (No credits charged.)"
+     "evidence": "Bad Parameters.  (No credits charged.)",
+     "on_clip": {
+      "seconds": 32,
+      "value": 22365
+     }
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 64,
+     "video_minutes": 0.53,
+     "clip": "a 32-second 1080p clip, the longest this route accepted",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 32,
+     "tokens_per_unit": 364,
+     "frame_size": "832x448",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group"
     }
    },
    "accepts": {
@@ -5987,13 +6256,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.6,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0015 0036 0061 0091 0122 0152 0183 0213 0244 0274 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0610 0640 0671 0701 0732 0762 0793 0823 0854 0884"
+     "clip": "the 5-minute 1080p reference clip (H.264 copy)",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min_h264",
+      "predicted_tokens_per_min": 2498,
+      "measured_tokens_per_min": 2498,
+      "diff_pct": -0.02
+     }
     }
    },
    "accepts": {
@@ -6113,6 +6394,28 @@
      "video": "baker_5min",
      "repeats": 1,
      "spread_pct": 0.0
+    },
+    "video_frames_per_min": {
+     "status": "measured",
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
+     "video_minutes": 5.13,
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 594,
+     "frame_size": "1056x576",
+     "reference": false,
+     "setting": "frames capped at about 640 tokens per group, no total budget; at least 2 frames",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 35640,
+      "measured_tokens_per_min": 35640,
+      "diff_pct": -0.0
+     }
     }
    },
    "accepts": {
@@ -6177,13 +6480,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0005 0030 0061 0091 0122 0152 0183 0213 0244 0294 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0600 0630 0661 0691 0722 0752 0783 0813 0844 0874"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -6247,14 +6562,9 @@
      "spread_pct": 0.0
     },
     "video_frames_per_min": {
-     "status": "measured",
-     "value": 6.0,
-     "tokens_per_frame": 413.7,
-     "frames_per_video": 31,
-     "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0006 0035 0066 0095 0121 0152 0182 0213 0243 0274 0304 0335 0365 0396 0426 0457 0487 0518 0548 0579 0609 0640 0670 0701 0731 0762 0792 0823 0853 0884"
+     "status": "varies",
+     "method": "billing",
+     "note": "Identical requests billed different amounts: 1920x1080_30fps_64s 12,088 then 8,248"
     }
    },
    "accepts": {
@@ -6319,13 +6629,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0005 0030 0061 0091 0122 0152 0183 0213 0244 0274 0305 0335 0366 0396 0427 0457 0488 0518 0549 0579 0609 0640 0670 0701 0731 0762 0792 0823 0853 0884"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {
@@ -6445,13 +6767,25 @@
     },
     "video_frames_per_min": {
      "status": "measured",
-     "value": 6.3,
-     "tokens_per_frame": 398.7,
-     "frames_per_video": 32,
+     "method": "billing",
+     "value": 120.0,
+     "frames_per_video": 616,
      "video_minutes": 5.13,
-     "frames_per_min_short_clip": 60.0,
-     "capped": true,
-     "calibration_reply": "0065 0030 0061 0091 0122 0152 0183 0213 0244 0294 0305 0335 0366 0396 0427 0457 0488 0518 0549 0599 0600 0640 0670 0701 0731 0762 0792 0823 0853 0884"
+     "clip": "the 5-minute 1080p reference clip",
+     "frames_per_min_short_clip": 120.0,
+     "capped": false,
+     "unit": "2-frame group",
+     "units_per_video": 308,
+     "tokens_per_unit": 32,
+     "frame_size": "256x128",
+     "reference": true,
+     "setting": "Qwen3-VL reference: 2 fps (4 to 768 frames), 2-frame groups, 25.2-megapixel budget per video, timestamp per group",
+     "check": {
+      "clip": "baker_5min",
+      "predicted_tokens_per_min": 2499,
+      "measured_tokens_per_min": 2499,
+      "diff_pct": 0.0
+     }
     }
    },
    "accepts": {

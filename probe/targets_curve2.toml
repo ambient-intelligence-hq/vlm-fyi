@@ -1,0 +1,58 @@
+# Routes still missing a billing curve (2026-11-08).
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/moonshotai/highspeed"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "moonshotai/highspeed"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/moonshotai/mxfp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "moonshotai/mxfp4"
+
+[[target]]
+name = "kimi-k3 · moonshot"
+base_url = "https://api.moonshot.ai/v1"
+api_key_env = "MOONSHOT_API_KEY"
+model = "kimi-k3"
+rpm = 2.5
+video_inline = true
+
+[[target]]
+name = "kimi-k3 · openrouter/moonshotai"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "moonshotai"
+
+[[target]]
+name = "kimi-k3 · openrouter/auto"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "auto"
+
+[[target]]
+name = "kimi-k3 · openrouter/decart/mxfp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3"
+openrouter_provider = "decart/mxfp4"
+
+[[target]]
+name = "muse-spark-open · openrouter/baseten/fp4"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "meta/muse-spark-open"
+openrouter_provider = "baseten/fp4"
+
+[[target]]
+name = "kimi-k3.1-pro · openrouter/fireworks"
+base_url = "https://openrouter.ai/api/v1"
+api_key_env = "OPENROUTER_API_KEY"
+model = "moonshotai/kimi-k3.1-pro"
+openrouter_provider = "fireworks"
