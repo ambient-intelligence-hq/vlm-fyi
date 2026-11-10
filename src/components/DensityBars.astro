@@ -17,10 +17,13 @@ const all = densityRows(only ?? entries);
 const tested = all.filter((r) => !r.untested);
 const untested = all.filter((r) => r.untested);
 // One group per model on the home page; a model or provider page is one list.
+// These lead the home page, in this order; every other model follows alphabetically.
+const PINNED = ["kimi-k3.1-pro", "kimi-k3", "qwen3.8-27b"];
+const pin = (slug: string) => (PINNED.includes(slug) ? PINNED.indexOf(slug) : PINNED.length);
 const groups = only
   ? [{ slug: "", name: "", rows: tested }]
   : [...groupBy(tested, (r) => modelSlug(r.entry))].map(([slug, rows]) => ({ slug, name: rows[0].entry.model.name, rows }))
-      .sort((a, b) => a.name.localeCompare(b.name));
+      .sort((a, b) => pin(a.slug) - pin(b.slug) || a.name.localeCompare(b.name));
 const shown = groups.filter((g) => g.rows.some((r) => !r.noVideo));
 const noneTakeVideo = groups.filter((g) => !g.rows.some((r) => !r.noVideo));
 const href = (e: Entry) => (only && name === "provider" ? `/providers/${providerSlug(e)}` : `/models/${modelSlug(e)}`);
