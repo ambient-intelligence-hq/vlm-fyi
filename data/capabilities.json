@@ -2,7 +2,7 @@
  "$schema": "https://vlm.fyi/schema/capabilities-v1.json",
  "version": 1,
  "probe_version": "2",
- "updated": "2026-11-08",
+ "updated": "2026-11-19",
  "limits": {
   "images_per_request": {
    "label": "Images per request",
@@ -335,6 +335,87 @@
      "stream_options": true,
      "usage": true,
      "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "sarvam/deepseek-v4.1-flash-1017",
+   "provider": {
+    "id": "sarvam",
+    "name": "Sarvam AI",
+    "via": null
+   },
+   "model": {
+    "id": "deepseek/deepseek-v4.1-flash-1017",
+    "name": "DeepSeek V4.1 Flash (1017)",
+    "vendor": "DeepSeek",
+    "api_id": "deepseekv4.1-flash-1017",
+    "input_modalities": [
+     "text",
+     "image"
+    ]
+   },
+   "measured_at": "2026-11-19",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Validation: `image` count 121 exceeds limit_mm_per_prompt.image=120 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Validation: `image` count 128 exceeds limit_mm_per_prompt.image=120 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 24000000,
+     "fails_at": 28000000,
+     "failure": "request_bytes",
+     "stated": 33554432,
+     "evidence": "Request size 37333553 bytes exceeds the limit of 33554432."
+    },
+    "url_image_bytes": {
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "messages[0].content[1]: image URLs are not allowed; send the image inline as a base64 data URI instead, e.g."
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Video input is not supported for this model."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 223
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Video input is not supported for this model."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
      "response_format": true,
      "tools": true
     }
@@ -1143,6 +1224,88 @@
    "featured": true
   },
   {
+   "id": "sarvam/gemma-4-31b",
+   "provider": {
+    "id": "sarvam",
+    "name": "Sarvam AI",
+    "via": null
+   },
+   "model": {
+    "id": "google/gemma-4-31b-it",
+    "name": "Gemma 4 31B",
+    "vendor": "Google",
+    "api_id": "gemma4",
+    "input_modalities": [
+     "image",
+     "text",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-19",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 30,
+     "fails_at": 31,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Validation: `image` count 31 exceeds limit_mm_per_prompt.image=30 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 28,
+     "fails_at": 32,
+     "failure": "image_count",
+     "stated": 30,
+     "evidence": "Validation: `image` count 32 exceeds limit_mm_per_prompt.image=30 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 7000000,
+     "fails_at": 8000000,
+     "failure": "request_bytes",
+     "stated": 10485760,
+     "evidence": "Request size 10666897 bytes exceeds the limit of 10485760."
+    },
+    "url_image_bytes": {
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "messages[0].content[1]: image URLs are not allowed; send the image inline as a base64 data URI instead, e.g."
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Video input is not supported for this model."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 267
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Video input is not supported for this model."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
    "id": "fireworks/glm-5.3-flash",
    "provider": {
     "id": "fireworks",
@@ -1339,6 +1502,88 @@
      "stream_options": true,
      "usage": true,
      "reasoning": true,
+     "response_format": true,
+     "tools": true
+    }
+   },
+   "behaviour": {
+    "strict_tool_message_order": false
+   },
+   "notes": [],
+   "featured": true
+  },
+  {
+   "id": "sarvam/glm-5.3-flash",
+   "provider": {
+    "id": "sarvam",
+    "name": "Sarvam AI",
+    "via": null
+   },
+   "model": {
+    "id": "z-ai/glm-5.3-flash",
+    "name": "GLM 5.3 Flash",
+    "vendor": "Z.ai",
+    "api_id": "glm5.3-flash",
+    "input_modalities": [
+     "text",
+     "image",
+     "video"
+    ]
+   },
+   "measured_at": "2026-11-19",
+   "limits": {
+    "images_per_request": {
+     "status": "measured",
+     "value": 120,
+     "fails_at": 121,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Validation: `image` count 121 exceeds limit_mm_per_prompt.image=120 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "frames_768x432": {
+     "status": "measured",
+     "value": 112,
+     "fails_at": 128,
+     "failure": "image_count",
+     "stated": 120,
+     "evidence": "Validation: `image` count 128 exceeds limit_mm_per_prompt.image=120 (from LIMIT_MM_PER_PROMPT / --limit-mm-per-prompt)."
+    },
+    "inline_request_bytes": {
+     "status": "measured",
+     "value": 7000000,
+     "fails_at": 8000000,
+     "failure": "request_bytes",
+     "stated": 10485760,
+     "evidence": "Request size 10666897 bytes exceeds the limit of 10485760."
+    },
+    "url_image_bytes": {
+     "status": "unsupported",
+     "reason": "url_unsupported",
+     "evidence": "messages[0].content[1]: image URLs are not allowed; send the image inline as a base64 data URI instead, e.g."
+    },
+    "video_file_bytes": {
+     "status": "unsupported",
+     "reason": "no_video",
+     "evidence": "Video input is not supported for this model."
+    },
+    "tokens_per_frame_768x432": {
+     "status": "measured",
+     "value": 450
+    },
+    "video_tokens_per_min": {
+     "status": "unsupported",
+     "failure": "no_video",
+     "evidence": "Video input is not supported for this model."
+    }
+   },
+   "accepts": {
+    "image_inline": true,
+    "image_url": false,
+    "video": "no",
+    "request_fields": {
+     "stream_options": true,
+     "usage": false,
+     "reasoning": false,
      "response_format": true,
      "tools": true
     }

@@ -1,0 +1,25 @@
+# Sarvam AI's v2 chat completions (OpenAI-compatible, Bearer auth accepted).
+# Images inline as base64 only (URLs refused), no video input, 10 MB request body.
+# Pay-as-you-go accounts get 50 requests/min across these models: rpm is shared per key.
+#   python probe.py --targets targets_sarvam.toml
+
+[[target]]
+name = "deepseek-v4.1-flash · sarvam"
+base_url = "https://api.sarvam.ai/v2"
+api_key_env = "SARVAM_API_KEY"
+model = "deepseekv4.1-flash-1017"
+rpm = 40
+
+[[target]]
+name = "glm-5.3-flash · sarvam"
+base_url = "https://api.sarvam.ai/v2"
+api_key_env = "SARVAM_API_KEY"
+model = "glm5.3-flash"
+rpm = 40
+
+[[target]]
+name = "gemma-4-31b · sarvam"
+base_url = "https://api.sarvam.ai/v2"
+api_key_env = "SARVAM_API_KEY"
+model = "gemma4"
+rpm = 40

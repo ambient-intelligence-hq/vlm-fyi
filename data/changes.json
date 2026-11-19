@@ -903,5 +903,20 @@
   "to": {
    "status": "rejected"
   }
+ },
+ {
+  "date": "2026-11-19",
+  "id": "sarvam/deepseek-v4.1-flash-1017",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-19",
+  "id": "sarvam/gemma-4-31b",
+  "change": "added"
+ },
+ {
+  "date": "2026-11-19",
+  "id": "sarvam/glm-5.3-flash",
+  "change": "added"
  }
 ]

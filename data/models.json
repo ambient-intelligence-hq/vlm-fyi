@@ -56,6 +56,20 @@
    "aliases": [
     "nvidia/NVIDIA-Nemotron-3.5-Super-VL"
    ]
+  },
+  {
+   "id": "google/gemma-4-31b-it",
+   "name": "Gemma 4 31B",
+   "vendor": "Google",
+   "input_modalities": [
+    "image",
+    "text",
+    "video"
+   ],
+   "aliases": [
+    "gemma-4-31b-it",
+    "gemma4"
+   ]
   }
  ]
 }

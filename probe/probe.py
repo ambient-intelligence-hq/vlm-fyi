@@ -127,7 +127,7 @@ def service_of(base_url: str) -> str:
     b = base_url.lower()
     for host, svc in (("openrouter", "openrouter"), ("fireworks", "fireworks"), ("together", "together"),
                       ("jarvislabs", "jarvislabs"), ("modal.direct", "modal"), ("modal.run", "modal"),
-                      ("moonshot.ai", "moonshot")):
+                      ("moonshot.ai", "moonshot"), ("sarvam.ai", "sarvam")):
         if host in b:
             return svc
     return "self_hosted"
@@ -162,20 +162,23 @@ PATTERNS: list[tuple[str, str]] = [
     ("auth_or_billing", r"Credit limit|Unauthorized|invalid api key|Invalid API key|insufficient.{0,20}(?:credit|quota|balance)"),
     ("image_count", r"limit the number of images per conversation to (\d+)|max number of data-uri items\s*:?\s*(\d+)"
                     r"|[Tt]oo many images: \d+ \(max (\d+)\)|[Tt]oo many images in request: \d+ > (\d+)"
-                    r"|[Aa]t most (\d+) image|too many images|images? per (?:request|prompt|message)"),
+                    r"|[Aa]t most (\d+) image|too many images|images? per (?:request|prompt|message)"
+                    r"|limit_mm_per_prompt\.image=(\d+)"),
     ("download_bytes", r"[Dd]ownloaded .{0,40}cannot exceed (\d+)\s*MB"),
     ("media_bytes", r"media exceeds size limit: max (\d+) bytes|too large: \d+ exceeds limit (\d+)|file (?:is )?too large|exceeds the maximum (?:file )?size"),
     ("decoded_bytes", r"DECODE_BYTES=(\d+)|single-message ceiling of (\d+) bytes"),
     ("decoded_bytes", r"[Mm]ultimodal payload|decoded media exceeds"),
-    ("request_bytes", r"Request body exceeds|request_too_large|[Pp]ayload [Tt]oo [Ll]arge|Request Entity Too Large"),
+    ("request_bytes", r"Request size \d+ bytes exceeds the limit of (\d+)|Request body exceeds|request_too_large|[Pp]ayload [Tt]oo [Ll]arge|Request Entity Too Large"),
     ("body_timeout", r"[Rr]equest body timed out|request_timeout"),
     ("context_length", r"context length|maximum context|context_length_exceeded|too many tokens|prompt is too long"
                        r"|input token count exceeds|maximum number of tokens allowed"
                        r"|exceeds the model's|input tokens? exceed|longer than the model"),
     # Media by URL refused, not media itself (Moonshot's API takes base64 or uploaded files only).
-    ("url_unsupported", r"[Uu]nsupported (?:image|video) url|URL must be from one of the allowed domains"),
+    ("url_unsupported", r"[Uu]nsupported (?:image|video) url|URL must be from one of the allowed domains"
+                        r"|(?:image|video) URLs are not allowed"),
     ("no_video", r"number of videos per conversation to 0|Video count \d+ exceeds limit 0|supports image input only|[Vv]ideo.{0,30}not supported|does not support video|[Uu]nsupported .{0,20}video"),
-    ("strict_params", r"Extra inputs are not permitted|Unrecognized request argument|[Uu]nknown (?:field|parameter)"),
+    ("strict_params", r"Extra inputs are not permitted|Unrecognized request argument|[Uu]nknown (?:field|parameter)"
+                      r"|Unsupported parameter\(s\)"),
     ("tool_order", r"tool_call_id|parallel tool|tool messages responding|parallel group"),
     ("invalid_media", r"Invalid image or video input|rejected the request parameters|INVALID_ARGUMENT|[Ii]nvalid (?:image|video)"),
 ]
@@ -1113,7 +1116,8 @@ def fmt_density(d: Optional[dict]) -> str:
         if d.get("spread_pct"):
             s += f" ±{d['spread_pct']:g}%"
         return s
-    run = next((r for r in d.get("runs", []) if not r.get("ok")), None)
+    # The last failure is the verdict: earlier ones only triggered a fallback (e.g. a URL refusal retried inline).
+    run = next((r for r in reversed(d.get("runs", [])) if not r.get("ok")), None)
     return f"✗ {run.get('kind')}" if run else (d.get("error", "—")[:40])
 
 

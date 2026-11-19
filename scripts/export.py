@@ -41,7 +41,7 @@ EXCLUDED_TARGETS = {
 # Hostnames can carry account names (e.g. <workspace>--ep-<name>.<region>.modal.direct);
 # the dataset never stores endpoint URLs, and the leak check below enforces it.
 SERVICE_HOSTS = {"openrouter": "openrouter", "fireworks": "fireworks", "together": "together",
-                 "jarvislabs": "jarvislabs", "modal.direct": "modal", "moonshot.ai": "moonshot"}
+                 "jarvislabs": "jarvislabs", "modal.direct": "modal", "moonshot.ai": "moonshot", "sarvam.ai": "sarvam"}
 
 PROVIDERS = {
     "fireworks": ("Fireworks", "https://fireworks.ai"),
@@ -49,6 +49,7 @@ PROVIDERS = {
     "jarvislabs": ("Jarvislabs", "https://jarvislabs.ai"),
     "modal": ("Modal", "https://modal.com"),
     "moonshot": ("Moonshot AI", "https://platform.moonshot.ai"),
+    "sarvam": ("Sarvam AI", "https://www.sarvam.ai"),
     "openrouter": ("OpenRouter", "https://openrouter.ai"),
     "alibaba": ("Alibaba Cloud", "https://www.alibabacloud.com"),
     "z-ai": ("Z.ai", "https://z.ai"),
@@ -714,7 +715,7 @@ def main() -> None:
     body = json.dumps(dataset, indent=1, ensure_ascii=False) + "\n"
     # Check before writing anything: a leak must never reach data/.
     leaks = re.findall(r"https?://(?!vlm\.fyi)|X-Amz-|user_[A-Za-z0-9]{10,}|sk-or-|tgp_v1|fw_[A-Za-z0-9]{8}|wk-[A-Za-z0-9]{6}|modal\.direct|--ep-"
-                       r"|\b(?:org|proj|ak)-[A-Za-z0-9]{8,}|\bsk-[A-Za-z0-9]{20,}",
+                       r"|\b(?:org|proj|ak)-[A-Za-z0-9]{8,}|\bsk-[A-Za-z0-9]{20,}|\bsk_[A-Za-z0-9]{6,}_[A-Za-z0-9]{8,}",
                        body + json.dumps(changes, ensure_ascii=False))
     print(f"{len(entries)} entries · {len(changes)} change records · leak check: {'CLEAN' if not leaks else leaks[:5]}")
     if leaks:
